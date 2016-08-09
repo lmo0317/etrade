@@ -1,0 +1,574 @@
+[
+  {
+    "isu_nm": "넥슨지티",
+    "isu_srt_cd": "A041140"
+  },
+  {
+    "isu_nm": "에이티넘인베스트",
+    "isu_srt_cd": "A021080"
+  },
+  {
+  "isu_nm": "삼익THK",
+  "isu_srt_cd": "A004380"
+  },
+  {
+    "isu_nm": "원익홀딩스",
+    "isu_srt_cd": "A030530"
+  },
+  {
+    "isu_nm": "두산엔진",
+    "isu_srt_cd": "A082740"
+  },
+  {
+    "isu_nm": "카프로",
+    "isu_srt_cd": "A006380"
+  },
+  {
+    "isu_nm": "하이비젼시스템",
+    "isu_srt_cd": "A126700"
+  },
+  {
+    "isu_nm": "동국S&C",
+    "isu_srt_cd": "A100130"
+  },
+  {
+    "isu_nm": "엘비세미콘",
+    "isu_srt_cd": "A061970"
+  },
+  {
+    "isu_nm": "AP시스템",
+    "isu_srt_cd": "A054620"
+  },
+  {
+    "isu_nm": "엑셈",
+    "isu_srt_cd": "A205100"
+  },
+  {
+    "isu_nm": "디오",
+    "isu_srt_cd": "A039840"
+  },
+  {
+    "isu_nm": "인베니아",
+    "isu_srt_cd": "A079950"
+  },
+  {
+    "isu_nm": "한국알콜",
+    "isu_srt_cd": "A017890"
+  },
+  {
+    "isu_nm": "아시아나항공",
+    "isu_srt_cd": "A020560"
+  },
+  {
+    "isu_nm": "옵트론텍",
+    "isu_srt_cd": "A082210"
+  },
+  {
+    "isu_nm": "이녹스",
+    "isu_srt_cd": "A088390"
+  },
+  {
+    "isu_nm": "주성엔지니어링",
+    "isu_srt_cd": "A036930"
+  },
+  {
+    "isu_nm": "오스코텍",
+    "isu_srt_cd": "A039200"
+  },
+  {
+    "isu_nm": "옴니시스템",
+    "isu_srt_cd": "A057540"
+  },
+  {
+    "isu_nm": "유진테크",
+    "isu_srt_cd": "A084370"
+  },
+  {
+    "isu_nm": "인터플렉스",
+    "isu_srt_cd": "A051370"
+  },
+  {
+    "isu_nm": "에스엠",
+    "isu_srt_cd": "A041510"
+  },
+  {
+    "isu_nm": "파라다이스",
+    "isu_srt_cd": "A034230"
+  },
+  {
+    "isu_nm": "인포뱅크",
+    "isu_srt_cd": "A039290"
+  },
+  {
+    "isu_nm": "엘컴텍",
+    "isu_srt_cd": "A037950"
+  },
+  {
+    "isu_nm": "넥스턴",
+    "isu_srt_cd": "A089140"
+  },
+  {
+    "isu_nm": "에스티팜",
+    "isu_srt_cd": "A237690"
+  },
+  {
+    "isu_nm": "한라홀딩스",
+    "isu_srt_cd": "A060980"
+  },
+  {
+    "isu_nm": "씨젠",
+    "isu_srt_cd": "A096530"
+  },
+  {
+    "isu_nm": "대원미디어",
+    "isu_srt_cd": "A048910"
+  },
+  {
+    "isu_nm": "테스",
+    "isu_srt_cd": "A095610"
+  },
+  {
+    "isu_nm": "아바코",
+    "isu_srt_cd": "A083930"
+  },
+  {
+    "isu_nm": "제주항공",
+    "isu_srt_cd": "A089590"
+  },
+  {
+    "isu_nm": "톱텍",
+    "isu_srt_cd": "A108230"
+  },
+  {
+    "isu_nm": "팅크웨어",
+    "isu_srt_cd": "A084730"
+  },
+  {
+    "isu_nm": "스페코",
+    "isu_srt_cd": "A013810"
+  },
+  {
+    "isu_nm": "서희건설",
+    "isu_srt_cd": "A035890"
+  },
+  {
+    "isu_nm": "차바이오텍",
+    "isu_srt_cd": "A085660"
+  },
+  {
+    "isu_nm": "아시아경제",
+    "isu_srt_cd": "A127710"
+  },
+  {
+    "isu_nm": "팍스넷",
+    "isu_srt_cd": "A038160"
+  },
+  {
+    "isu_nm": "원익IPS",
+    "isu_srt_cd": "A240810"
+  },
+  {
+    "isu_nm": "한진칼",
+    "isu_srt_cd": "A180640"
+  },
+  {
+    "isu_nm": "비아트론",
+    "isu_srt_cd": "A141000"
+  },
+  {
+    "isu_nm": "영진약품",
+    "isu_srt_cd": "A003520"
+  },
+  {
+    "isu_nm": "에스티아이",
+    "isu_srt_cd": "A039440"
+  },
+  {
+    "isu_nm": "대한항공",
+    "isu_srt_cd": "A003490"
+  },
+  {
+    "isu_nm": "경인양행",
+    "isu_srt_cd": "A012610"
+  },
+  {
+    "isu_nm": "아이씨디",
+    "isu_srt_cd": "A040910"
+  },
+  {
+    "isu_nm": "루트로닉",
+    "isu_srt_cd": "A085370"
+  },
+  {
+    "isu_nm": "현대로템",
+    "isu_srt_cd": "A064350"
+  },
+  {
+    "isu_nm": "한전기술",
+    "isu_srt_cd": "A052690"
+  },
+  {
+    "isu_nm": "에프티이앤이",
+    "isu_srt_cd": "A065160"
+  },
+  {
+    "isu_nm": "엔씨소프트",
+    "isu_srt_cd": "A036570"
+  },
+  {
+    "isu_nm": "파트론",
+    "isu_srt_cd": "A091700"
+  },
+  {
+    "isu_nm": "이엔에프테크놀로지",
+    "isu_srt_cd": "A102710"
+  },
+  {
+    "isu_nm": "비에이치",
+    "isu_srt_cd": "A090460"
+  },
+  {
+    "isu_nm": "삼화네트웍스",
+    "isu_srt_cd": "A046390"
+  },
+  {
+    "isu_nm": "IHQ",
+    "isu_srt_cd": "A003560"
+  },
+  {
+    "isu_nm": "초록뱀",
+    "isu_srt_cd": "A047820"
+  },
+  {
+    "isu_nm": "보령메디앙스",
+    "isu_srt_cd": "A014100"
+  },
+  {
+    "isu_nm": "에이블씨엔씨",
+    "isu_srt_cd": "A078520"
+  },
+  {
+    "isu_nm": "대아티아이",
+    "isu_srt_cd": "A045390"
+  },
+  {
+    "isu_nm": "레드로버",
+    "isu_srt_cd": "A060300"
+  },
+  {
+    "isu_nm": "와이지엔터테인먼트",
+    "isu_srt_cd": "A122870"
+  },
+  {
+    "isu_nm": "링네트",
+    "isu_srt_cd": "A042500"
+  },
+  {
+    "isu_nm": "동진쎄미켐",
+    "isu_srt_cd": "A005290"
+  },
+  {
+    "isu_nm": "아가방컴퍼니",
+    "isu_srt_cd": "A013990"
+  },
+  {
+    "isu_nm": "조이시티",
+    "isu_srt_cd": "A067000"
+  },
+  {
+    "isu_nm": "CMG제약",
+    "isu_srt_cd": "A058820"
+  },
+  {
+    "isu_nm": "크리스탈",
+    "isu_srt_cd": "A083790"
+  },
+  {
+    "isu_nm": "세코닉스",
+    "isu_srt_cd": "A053450"
+  },
+  {
+    "isu_nm": "셀트리온",
+    "isu_srt_cd": "A068270"
+  },
+  {
+    "isu_nm": "한올바이오파마",
+    "isu_srt_cd": "A009420"
+  },
+  {
+    "isu_nm": "한화테크윈",
+    "isu_srt_cd": "A012450"
+  },
+  {
+    "isu_nm": "나무가",
+    "isu_srt_cd": "A190510"
+  },
+  {
+    "isu_nm": "한진피앤씨",
+    "isu_srt_cd": "A061460"
+  },
+  {
+    "isu_nm": "엠게임",
+    "isu_srt_cd": "A058630"
+  },
+  {
+    "isu_nm": "홈센타",
+    "isu_srt_cd": "A060560"
+  },
+  {
+    "isu_nm": "명문제약",
+    "isu_srt_cd": "A017180"
+  },
+  {
+    "isu_nm": "텔콘",
+    "isu_srt_cd": "A200230"
+  },
+  {
+    "isu_nm": "드래곤플라이",
+    "isu_srt_cd": "A030350"
+  },
+  {
+    "isu_nm": "오스템",
+    "isu_srt_cd": "A031510"
+  },
+  {
+    "isu_nm": "오스템임플란트",
+    "isu_srt_cd": "A048260"
+  },
+  {
+    "isu_nm": "서울반도체",
+    "isu_srt_cd": "A046890"
+  },
+  {
+    "isu_nm": "영화금속",
+    "isu_srt_cd": "A012280"
+  },
+  {
+    "isu_nm": "셀루메드",
+    "isu_srt_cd": "A049180"
+  },
+  {
+    "isu_nm": "하이소닉",
+    "isu_srt_cd": "A106080"
+  },
+  {
+    "isu_nm": "코맥스",
+    "isu_srt_cd": "A036690"
+  },
+  {
+    "isu_nm": "한일진공",
+    "isu_srt_cd": "A123840"
+  },
+  {
+    "isu_nm": "우리종금",
+    "isu_srt_cd": "A010050"
+  },
+  {
+    "isu_nm": "현대산업",
+    "isu_srt_cd": "A012630"
+  },
+  {
+    "isu_nm": "에임하이",
+    "isu_srt_cd": "A043580"
+  },
+  {
+    "isu_nm": "위노바",
+    "isu_srt_cd": "A039790"
+  },
+  {
+    "isu_nm": "부방",
+    "isu_srt_cd": "A014470"
+  },
+  {
+    "isu_nm": "이미지스",
+    "isu_srt_cd": "A115610"
+  },
+  {
+    "isu_nm": "버추얼텍",
+    "isu_srt_cd": "A036620"
+  },
+  {
+    "isu_nm": "성호전자",
+    "isu_srt_cd": "A043260"
+  },
+  {
+    "isu_nm": "지어소프트",
+    "isu_srt_cd": "A051160"
+  },
+  {
+    "isu_nm": "홈캐스트",
+    "isu_srt_cd": "A064240"
+  },
+  {
+    "isu_nm": "대성파인텍",
+    "isu_srt_cd": "A104040"
+  },
+  {
+    "isu_nm": "테고사이언스",
+    "isu_srt_cd": "A191420"
+  },
+  {
+    "isu_nm": "큐로컴",
+    "isu_srt_cd": "A040350"
+  },
+  {
+    "isu_nm": "유성티엔에스",
+    "isu_srt_cd": "A024800"
+  },
+  {
+    "isu_nm": "아이엠텍",
+    "isu_srt_cd": "A226350"
+  },
+  {
+    "isu_nm": "우리들휴브레인",
+    "isu_srt_cd": "A118000"
+  },
+  {
+    "isu_nm": "유니더스",
+    "isu_srt_cd": "A044480"
+  },
+  {
+    "isu_nm": "피엔티",
+    "isu_srt_cd": "A137400"
+  },
+  {
+    "isu_nm": "한화갤러리아타임월드",
+    "isu_srt_cd": "A027390"
+  },
+  {
+    "isu_nm": "코렌",
+    "isu_srt_cd": "A078650"
+  },
+  {
+    "isu_nm": "흥아해운",
+    "isu_srt_cd": "A003280"
+  },
+  {
+    "isu_nm": "SH에너지화학",
+    "isu_srt_cd": "A002360"
+  },
+  {
+    "isu_nm": "키이스트",
+    "isu_srt_cd": "A054780"
+  },
+  {
+    "isu_nm": "로체시스템즈",
+    "isu_srt_cd": "A071280"
+  },
+  {
+    "isu_nm": "유니퀘스트",
+    "isu_srt_cd": "A077500"
+  },
+  {
+    "isu_nm": "더블유게임즈",
+    "isu_srt_cd": "A192080"
+  },
+  {
+    "isu_nm": "탑엔지니어링",
+    "isu_srt_cd": "A065130"
+  },
+  {
+    "isu_nm": "케이엔더블유",
+    "isu_srt_cd": "A105330"
+  },
+  {
+    "isu_nm": "영우디에스피",
+    "isu_srt_cd": "A143540"
+  },
+  {
+    "isu_nm": "금양",
+    "isu_srt_cd": "A001570"
+  },
+  {
+    "isu_nm": "씨에스윈드",
+    "isu_srt_cd": "A112610"
+  },
+  {
+    "isu_nm": "기가레인",
+    "isu_srt_cd": "A049080"
+  },
+  {
+    "isu_nm": "진바이오텍",
+    "isu_srt_cd": "A086060"
+  },
+  {
+    "isu_nm": "유니테스트",
+    "isu_srt_cd": "A086390"
+  },
+  {
+    "isu_nm": "서연이화",
+    "isu_srt_cd": "A200880"
+  },
+  {
+    "isu_nm": "A코리아나",
+    "isu_srt_cd": "027050"
+  },
+  {
+    "isu_nm": "로엔",
+    "isu_srt_cd": "A016170"
+  },
+  {
+    "isu_nm": "게임빌",
+    "isu_srt_cd": "A063080"
+  },
+  {
+    "isu_nm": "컴투스",
+    "isu_srt_cd": "A078340"
+  },
+  {
+    "isu_nm": "파인텍",
+    "isu_srt_cd": "A131760"
+  },
+  {
+    "isu_nm": "삼본정밀전자",
+    "isu_srt_cd": "A111870"
+  },
+  {
+    "isu_nm": "에이테크솔루션",
+    "isu_srt_cd": "A071670"
+  },
+  {
+    "isu_nm": "자연과환경",
+    "isu_srt_cd": "A043910"
+  },
+  {
+    "isu_nm": "아이엠",
+    "isu_srt_cd": "A101390"
+  },
+  {
+    "isu_nm": "인피니트헬스케어",
+    "isu_srt_cd": "A071200"
+  },
+  {
+    "isu_nm": "리더스코스메틱",
+    "isu_srt_cd": "A016100"
+  },
+  {
+    "isu_nm": "제이씨현시스템",
+    "isu_srt_cd": "A033320"
+  },
+  {
+    "isu_nm": "인바디",
+    "isu_srt_cd": "A041830"
+  },
+  {
+    "isu_nm": "NEW",
+    "isu_srt_cd": "A160550"
+  },
+  {
+    "isu_nm": "엔케이",
+    "isu_srt_cd": "A085310"
+  },
+  {
+    "isu_nm": "안랩",
+    "isu_srt_cd": "A053800"
+  },
+  {
+    "isu_nm": "체시스",
+    "isu_srt_cd": "A033250"
+  },
+  {
+    "isu_nm": "제주반도체",
+    "isu_srt_cd": "A080220"
+  }
+]
