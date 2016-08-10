@@ -1,4 +1,3 @@
-//var filelist = require('../service/filelist');
 var tradingService = require('../service/trading');
 
 exports.delegate = function(app) {
