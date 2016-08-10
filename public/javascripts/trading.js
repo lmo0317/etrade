@@ -13,7 +13,7 @@ function getTrading() {
             },
             success:function(data) {
                 console.log(data);
-                $("#tbody_trading_container").innerHTML = "";
+                $("#tbody_trading_container").html('');
 
                 for(var i=0;i<data.length;i++) {
                     var value = data[i];
