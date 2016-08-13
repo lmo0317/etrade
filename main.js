@@ -6,8 +6,15 @@ var superagent = require('superagent');
 var request  = superagent.agent();
 var sync = require('synchronize');
 var fs = require('fs');
-
 var intervalTime = 1000 * 60 * 20;
+
+var stock = require('./schema/stock');
+var mongoose = require('mongoose');
+var stocklistlib = require('./lib/stocklist');
+
+var Stock = mongoose.model('Stock', stock.StockSchema);
+mongoose.Promise = global.Promise;
+var db = mongoose.connect('mongodb://lmo0317.iptime.org/etrade'); // 접속할 DB 선택
 
 var body = {
     fromdate: '20160805',
@@ -152,7 +159,38 @@ function searchProcess() {
     });
 }
 
+function addStokcListToDB() {
+
+    //list.json에서 검사할 stock list를 얻어온다.
+    sync.fiber(function() {
+
+        var data = sync.await(fs.readFile('stocklist.json', 'utf8', sync.defer()));
+        var stocklist = JSON.parse(data);
+        //console.log(stocklist);
+
+        for(var i = 0; i < stocklist.length;i++) {
+
+            var stock = stocklist[i];
+            var result = sync.await(stocklistlib.getStock(stock.isu_srt_cd, sync.defer()));
+            if(result.length !== 0) {
+                continue;
+            }
+
+            stock['isu_cdnm'] = stock['isu_srt_cd'] + '/' + stock['isu_nm'];
+            var isu_srt_cd = stock['isu_srt_cd'].substr(1,6);
+            stock['isu_cd'] = 'KR7' + isu_srt_cd + '00' + makeLastKey(isu_srt_cd);
+            var doc = new Stock(stock);
+            sync.await(doc.save(sync.defer()));
+            console.log(doc);
+        }
+
+    }, function(err, res) {
+
+    });
+}
+
 (function main() {
-    searchProcess();
-    setInterval(searchProcess, intervalTime);
+    //searchProcess();
+    //setInterval(searchProcess, intervalTime);
+    addStokcListToDB();
 })();

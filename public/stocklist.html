@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="bootstrap/css/daterangepicker.css" rel="stylesheet">
+
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
+    <script type="text/javascript" src="bootstrap/js/moment.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/daterangepicker.js"></script>
+
+    <script type="text/javascript" src="javascripts/stocklist.js"></script>
+    <script type="text/javascript"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="/trading.html">Trading</a></li>
+            <li class="active"><a href="/stocklist.html">Stock List</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <h2>Stock List</h2>
+
+    <div>
+        <label class="control-label" for="add_input_name">Name</label>
+        <input type="text" class="form-control" id="add_input_name">
+
+        <label class="control-label" for="add_input_code">Code</label>
+        <input type="text" class="form-control" id="add_input_code">
+
+        <div id="div_button">
+            <button id="btn_add" type="button" class="btn btn-primary btn-lg btn-block">Add</button>
+        </div>
+    </div>
+
+    <table class ="table table-striped">
+        <thead>
+        <tr>
+            <th> Name </th>
+            <th> Code </th>
+        </tr>
+        </thead>
+        <tbody id="tbody_container"></tbody>
+    </table>
+</div>
+</body>
+</html>
