@@ -2,7 +2,7 @@
 exports.delegate = function(app)
 {
     var controllers = [
-        'trading', 'stocklist', 'manager'
+        'trading', 'stocklist'
     ];
 
     console.info(controllers);
