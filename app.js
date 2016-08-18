@@ -12,10 +12,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended : true }));
 app.use(cookieParser());
 
+var util = require('./lib/util');
+
 var global = require('./globals');
 var db = mongoose.connect('mongodb://lmo0317.iptime.org/etrade'); // 접속할 DB 선택
 
-var server = app.listen(3000, function () {
+var server = app.listen(1000, function () {
     console.info('server is started');
 
     sync.fiber(function() {
