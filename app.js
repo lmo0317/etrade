@@ -27,7 +27,7 @@ global.program
 //db
 mongoose.connect(global.configure.db.path);
 
-var server = app.listen(1000, function () {
+var server = app.listen(3000, function () {
     console.info('server is started');
     controller.delegate(app);
 });
