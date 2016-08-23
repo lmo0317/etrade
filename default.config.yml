@@ -1,8 +1,3 @@
 os: 'windows'
-directory:
-  linux:
-    seed: '/home/lmo0317/usb/torrent/'
-    download: '/home/lmo0317/usb/download/'
-  windows:
-    seed: 'torrent\\'
-    download: 'F:\down\complete'
+db:
+  path: 'mongodb://localhost/etrade' #'mongodb://lmo0317.iptime.org/etrade'

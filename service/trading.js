@@ -1,7 +1,7 @@
 var tradinglib = require('../lib/trading');
 
-exports.getTrading = function(param, callback) {
-    tradinglib.getTrading(param, callback);
+exports.getTradingList = function(param, callback) {
+    tradinglib.getTradingList(param, callback);
 };
 
 exports.findTrading = function(callback) {

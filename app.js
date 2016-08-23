@@ -5,25 +5,29 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose'); // mongoose 모듈
 var controller = require('./controllers/index');
-app.use(express.static('public'));
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var util = require('./lib/util');
+var yaml = require('yamljs');
+
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended : true }));
 app.use(cookieParser());
 
-var util = require('./lib/util');
+//global
+global.configure = yaml.load('./default.config.yml')
+global.DB = {};
+global.program = require('commander');
+global.program
+    .version('0.0.1')
+    .option('--d, --develop', 'Develop')
+    .parse(process.argv);
 
-var global = require('./globals');
-var db = mongoose.connect('mongodb://lmo0317.iptime.org/etrade'); // 접속할 DB 선택
+//db
+mongoose.connect(global.configure.db.path);
 
 var server = app.listen(1000, function () {
     console.info('server is started');
-
-    sync.fiber(function() {
-        sync.await(require('./globals').delegate(app, sync.defer()) );
-        controller.delegate(app);
-    }, function(err, res) {
-        if(err) console.log(err);
-    });
+    controller.delegate(app);
 });

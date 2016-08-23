@@ -12,9 +12,9 @@ var stock = require('./schema/stock');
 var mongoose = require('mongoose');
 var stocklistlib = require('./lib/stocklist');
 
-var Stock = mongoose.model('Stock', stock.StockSchema);
-mongoose.Promise = global.Promise;
-var db = mongoose.connect('mongodb://lmo0317.iptime.org/etrade'); // 접속할 DB 선택
+//var Stock = mongoose.model('Stock', stock.StockSchema);
+//mongoose.Promise = global.Promise;
+//var db = mongoose.connect('mongodb://lmo0317.iptime.org/etrade'); // 접속할 DB 선택
 
 var body = {
     fromdate: '20160805',
@@ -192,5 +192,38 @@ function addStokcListToDB() {
 (function main() {
     //searchProcess();
     //setInterval(searchProcess, intervalTime);
-    addStokcListToDB();
+    //addStokcListToDB();
+    var body = {
+        DepStn: 'TPE',
+        ArrStn: 'ICN',
+        AdultPaxCnt: 2,
+        ChildPaxCnt: 0,
+        InfantPaxCnt: 0,
+        RouteType: 'I',
+        Language: 'KR',
+        SystemType: 'IBE',
+        TripType: 'RT',
+        SegType: 'RET',
+        DepDate: '2016-09-11',
+        Index: 2
+    };
+
+    sync.fiber(function() {
+
+        var result = sync.await(request.get('https://www.jejuair.net/jejuair', sync.defer()));
+
+        var options = {
+            url : 'https://www.jejuair.net/jejuair/com/jeju/ibe/goAvail.do'
+        };
+
+        var url = 'https://www.jejuair.net/jejuair/com/jeju/ibe/goAvail.do';
+
+        request.set({'cookie': result.req._headers.cookie}).post(url).type('form').send(body).end(function(err, res) {
+            console.log(res);
+        });
+
+    }, function(err, res) {
+        if(err) console.log(err);
+    });
+
 })();

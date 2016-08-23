@@ -11,7 +11,7 @@ function getTrading(req, res) {
         start: req.query.start
     };
 
-    tradingService.getTrading(param, function(err, result) {
+    tradingService.getTradingList(param, function(err, result) {
         console.log(result);
         res.send(result);
     });
