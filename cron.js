@@ -11,9 +11,6 @@ var yaml = require('yamljs');
 var mongoose = require('mongoose');
 var util = require('./lib/util');
 
-var cronSchedule = '0 * * * * *';
-console.log(cronSchedule);
-
 global.configure = yaml.load('./default.config.yml')
 global.DB = {};
 global.program = require('commander');
@@ -25,7 +22,7 @@ global.program
 //db
 mongoose.connect(global.configure.db.path);
 
-new cronJob(cronSchedule, function(){
+new cronJob(global.configure.cron.FIND_TRADING, function(){
 
     console.log('cron schedule', moment().format("YYYYMMDDHHmm"));
     sync.fiber(function() {

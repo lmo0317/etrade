@@ -1,3 +1,5 @@
 os: 'windows'
 db:
   path: 'mongodb://localhost/etrade' #'mongodb://lmo0317.iptime.org/etrade'
+cron:
+  FIND_TRADING : '0 0,20,40 * * * *'

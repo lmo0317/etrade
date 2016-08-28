@@ -11,6 +11,7 @@
     <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
     <script type="text/javascript" src="bootstrap/js/moment.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/daterangepicker.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="javascripts/trading.js"></script>
     <script type="text/javascript"></script>
@@ -40,12 +41,31 @@
                 <thead>
                 <tr>
                     <th> name </th>
-                    <th> trading  </th>
+                    <th> trading </th>
+                    <th> detail </th>
                 </tr>
                 </thead>
                 <tbody id="tbody_trading_container"></tbody>
             </table>
         </div>
     </form>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body" id="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
