@@ -23,10 +23,29 @@ function getLatestTrading(tradelist) {
     return tradelist[maxKey];
 }
 
-function clickButtonDetail() {
-    //전체 테이블 추가
-    
-    $("#modal-body").html('123');
+function clickButtonDetail(tradelist) {
+
+    console.log(tradelist);
+
+    $("#tbody_trading_detail_container").html('');
+    Object.keys(tradelist).forEach(function(key) {
+        
+        //tr 추가
+        var tr = $("<tr>").attr("id", "tr_trading_list");
+        
+        //time
+        var td_time = $("<td>").attr("id", "td_name");
+        td_time.text(key);
+
+        //trading
+        var td_trading = $("<td>").attr("id", "td_trading");
+        td_trading.text(tradelist[key]);
+
+        tr.append(td_time);
+        tr.append(td_trading);
+        $("#tbody_trading_detail_container").append(tr);
+    });
+
 }
 
 function getTrading() {
@@ -42,8 +61,7 @@ function getTrading() {
                 console.log(data);
                 $("#tbody_trading_container").html('');
 
-                for(var i = 0 ;i < data.length; i++) {
-                    var value = data[i];
+                data.forEach(function(value) {
 
                     var tr = $("<tr>").attr("id", "tr_trading_list");
                     var td_name = $("<td>").attr("id", "td_name");
@@ -54,15 +72,15 @@ function getTrading() {
 
                     var td_detail_button = $("<td>").attr("id", "td_detail_button");
                     var button_detail = $("<input>")
-                                            .attr("type", "button")
-                                            .attr("id", "btn_detail" )
-                                            .attr("class", "btn btn-danger")
-                                            .attr("data-toggle", "modal")
-                                            .attr("data-target", "#myModal")
-                                            .val('DETAIL');
+                        .attr("type", "button")
+                        .attr("id", "btn_detail" )
+                        .attr("class", "btn btn-danger")
+                        .attr("data-toggle", "modal")
+                        .attr("data-target", "#myModal")
+                        .val('DETAIL');
 
                     button_detail.click(function() {
-                        clickButtonDetail();
+                        clickButtonDetail(value.trade);
                     });
 
 
@@ -70,7 +88,7 @@ function getTrading() {
                     tr.append(td_trading);
                     tr.append(td_detail_button.append(button_detail));
                     $("#tbody_trading_container").append(tr);
-                }
+                });
             },
             error:function() {
                 alert('error');
