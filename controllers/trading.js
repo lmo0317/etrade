@@ -13,6 +13,9 @@ function getTrading(req, res) {
 
     tradingService.getTradingList(param, function(err, result) {
         console.log(result);
+        result.sort(function(a, b) {
+            return b.buylist[b.buylist.length-1].sum - a.buylist[a.buylist.length-1].sum;
+        });
         res.send(result);
     });
 }

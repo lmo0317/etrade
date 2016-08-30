@@ -23,29 +23,28 @@ function getLatestTrading(tradelist) {
     return tradelist[maxKey];
 }
 
-function clickButtonDetail(tradelist) {
+function clickButtonDetail(buylist) {
 
-    console.log(tradelist);
+    console.log(buylist);
 
     $("#tbody_trading_detail_container").html('');
-    Object.keys(tradelist).forEach(function(key) {
+    buylist.forEach(function(buy) {
         
         //tr 추가
         var tr = $("<tr>").attr("id", "tr_trading_list");
         
         //time
         var td_time = $("<td>").attr("id", "td_name");
-        td_time.text(key);
+        td_time.text(buy.time);
 
         //trading
         var td_trading = $("<td>").attr("id", "td_trading");
-        td_trading.text(tradelist[key]);
+        td_trading.text(buy.sum);
 
         tr.append(td_time);
         tr.append(td_trading);
         $("#tbody_trading_detail_container").append(tr);
     });
-
 }
 
 function getTrading() {
@@ -68,7 +67,7 @@ function getTrading() {
                     td_name.text(value.isu_nm);
 
                     var td_trading = $("<td>").attr("id", "td_trading");
-                    td_trading.text(getLatestTrading(value.trade));
+                    td_trading.text(value.buylist[value.buylist.length - 1].sum);
 
                     var td_detail_button = $("<td>").attr("id", "td_detail_button");
                     var button_detail = $("<input>")
@@ -80,7 +79,7 @@ function getTrading() {
                         .val('DETAIL');
 
                     button_detail.click(function() {
-                        clickButtonDetail(value.trade);
+                        clickButtonDetail(value.buylist);
                     });
 
 
