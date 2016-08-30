@@ -10,17 +10,13 @@ var tradinglib = require('./lib/trading');
 var yaml = require('yamljs');
 var mongoose = require('mongoose');
 var util = require('./lib/util');
+var config = require('./config');
 
-global.configure = yaml.load('./default.config.yml')
-global.DB = {};
-global.program = require('commander');
-global.program
-    .version('0.0.1')
-    .option('--d, --develop', 'Develop')
-    .parse(process.argv);
+config.init();
 
 //db
 mongoose.connect(global.configure.db.path);
+console.log('start cron');
 
 new cronJob(global.configure.cron.FIND_TRADING, function(){
 

@@ -8,21 +8,14 @@ var controller = require('./controllers/index');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var util = require('./lib/util');
-var yaml = require('yamljs');
+var config = require('./config');
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended : true }));
 app.use(cookieParser());
 
-//global
-global.configure = yaml.load('./default.config.yml')
-global.DB = {};
-global.program = require('commander');
-global.program
-    .version('0.0.1')
-    .option('--d, --develop', 'Develop')
-    .parse(process.argv);
+config.init();
 
 //db
 mongoose.connect(global.configure.db.path);
