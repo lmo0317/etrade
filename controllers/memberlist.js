@@ -11,11 +11,21 @@ exports.delegate = function(app) {
 };
 
 function getMemberList(req, res) {
-
+    memberlistService.getMemberList(function(err, result) {
+        if(err) return res.send({result: false});
+        res.send(result);
+    });
 }
 
 function addMember(req, res) {
+    var member = {
+        mbr_nm: req.body.mbr_nm
+    };
 
+    memberlistService.addMember(member, function(err, result) {
+        if(err) return res.send({result:false});
+        res.send(result);
+    });
 }
 
 function deleteMember(req, res) {
