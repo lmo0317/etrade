@@ -29,5 +29,10 @@ function addMember(req, res) {
 }
 
 function deleteMember(req, res) {
+    var mbr_nm = req.body.mbr_nm;
 
+    memberlistService.deleteMember(mbr_nm, function(err, result) {
+        if(err) return res.send({result: false});
+        res.send({result: true});
+    });
 }

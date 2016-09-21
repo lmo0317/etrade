@@ -11,6 +11,6 @@ exports.addMember = function(member, callback) {
     memberlistlib.addMember(member, callback);
 };
 
-exports.deleteMember = function(id, callback) {
-    memberlistlib.deleteMember(id, callback);
+exports.deleteMember = function(mbr_nm, callback) {
+    memberlistlib.deleteMember(mbr_nm, callback);
 };

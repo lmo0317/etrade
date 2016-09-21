@@ -2,20 +2,20 @@ $(document).ready(function (){
     init();
 });
 
-function deleteMember(isu_srt_cd) {
-    console.log(isu_srt_cd);
+function deleteMember(mbr_nm) {
+    console.log(mbr_nm);
 
     $.ajax({
-        url: '/stock',
+        url: '/member',
         type: 'delete',
         data: {
-            isu_srt_cd: isu_srt_cd
+            mbr_nm: mbr_nm
         },
         success: function (data) {
             console.log(data);
             location.reload();
         },
-        error: function () {
+        error: function (err) {
             alert('error');
         }
     });
@@ -32,7 +32,7 @@ function getMember() {
             $("#tbody_container").html('');
             data.forEach(function(member) {
                 var tr = $("<tr>").attr("id", "tr_member");
-                var td_name = $("<td>").attr("id", "td_name");
+                var td_name = $("<td>").attr("id", "td_name").attr('width','80%');
                 td_name.text(member.mbr_nm);
 
                 var button_delete = $("<input>")

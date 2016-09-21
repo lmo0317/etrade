@@ -30,10 +30,10 @@ function getStock() {
             $("#tbody_container").html('');
             data.forEach(function(stock) {
                 var tr = $("<tr>").attr("id", "tr_stock");
-                var td_name = $("<td>").attr("id", "td_name");
+                var td_name = $("<td>").attr("id", "td_name").attr('width','40%');
                 td_name.text(stock.isu_nm);
 
-                var td_code = $("<td>").attr("id", "td_code");
+                var td_code = $("<td>").attr("id", "td_code").attr('width','40%');
                 td_code.text(stock.isu_srt_cd);
 
                 var button_delete = $("<input>")
