@@ -12,9 +12,9 @@ function getTrading(req, res) {
     };
 
     tradingService.getTradingList(param, function(err, result) {
-        console.log(result);
+        //거래량 기준 정렬
         result.sort(function(a, b) {
-            return b.buylist[b.buylist.length-1].sum - a.buylist[a.buylist.length-1].sum;
+            return b.buylist[b.buylist.length-1].netaskvol - a.buylist[a.buylist.length-1].netaskvol;
         });
         res.send(result);
     });

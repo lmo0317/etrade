@@ -2,6 +2,10 @@ $(document).ready(function (){
     init();
 });
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 function getAccumlateTrading(tradelist) {
     var accumlate = 0;
     Object.keys(tradelist).forEach(function(key) {
@@ -38,11 +42,15 @@ function clickButtonDetail(buylist) {
         td_time.text(buy.time);
 
         //trading
-        var td_trading = $("<td>").attr("id", "td_trading");
-        td_trading.text(buy.sum);
+        var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
+        td_trading_netaskval.text(numberWithCommas(buy.netaskval));
+
+        var td_trading_netaskvol = $("<td>").attr("id", "td_trading_netaskvol");
+        td_trading_netaskvol.text(buy.netaskvol);
 
         tr.append(td_time);
-        tr.append(td_trading);
+        tr.append(td_trading_netaskval);
+        tr.append(td_trading_netaskvol);
         $("#tbody_trading_detail_container").append(tr);
     });
 }
@@ -66,8 +74,13 @@ function getTrading() {
                     var td_name = $("<td>").attr("id", "td_name");
                     td_name.text(value.isu_nm);
 
-                    var td_trading = $("<td>").attr("id", "td_trading");
-                    td_trading.text(value.buylist[value.buylist.length - 1].sum);
+                    var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
+                    var netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskval);
+                    td_trading_netaskval.text(netaskval);
+
+                    var td_trading_netaskvol = $("<td>").attr("id", "td_trading_netaskvol");
+                    var netaskvol = value.buylist[value.buylist.length - 1].netaskvol;
+                    td_trading_netaskvol.text(netaskvol);
 
                     var td_detail_button = $("<td>").attr("id", "td_detail_button");
                     var button_detail = $("<input>")
@@ -84,7 +97,8 @@ function getTrading() {
 
 
                     tr.append(td_name);
-                    tr.append(td_trading);
+                    tr.append(td_trading_netaskval);
+                    tr.append(td_trading_netaskvol);
                     tr.append(td_detail_button.append(button_detail));
                     $("#tbody_trading_container").append(tr);
                 });
