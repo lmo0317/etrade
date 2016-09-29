@@ -10,19 +10,17 @@ exports.delegate = function(app) {
 
 function getStocklist(req, res) {
     stocklistService.getStocklist(function(err, result) {
-        console.log(result);
         res.send(result);
     });
 }
 
 function addStock(req, res) {
-    var stock = {
-        isu_nm: req.body.isu_nm,
-        isu_srt_cd: req.body.isu_srt_cd
-    };
-
-    stocklistService.addStock(stock, function(err, result) {
-        if(err) return res.send({result: false});
+    var isu_nm = req.body.isu_nm;
+    stocklistService.addStock(isu_nm, function(err, result) {
+        if(err) {
+            console.log(err);
+            return res.send({result: false});
+        }
         res.send({result: true});
     });
 }

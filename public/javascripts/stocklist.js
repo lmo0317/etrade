@@ -65,8 +65,7 @@ function registerAddStock() {
             url: '/stock',
             type: 'post',
             data: {
-                isu_nm: $("#add_input_name").val(),
-                isu_srt_cd: $("#add_input_code").val()
+                isu_nm: $("#add_input_name").val()
             },
             success:function(data) {
                 console.log(data);
