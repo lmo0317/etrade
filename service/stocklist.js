@@ -23,3 +23,7 @@ exports.getFavoriteStockList = function(callback) {
 exports.addFavoriteStock = function(isu_nm, callback) {
     stocklistlib.addFavoriteStock(isu_nm, callback);
 };
+
+exports.deleteFavoriteStock = function(isu_nm, callback) {
+    stocklistlib.deleteFavoriteStock(isu_nm, callback);
+};

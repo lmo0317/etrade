@@ -2,14 +2,13 @@ $(document).ready(function (){
     init();
 });
 
-function deleteStock(isu_srt_cd) {
-    console.log(isu_srt_cd);
-
+function deleteFavoriteStock(isu_nm) {
+    console.log(isu_nm);
     $.ajax({
-        url: '/stock',
+        url: '/stock/favorite',
         type: 'delete',
         data: {
-            isu_srt_cd: isu_srt_cd
+            isu_nm: isu_nm
         },
         success: function (data) {
             console.log(data);
@@ -60,7 +59,7 @@ function getFavoriteStockList() {
                     .val('DELETE');
 
                 button_delete.click(function() {
-                    deleteStock(stock.isu_srt_cd);
+                    deleteFavoriteStock(stock.isu_nm);
                 });
 
                 tr.append(td_name);

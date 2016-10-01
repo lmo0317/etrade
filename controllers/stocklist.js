@@ -8,6 +8,7 @@ exports.delegate = function(app) {
     app.delete('/stock', deleteStock);
     app.get('/stocklist/favorite', getFavoriteStockList);
     app.post('/stock/favorite', addFavoriteStock);
+    app.delete('/stock/favorite', deleteFavoriteStock);
 };
 
 function getStockList(req, res) {
@@ -49,6 +50,14 @@ function addFavoriteStock(req, res) {
             console.log(err);
             return res.send({result: false});
         }
+        res.send({result: true});
+    });
+}
+
+function deleteFavoriteStock(req, res) {
+    var isu_nm = req.body.isu_nm;
+    stocklistService.deleteFavoriteStock(isu_nm, function(err, result) {
+        if(err) return res.send({result: false});
         res.send({result: true});
     });
 }
