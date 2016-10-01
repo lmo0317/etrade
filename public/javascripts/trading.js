@@ -58,14 +58,17 @@ function clickButtonDetail(buylist) {
 function getTrading() {
 
     $("#btn_search").click(function(){
+        console.log($('input:checkbox[name=check_box_favorite]').is(':checked'));
+
         $.ajax({
             url: '/trading',
             type: 'get',
             data: {
-                start: $("#edit_start").val()
+                start: $("#edit_start").val(),
+                favorite: $('input:checkbox[name=check_box_favorite]').is(':checked'),
+                best: $('input:checkbox[name=check_box_best]').is(':checked')
             },
             success:function(data) {
-                console.log(data);
                 $("#tbody_trading_container").html('');
 
                 data.forEach(function(value) {
@@ -125,5 +128,8 @@ function getTrading() {
 }
 
 function init() {
+    $('input:checkbox[name=check_box_favorite]').attr('checked', true);
+    $('input:checkbox[name=check_box_best]').attr('checked', true);
+
     getTrading();
 }

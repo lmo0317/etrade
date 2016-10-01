@@ -11,8 +11,4 @@ exports.init = function() {
         .version('0.0.1')
         .option('--d, --develop', 'Develop')
         .parse(process.argv);
-
-    if(global.program.develop) {
-        global.configure.cron.FIND_TRADING = '0 * * * * *';
-    }
-}
+};

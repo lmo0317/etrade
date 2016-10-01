@@ -8,7 +8,11 @@ exports.StockSchema = new mongoose.Schema({
     market_name: {type:String}
 });
 
+exports.FavoriteStockSchema = new mongoose.Schema( {
+    isu_nm: {type:String, require:true}
+});
+
 exports.BestStockSchema = new mongoose.Schema({
     date: {type:String, require: true},
-    list: {type: Array} // StockSchema List
+    list: {type: Array} //isu_nm
 });

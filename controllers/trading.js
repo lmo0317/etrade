@@ -8,13 +8,15 @@ exports.delegate = function(app) {
 
 function getTrading(req, res) {
     var param = {
-        start: req.query.start
+        start: req.query.start,
+        favorite: req.query.favorite,
+        best: req.query.best
     };
 
     tradingService.getTradingList(param, function(err, result) {
         //거래량 기준 정렬
         result.sort(function(a, b) {
-            return b.buylist[b.buylist.length-1].netaskvol - a.buylist[a.buylist.length-1].netaskvol;
+            return b.buylist[b .buylist.length-1].netaskvol - a.buylist[a.buylist.length-1].netaskvol;
         });
         res.send(result);
     });

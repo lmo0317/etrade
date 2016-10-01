@@ -24,7 +24,7 @@ new cronJob(global.configure.cron.FIND_TRADING, function(){
     console.log('cron schedule', moment().format("YYYYMMDDHHmm"));
     sync.fiber(function() {
 
-        //sync.await(stocklistlib.findTop100Stocks(sync.defer()));
+        sync.await(stocklistlib.findTop100Stocks(sync.defer()));
         sync.await(tradinglib.findTrading(sync.defer()));
 
     }, function(err, result) {

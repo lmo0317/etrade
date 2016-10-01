@@ -22,13 +22,18 @@
 
     <form>
         <div class="container">
-            <h2>Trading</h2>
+            <h2>거래</h2>
 
             <label for="exampleInputName2">Start</label>
             <input type="text" class="form-control" id="edit_start" placeholder="160505" name="datepicker">
 
             <div id="div_button">
                 <button id="btn_search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
+            </div>
+
+            <div>
+                <label class="checkbox-inline"><input type="checkbox" value="" name="check_box_favorite">관심 종목</label>
+                <label class="checkbox-inline"><input type="checkbox" value="" name="check_box_best">거래량, 대금 상/하위 종목</label>
             </div>
 
             <table class ="table table-striped">
@@ -45,6 +50,7 @@
         </div>
     </form>
 
+
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -58,7 +64,7 @@
                     <table class ="table table-striped">
                         <thead>
                         <tr>
-                            <th> time </th>
+                            <th> 시간 </th>
                             <th> 거래대금 </th>
                             <th> 거래량 </th>
                         </tr>

@@ -1,11 +1,11 @@
 var stocklistlib = require('../lib/stocklist');
 
-exports.getStocklist = function(callback) {
-    stocklistlib.getStocklist(callback);
+exports.getStockList = function(callback) {
+    stocklistlib.getStockList(callback);
 };
 
-exports.getStock = function(code, callback) {
-    stocklistlib.getStock(code, callback);
+exports.getStock = function(isu_nm, callback) {
+    stocklistlib.getStock(isu_nm, callback);
 };
 
 exports.addStock = function(isu_nm, callback) {
@@ -14,4 +14,12 @@ exports.addStock = function(isu_nm, callback) {
 
 exports.deleteStock = function(isu_srt_cd, callback) {
     stocklistlib.deleteStock(isu_srt_cd, callback);
+};
+
+exports.getFavoriteStockList = function(callback) {
+    stocklistlib.getFavoriteStockList(callback);
+};
+
+exports.addFavoriteStock = function(isu_nm, callback) {
+    stocklistlib.addFavoriteStock(isu_nm, callback);
 };
