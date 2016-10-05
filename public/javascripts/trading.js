@@ -77,6 +77,10 @@ function getTrading() {
                     var td_name = $("<td>").attr("id", "td_name");
                     td_name.text(value.isu_nm);
 
+                    var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
+                    var updn_rate = numberWithCommas(value.buylist[value.buylist.length - 1].stockinfo.updn_rate);
+                    td_trading_updn_rate.text(updn_rate);
+
                     var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
                     var netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskval);
                     td_trading_netaskval.text(netaskval);
@@ -100,6 +104,7 @@ function getTrading() {
 
 
                     tr.append(td_name);
+                    tr.append(td_trading_updn_rate);
                     tr.append(td_trading_netaskval);
                     tr.append(td_trading_netaskvol);
                     tr.append(td_detail_button.append(button_detail));
