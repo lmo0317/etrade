@@ -16,7 +16,7 @@ exports.getTradingList = function(param, callback) {
         }
 
         if(param.best === 'true') {
-            var trading = sync.await(stocklistlib.filterBestStock(today.format('YYYYMMDD'), tradingList, sync.defer()));
+            var trading = sync.await(stocklistlib.filterBestStock("20" + param.start, tradingList, sync.defer()));
             result = result.concat(trading);
         }
 
