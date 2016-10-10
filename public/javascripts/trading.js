@@ -41,6 +41,10 @@ function clickButtonDetail(buylist) {
         var td_time = $("<td>").attr("id", "td_name");
         td_time.text(buy.time);
 
+        var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
+        var updn_rate = numberWithCommas(buy.stockinfo.updn_rate);
+        td_trading_updn_rate.text(updn_rate);
+
         //trading
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
         td_trading_netaskval.text(numberWithCommas(buy.netaskval));
@@ -49,6 +53,7 @@ function clickButtonDetail(buylist) {
         td_trading_netaskvol.text(buy.netaskvol);
 
         tr.append(td_time);
+        tr.append(td_trading_updn_rate);
         tr.append(td_trading_netaskval);
         tr.append(td_trading_netaskvol);
         $("#tbody_trading_detail_container").append(tr);
