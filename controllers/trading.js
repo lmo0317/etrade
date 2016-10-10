@@ -16,7 +16,7 @@ function getTrading(req, res) {
     tradingService.getTradingList(param, function(err, result) {
         //거래량 기준 정렬
         result.sort(function(a, b) {
-            return b.buylist[b .buylist.length-1].netaskvol - a.buylist[a.buylist.length-1].netaskvol;
+            return b.buylist[b .buylist.length-1].netaskval - a.buylist[a.buylist.length-1].netaskval;
         });
         res.send(result);
     });
