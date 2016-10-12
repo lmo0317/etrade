@@ -116,8 +116,9 @@ function getTrading() {
                     $("#tbody_trading_container").append(tr);
                 });
             },
-            error:function() {
-                alert('error');
+            error:function(err) {
+                console.log(err);
+                alert(err.responseText);
             }
         });
     });
