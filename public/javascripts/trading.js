@@ -42,7 +42,7 @@ function clickButtonDetail(buylist) {
         td_time.text(buy.time);
 
         var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
-        var updn_rate = numberWithCommas(buy.stockinfo.updn_rate);
+        var updn_rate = numberWithCommas((buy.stockinfo && buy.stockinfo.updn_rate) || 0);
         td_trading_updn_rate.text(updn_rate);
 
         //trading
@@ -63,15 +63,15 @@ function clickButtonDetail(buylist) {
 function getTrading() {
 
     $("#btn_search").click(function(){
-        console.log($('input:checkbox[name=check_box_favorite]').is(':checked'));
+        console.log($("#type"));
+        console.log($("#type").val());
 
         $.ajax({
             url: '/trading',
             type: 'get',
             data: {
                 start: $("#edit_start").val(),
-                favorite: $('input:checkbox[name=check_box_favorite]').is(':checked'),
-                best: $('input:checkbox[name=check_box_best]').is(':checked')
+                type: $("#type").val()
             },
             success:function(data) {
                 $("#tbody_trading_container").html('');
@@ -83,7 +83,8 @@ function getTrading() {
                     td_name.text(value.isu_nm);
 
                     var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
-                    var updn_rate = numberWithCommas(value.buylist[value.buylist.length - 1].stockinfo.updn_rate);
+                    var stockInfo = value.buylist[value.buylist.length - 1].stockinfo;
+                    var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0);
                     td_trading_updn_rate.text(updn_rate);
 
                     var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");

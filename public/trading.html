@@ -27,13 +27,15 @@
             <label for="exampleInputName2">Start</label>
             <input type="text" class="form-control" id="edit_start" placeholder="160505" name="datepicker">
 
-            <div id="div_button">
+            <div id="div_button" style="margin-top: 10px">
                 <button id="btn_search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
             </div>
 
-            <div>
-                <label class="checkbox-inline"><input type="checkbox" value="" name="check_box_favorite">관심 종목</label>
-                <label class="checkbox-inline"><input type="checkbox" value="" name="check_box_best">거래량, 대금 상/하위 종목</label>
+            <div style="margin-top: 10px">
+                <select class="form-control" id="type">
+                   <option value="favorite">관심 종목</option>
+                   <option value="kosdaq">코스닥 ( 거래량, 대금 상/하위 종목 ) </option>
+                </select>
             </div>
 
             <table class ="table table-striped">

@@ -9,8 +9,7 @@ exports.delegate = function(app) {
 function getTrading(req, res) {
     var param = {
         start: req.query.start,
-        favorite: req.query.favorite,
-        best: req.query.best
+        type: req.query.type
     };
 
     tradingService.getTradingList(param, function(err, result) {

@@ -10,12 +10,10 @@ exports.getTradingList = function(param, callback) {
 
         var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
 
-        if(param.favorite === 'true') {
+        if(param.type === 'favorite') {
             var trading = sync.await(stocklistlib.filterFavoriteStock(tradingList, sync.defer()));
             result = result.concat(trading);
-        }
-
-        if(param.best === 'true') {
+        } else if(param.type === 'kosdaq') {
             var trading = sync.await(stocklistlib.filterBestStock("20" + param.start, tradingList, sync.defer()));
             result = result.concat(trading);
         }
