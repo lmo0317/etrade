@@ -7,9 +7,7 @@ exports.getTradingList = function(param, callback) {
     sync.fiber(function() {
         var result = [];
         var today = moment();
-
         var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
-
         if(param.type === 'favorite') {
             var trading = sync.await(stocklistlib.filterFavoriteStock(tradingList, sync.defer()));
             result = result.concat(trading);
@@ -17,7 +15,7 @@ exports.getTradingList = function(param, callback) {
             var trading = sync.await(stocklistlib.filterBestStock("20" + param.start, tradingList, sync.defer()));
             result = result.concat(trading);
         }
-
+        
         return result;
 
     }, function(err, res) {

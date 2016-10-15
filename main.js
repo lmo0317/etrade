@@ -19,9 +19,8 @@ config.init();
 mongoose.connect(global.configure.db.path);
 console.log('start cron');
 
-console.log('cron schedule', moment().format("YYYYMMDDHHmm"));
 ( function() {
-    console.log('TEST');
+    console.log('START MAIN TEST');
     sync.fiber(function () {
 
         sync.await(stocklistlib.findTop100Stocks(sync.defer()));
@@ -29,6 +28,5 @@ console.log('cron schedule', moment().format("YYYYMMDDHHmm"));
 
     }, function (err, result) {
         if (err) return console.log(err);
-        console.log('complete find trading');
     });
 })();

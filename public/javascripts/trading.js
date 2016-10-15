@@ -74,6 +74,8 @@ function getTrading() {
                 type: $("#type").val()
             },
             success:function(data) {
+                alert('complete');
+
                 $("#tbody_trading_container").html('');
 
                 data.forEach(function(value) {

@@ -17,11 +17,11 @@ config.init();
 
 //db
 mongoose.connect(global.configure.db.path);
-console.log('start cron');
+console.log('Start Cron');
 
 new cronJob(global.configure.cron.FIND_TRADING, function(){
 
-    console.log('cron schedule', moment().format("YYYYMMDDHHmm"));
+    console.log('Cron Schedule ', moment().format("YYYYMMDDHHmm"));
     sync.fiber(function() {
 
         sync.await(stocklistlib.findTop100Stocks(sync.defer()));
@@ -29,7 +29,6 @@ new cronJob(global.configure.cron.FIND_TRADING, function(){
 
     }, function(err, result) {
         if(err) return console.log(err);
-        console.log('complete find trading');
     });
 
 },null, true, 'Asia/Seoul');
