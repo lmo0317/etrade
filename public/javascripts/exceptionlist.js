@@ -2,10 +2,10 @@ $(document).ready(function (){
     init();
 });
 
-function deleteFavoriteStock(isu_nm) {
+function deleteExceptionStock(isu_nm) {
     console.log(isu_nm);
     $.ajax({
-        url: '/stock/favorite',
+        url: '/stock/exception',
         type: 'delete',
         data: {
             isu_nm: isu_nm
@@ -20,11 +20,11 @@ function deleteFavoriteStock(isu_nm) {
     });
 }
 
-function registerAddStock() {
+function registerAddExceptionStock() {
 
     $("#btn_add").click(function(){
         $.ajax({
-            url: '/stock/favorite',
+            url: '/stock/exception',
             type: 'post',
             data: {
                 isu_nm: $("#add_input_name").val()
@@ -40,9 +40,9 @@ function registerAddStock() {
     });
 }
 
-function getFavoriteStockList() {
+function getExceptionStockList() {
     $.ajax({
-        url: '/stocklist/favorite',
+        url: '/stocklist/exception',
         type: 'get',
         success: function (data) {
 
@@ -59,7 +59,7 @@ function getFavoriteStockList() {
                     .val('DELETE');
 
                 button_delete.click(function() {
-                    deleteFavoriteStock(stock.isu_nm);
+                    deleteExceptionStock(stock.isu_nm);
                 });
 
                 tr.append(td_name);
@@ -74,6 +74,6 @@ function getFavoriteStockList() {
 }
 
 function init() {
-    getFavoriteStockList();
-    registerAddStock();
+    getExceptionStockList();
+    registerAddExceptionStock();
 }

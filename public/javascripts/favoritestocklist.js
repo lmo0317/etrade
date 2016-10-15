@@ -20,7 +20,7 @@ function deleteFavoriteStock(isu_nm) {
     });
 }
 
-function registerAddStock() {
+function registerAddFavoriteStock() {
 
     $("#btn_add").click(function(){
         $.ajax({
@@ -75,5 +75,5 @@ function getFavoriteStockList() {
 
 function init() {
     getFavoriteStockList();
-    registerAddStock();
+    registerAddFavoriteStock();
 }

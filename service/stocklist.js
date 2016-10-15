@@ -27,3 +27,15 @@ exports.addFavoriteStock = function(isu_nm, callback) {
 exports.deleteFavoriteStock = function(isu_nm, callback) {
     stocklistlib.deleteFavoriteStock(isu_nm, callback);
 };
+
+exports.getExceptionStockList = function(callback) {
+    stocklistlib.getExceptionStockList(callback);
+};
+
+exports.addExceptionStock = function(isu_nm, callback) {
+    stocklistlib.addExceptionStock(isu_nm, callback);
+};
+
+exports.deleteExceptionStock = function(isu_nm, callback) {
+    stocklistlib.deleteExceptionStock(isu_nm, callback);
+};

@@ -9,7 +9,14 @@ exports.delegate = function(app) {
     app.get('/stocklist/favorite', getFavoriteStockList);
     app.post('/stock/favorite', addFavoriteStock);
     app.delete('/stock/favorite', deleteFavoriteStock);
+    app.get('/stocklist/exception', getExceptionStockList);
+    app.post('/stock/exception', addExceptionStock);
+    app.delete('/stock/exception', deleteExceptionStock);
 };
+
+/**
+ * STOCK
+ */
 
 function getStockList(req, res) {
     stocklistService.getStockList(function(err, result) {
@@ -37,6 +44,10 @@ function deleteStock(req, res) {
     });
 }
 
+/**
+ * FAVORITE STOCK
+ */
+
 function getFavoriteStockList(req, res) {
     stocklistService.getFavoriteStockList(function(err, result) {
         res.send(result);
@@ -57,6 +68,35 @@ function addFavoriteStock(req, res) {
 function deleteFavoriteStock(req, res) {
     var isu_nm = req.body.isu_nm;
     stocklistService.deleteFavoriteStock(isu_nm, function(err, result) {
+        if(err) return res.send({result: false});
+        res.send({result: true});
+    });
+}
+
+/**
+ * EXCEPTION STOCK
+ */
+
+function getExceptionStockList(req, res) {
+    stocklistService.getExceptionStockList(function(err, result) {
+        res.send(result);
+    });
+}
+
+function addExceptionStock(req, res) {
+    var isu_nm = req.body.isu_nm;
+    stocklistService.addExceptionStock(isu_nm, function(err, result) {
+        if(err) {
+            console.log(err);
+            return res.send({result: false});
+        }
+        res.send({result: true});
+    });
+}
+
+function deleteExceptionStock(req, res) {
+    var isu_nm = req.body.isu_nm;
+    stocklistService.deleteExceptionStock(isu_nm, function(err, result) {
         if(err) return res.send({result: false});
         res.send({result: true});
     });
