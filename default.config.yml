@@ -1,5 +1,5 @@
 os: 'windows'
 db:
-  path: mongodb://183.98.70.23/etrade #mongodb://183.98.70.23/etrade #'mongodb://localhost/etrade' #'mongodb://lmo0317.iptime.org/etrade'
+  path: mongodb://121.138.223.128/etrade #mongodb://183.98.70.23/etrade #'mongodb://localhost/etrade' #'mongodb://lmo0317.iptime.org/etrade'
 cron:
   FIND_TRADING : '30 0,10,20,30,40,50 9,10,11,12,13,14,15,16 17 18 * * *'
