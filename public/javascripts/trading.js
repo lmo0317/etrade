@@ -40,9 +40,8 @@ function getLatestTrading(tradelist) {
 }
 
 function clickButtonDetail(buylist) {
-
+    
     console.log(buylist);
-
     $("#tbody_trading_detail_container").html('');
     buylist.forEach(function(buy) {
         
