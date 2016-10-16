@@ -1,3 +1,5 @@
+var _tradingData = null;
+
 $(document).ready(function (){
     init();
 
@@ -7,7 +9,7 @@ $(document).ready(function (){
         },
         change: function(e) {
             console.log('change');
-            console.log($("#tbody_trading_container"))
+            makeTradeTable(_tradingData);
         }
     });
 });
@@ -78,6 +80,62 @@ function clickButtonDetail(buylist) {
     });
 }
 
+function makeTradeTable(data) {
+
+    $("#tbody_trading_container").html('');
+
+    data.forEach(function(value) {
+
+        var tr = $("<tr>").attr("id", "tr_trading_list");
+        var td_name = $("<td>").attr("id", "td_name");
+        td_name.text(value.isu_nm);
+
+        var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
+        var stockInfo = value.buylist[value.buylist.length - 1].stockinfo;
+        var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0);
+        td_trading_updn_rate.text(updn_rate);
+
+        var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
+        var netaskval = 0;
+        if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
+            netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvalhidden);
+        } else {
+            netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskval);
+        }
+        td_trading_netaskval.text(netaskval);
+
+        var td_trading_netaskvol = $("<td>").attr("id", "td_trading_netaskvol");
+        var netaskvol = 0;
+        if( $('input:checkbox[name=check_box_exception_top]').is(':checked')) {
+            netaskvol = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvolhidden);
+        } else {
+            netaskvol = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvol);
+        }
+        td_trading_netaskvol.text(netaskvol);
+
+        var td_detail_button = $("<td>").attr("id", "td_detail_button");
+        var button_detail = $("<input>")
+            .attr("type", "button")
+            .attr("id", "btn_detail" )
+            .attr("class", "btn btn-danger")
+            .attr("data-toggle", "modal")
+            .attr("data-target", "#myModal")
+            .val('DETAIL');
+
+        button_detail.click(function() {
+            clickButtonDetail(value.buylist);
+        });
+
+
+        tr.append(td_name);
+        tr.append(td_trading_updn_rate);
+        tr.append(td_trading_netaskval);
+        tr.append(td_trading_netaskvol);
+        tr.append(td_detail_button.append(button_detail));
+        $("#tbody_trading_container").append(tr);
+    });
+}
+
 function getTrading() {
 
     $("#btn_search").click(function(){
@@ -92,60 +150,9 @@ function getTrading() {
                 type: $("#type").val()
             },
             success:function(data) {
+                _tradingData = data;
                 alert('complete');
-
-                $("#tbody_trading_container").html('');
-
-                data.forEach(function(value) {
-
-                    var tr = $("<tr>").attr("id", "tr_trading_list");
-                    var td_name = $("<td>").attr("id", "td_name");
-                    td_name.text(value.isu_nm);
-
-                    var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
-                    var stockInfo = value.buylist[value.buylist.length - 1].stockinfo;
-                    var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0);
-                    td_trading_updn_rate.text(updn_rate);
-
-                    var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-                    var netaskval = 0;
-                    if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
-                        netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvalhidden);
-                    } else {
-                        netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskval);
-                    }
-                    td_trading_netaskval.text(netaskval);
-
-                    var td_trading_netaskvol = $("<td>").attr("id", "td_trading_netaskvol");
-                    var netaskvol = 0;
-                    if( $('input:checkbox[name=check_box_exception_top]').is(':checked')) {
-                        netaskvol = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvolhidden);
-                    } else {
-                        netaskvol = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvol);
-                    }
-                    td_trading_netaskvol.text(netaskvol);
-
-                    var td_detail_button = $("<td>").attr("id", "td_detail_button");
-                    var button_detail = $("<input>")
-                        .attr("type", "button")
-                        .attr("id", "btn_detail" )
-                        .attr("class", "btn btn-danger")
-                        .attr("data-toggle", "modal")
-                        .attr("data-target", "#myModal")
-                        .val('DETAIL');
-
-                    button_detail.click(function() {
-                        clickButtonDetail(value.buylist);
-                    });
-
-
-                    tr.append(td_name);
-                    tr.append(td_trading_updn_rate);
-                    tr.append(td_trading_netaskval);
-                    tr.append(td_trading_netaskvol);
-                    tr.append(td_detail_button.append(button_detail));
-                    $("#tbody_trading_container").append(tr);
-                });
+                makeTradeTable(data);
             },
             error:function(err) {
                 console.log(err);
