@@ -23,7 +23,7 @@ console.log('start cron');
     console.log('START MAIN TEST');
     sync.fiber(function () {
 
-        sync.await(stocklistlib.findTop100Stocks(sync.defer()));
+        sync.await(stocklistlib.findBestStocks(sync.defer()));
         sync.await(tradinglib.findTrading(sync.defer()));
 
     }, function (err, result) {

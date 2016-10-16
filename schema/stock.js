@@ -18,5 +18,6 @@ exports.ExceptionStockSchema = new mongoose.Schema( {
 
 exports.BestStockSchema = new mongoose.Schema({
     date: {type:String, require: true},
+    type: {type: String, require: true},
     list: {type: Array} //isu_nm
 });

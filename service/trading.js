@@ -9,11 +9,9 @@ exports.getTradingList = function(param, callback) {
         var today = moment();
         var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
         if(param.type === 'favorite') {
-            var trading = sync.await(stocklistlib.filterFavoriteStock(tradingList, sync.defer()));
-            result = result.concat(trading);
-        } else if(param.type === 'kosdaq') {
-            var trading = sync.await(stocklistlib.filterBestStock("20" + param.start, tradingList, sync.defer()));
-            result = result.concat(trading);
+            result = sync.await(stocklistlib.filterFavoriteStock(tradingList, sync.defer()));
+        } else if(param.type === 'kosdaq' || param.type === 'kospi') {
+            result = sync.await(stocklistlib.filterBestStock("20" + param.start, param.type, tradingList, sync.defer()));
         }
         
         return result;
