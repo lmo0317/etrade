@@ -1,5 +1,15 @@
 $(document).ready(function (){
     init();
+
+    $('input:checkbox[name=check_box_exception_top]').on( {
+        click: function(e) {
+            console.log('click');
+        },
+        change: function(e) {
+            console.log('change');
+            console.log($("#tbody_trading_container"))
+        }
+    });
 });
 
 function numberWithCommas(x) {
@@ -47,10 +57,18 @@ function clickButtonDetail(buylist) {
 
         //trading
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-        td_trading_netaskval.text(numberWithCommas(buy.netaskval));
+        if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
+            td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
+        } else {
+            td_trading_netaskval.text(numberWithCommas(buy.netaskval));
+        }
 
         var td_trading_netaskvol = $("<td>").attr("id", "td_trading_netaskvol");
-        td_trading_netaskvol.text(buy.netaskvol);
+        if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
+            td_trading_netaskvol.text(numberWithCommas(buy.netaskvolhidden));
+        } else {
+            td_trading_netaskvol.text(numberWithCommas(buy.netaskvol));
+        }
 
         tr.append(td_time);
         tr.append(td_trading_updn_rate);
@@ -90,11 +108,21 @@ function getTrading() {
                     td_trading_updn_rate.text(updn_rate);
 
                     var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-                    var netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskval);
+                    var netaskval = 0;
+                    if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
+                        netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvalhidden);
+                    } else {
+                        netaskval = numberWithCommas(value.buylist[value.buylist.length - 1].netaskval);
+                    }
                     td_trading_netaskval.text(netaskval);
 
                     var td_trading_netaskvol = $("<td>").attr("id", "td_trading_netaskvol");
-                    var netaskvol = value.buylist[value.buylist.length - 1].netaskvol;
+                    var netaskvol = 0;
+                    if( $('input:checkbox[name=check_box_exception_top]').is(':checked')) {
+                        netaskvol = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvolhidden);
+                    } else {
+                        netaskvol = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvol);
+                    }
                     td_trading_netaskvol.text(netaskvol);
 
                     var td_detail_button = $("<td>").attr("id", "td_detail_button");
@@ -142,8 +170,5 @@ function getTrading() {
 }
 
 function init() {
-    $('input:checkbox[name=check_box_favorite]').attr('checked', true);
-    $('input:checkbox[name=check_box_best]').attr('checked', true);
-
     getTrading();
 }
