@@ -12,6 +12,8 @@ $(document).ready(function (){
             makeTradeTable(_tradingData);
         }
     });
+
+    new Tablesort(document.getElementById('sort'));
 });
 
 function numberWithCommas(x) {
