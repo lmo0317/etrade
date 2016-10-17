@@ -15,6 +15,7 @@
     "mongoose": "^4.3.7",
     "node-array": "0.0.7",
     "request": "^2.74.0",
+    "slack-client": "^2.0.6",
     "superagent": "^2.2.0",
     "synchronize": "^0.9.14",
     "walk": "^2.3.9",

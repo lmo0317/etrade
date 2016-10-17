@@ -2,19 +2,20 @@
  * Created by LEE-DESKTOP on 2016-10-18.
  */
 
-var Botkit = require('botkit');
-var controller = Botkit.slackbot();
+var RtmClient = require('slack-client').RtmClient;
+var WebClient = require('slack-client').WebClient;
+var token = 'xoxb-92380329216-50LhCbJHgtFiJ8ssr9vLVR8N';
 
-var bot = controller.spawn({
-    token: "xoxb-92380329216-NlEYmCdzDnOzK83P9FLRLB53"
-});
+var web = new WebClient('');
+var rtm = new RtmClient(token, {logLevel: 'error'});
+rtm.start();
 
-bot.startRTM(function(err,bot,payload) {
-    if (err) {
-        throw new Error('Could not connect to Slack');
-    }
-});
+var RTM_EVENTS = require('slack-client').RTM_EVENTS;
+rtm.on(RTM_EVENTS.MESSAGE, function (message) {
+    var channel = message.channel;
+    var user = message.user;
+    var text = message.text;
 
-controller.hears(["Hello","Hi"],["direct_message","direct_mention","mention","ambient"],function(bot,message) {
-    bot.reply(message,'Hello, how are you today?');
+    if (text == 'hello')
+        web.chat.postMessage(channel, 'World!', {username: "noticebot"});
 });
