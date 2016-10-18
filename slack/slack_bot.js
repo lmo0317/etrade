@@ -1,21 +1,27 @@
-/**
- * Created by LEE-DESKTOP on 2016-10-18.
- */
+var SlackBot = require('slackbots');
 
-var RtmClient = require('slack-client').RtmClient;
-var WebClient = require('slack-client').WebClient;
-var token = 'xoxb-92380329216-50LhCbJHgtFiJ8ssr9vLVR8N';
+// create a bot
+var bot = new SlackBot({
+    token: 'xoxb-92380329216-9GBD7DXXoI7U55rXcdFTvxo0', // Add a bot https://my.slack.com/services/new/bot and put the token
+    name: 'GOD'
+});
 
-var web = new WebClient('');
-var rtm = new RtmClient(token, {logLevel: 'error'});
-rtm.start();
+bot.on('start', function() {
+    // more information about additional params https://api.slack.com/methods/chat.postMessage
+    var params = {
+        icon_emoji: ':cat:'
+    };
 
-var RTM_EVENTS = require('slack-client').RTM_EVENTS;
-rtm.on(RTM_EVENTS.MESSAGE, function (message) {
-    var channel = message.channel;
-    var user = message.user;
-    var text = message.text;
+    // define channel, where bot exist. You can adjust it there https://my.slack.com/services
+    bot.postMessageToChannel('general', 'meow!', params);
 
-    if (text == 'hello')
-        web.chat.postMessage(channel, 'World!', {username: "noticebot"});
+    // define existing username instead of 'user_name'
+    bot.postMessageToUser('user_name', 'meow!', params);
+
+    // If you add a 'slackbot' property,
+    // you will post to another user's slackbot channel instead of a direct message
+    bot.postMessageToUser('user_name', 'meow!', { 'slackbot': true, icon_emoji: ':cat:' });
+
+    // define private group instead of 'private_group', where bot exist
+    bot.postMessageToGroup('private_group', 'meow!', params);
 });
