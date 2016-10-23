@@ -20,7 +20,3 @@ exports.getTradingList = function(param, callback) {
         callback(err, res);
     });
 };
-
-exports.findTrading = function(callback) {
-    tradinglib.findTrading(callback);
-};

@@ -20,7 +20,8 @@ console.log('start cron');
     sync.fiber(function () {
 
         sync.await(stocklistlib.findBestStocks(sync.defer()));
-        sync.await(tradinglib.findTrading(sync.defer()));
+        sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
+        sync.await(tradinglib.findTrading(['best'], sync.defer()));
 
     }, function (err, result) {
         if (err) return console.log(err);

@@ -13,9 +13,5 @@ exports.init = function() {
         .option('--d, --develop', 'Develop')
         .parse(process.argv);
 
-    if(global.program.develop) {
-        global.configure.cron.FIND_TRADING = '30 */10 * * * *';
-    }
-
     //slackbotlib.init();
 };
