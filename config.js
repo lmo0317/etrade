@@ -2,7 +2,7 @@
  * Created by LEE-DESKTOP on 2016-08-29.
  */
 var yaml = require('yamljs');
-var slackbotlib = require('./slack/slackbotlib');
+//var slackbotlib = require('./slack/slackbotlib');
 
 exports.init = function() {
     global.configure = yaml.load('./default.config.yml')
@@ -17,5 +17,5 @@ exports.init = function() {
         global.configure.cron.FIND_TRADING = '30 */10 * * * *';
     }
 
-    slackbotlib.init();
+    //slackbotlib.init();
 };
