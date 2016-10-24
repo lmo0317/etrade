@@ -43,8 +43,11 @@ function getLatestTrading(tradelist) {
 
 function clickButtonDetail(buylist) {
     
-    console.log(buylist);
     $("#tbody_trading_detail_container").html('');
+    buylist.sort(function(a, b) {
+        return parseInt(b.time, 10) - parseInt(a.time,10);
+    });
+
     buylist.forEach(function(buy) {
         
         //tr 추가
@@ -81,6 +84,23 @@ function clickButtonDetail(buylist) {
     });
 }
 
+function clickButtonAdd(isu_nm) {
+    $.ajax({
+        url: '/stock/favorite',
+        type: 'post',
+        data: {
+            isu_nm: isu_nm
+        },
+        success:function(data) {
+            console.log(data);
+            location.reload();
+        },
+        error:function() {
+            alert('error');
+        }
+    });
+}
+
 function makeTradeTable(data) {
 
     $("#tbody_trading_container").html('');
@@ -114,7 +134,7 @@ function makeTradeTable(data) {
         }
         td_trading_netaskvol.text(netaskvol);
 
-        var td_detail_button = $("<td>").attr("id", "td_detail_button");
+        var td_button = $("<td>").attr("id", "td_button");
         var button_detail = $("<input>")
             .attr("type", "button")
             .attr("id", "btn_detail" )
@@ -123,8 +143,18 @@ function makeTradeTable(data) {
             .attr("data-target", "#myModal")
             .val('DETAIL');
 
+        var button_add = $("<input>")
+            .attr("type", "button")
+            .attr("id", "btn_add" )
+            .attr("class", "btn btn-primary")
+            .val('ADD');
+
         button_detail.click(function() {
             clickButtonDetail(value.buylist);
+        });
+
+        button_add.click(function() {
+            clickButtonAdd(value.isu_nm);
         });
 
 
@@ -132,7 +162,7 @@ function makeTradeTable(data) {
         tr.append(td_trading_updn_rate);
         tr.append(td_trading_netaskval);
         tr.append(td_trading_netaskvol);
-        tr.append(td_detail_button.append(button_detail));
+        tr.append(td_button.append(button_detail).append(button_add));
         $("#tbody_trading_container").append(tr);
     });
 }
