@@ -135,6 +135,8 @@ function makeTradeTable(data) {
         td_trading_netaskvol.text(netaskvol);
 
         var td_button = $("<td>").attr("id", "td_button");
+        
+        //detail 버튼 추가
         var button_detail = $("<input>")
             .attr("type", "button")
             .attr("id", "btn_detail" )
@@ -143,26 +145,34 @@ function makeTradeTable(data) {
             .attr("data-target", "#myModal")
             .val('DETAIL');
 
-        var button_add = $("<input>")
-            .attr("type", "button")
-            .attr("id", "btn_add" )
-            .attr("class", "btn btn-primary")
-            .val('ADD');
-
         button_detail.click(function() {
             clickButtonDetail(value.buylist);
         });
 
-        button_add.click(function() {
-            clickButtonAdd(value.isu_nm);
-        });
+        td_button.append(button_detail);
 
+        //favorite에서는 add버튼 추가하지 않는다.
+        if($("#type").val() !== 'favorite') {
+
+            //add 버튼 추가
+            var button_add = $("<input>")
+                .attr("type", "button")
+                .attr("id", "btn_add")
+                .attr("class", "btn btn-primary")
+                .val('ADD');
+
+            button_add.click(function () {
+                clickButtonAdd(value.isu_nm);
+            });
+
+            td_button.append(button_add);
+        }
 
         tr.append(td_name);
         tr.append(td_trading_updn_rate);
         tr.append(td_trading_netaskval);
         tr.append(td_trading_netaskvol);
-        tr.append(td_button.append(button_detail).append(button_add));
+        tr.append(td_button);
         $("#tbody_trading_container").append(tr);
     });
 }
@@ -170,7 +180,6 @@ function makeTradeTable(data) {
 function getTrading() {
 
     $("#btn_search").click(function(){
-        console.log($("#type"));
         console.log($("#type").val());
 
         $.ajax({
