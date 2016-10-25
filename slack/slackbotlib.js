@@ -2,29 +2,23 @@ var SlackBot = require('slackbots');
 
 // create a bot
 var bot = new SlackBot({
-    token: 'xoxb-93434541907-kLfWzCdlrYuHDAQXEVyVYTN4', // Add a bot https://my.slack.com/services/new/bot and put the token
-    name: 'GOD'
+    token: 'xoxb-95893489302-xDVVZ6ueOj9STBj7UHVaSyM6',
+    name: '고명환'
 });
 
 var params = {
-    icon_emoji: ':cat:'
+    icon_url: 'https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2016-10-26/95997872625_500b9996104fc07bb259.jpg'
 };
 
-exports.init = function() {
+bot.on('message', function(data) {
+    if(data.type === 'message') {
+        if(data.text === 'hi') {
+            bot.postMessageToChannel('general', 'funck you', params,function(err, res) {
 
-    bot.on('start', function() {
-        // define channel, where bot exist. You can adjust it there https://my.slack.com/services
-        bot.postMessageToChannel('general', 'meow!', params);
-    });
-
-    bot.on('message', function(data) {
-        if(data.type === 'message') {
-            if(data.text === 'hi') {
-                bot.postMessageToChannel('general', 'funck you', params);
-            }
+            });
         }
-    });
-};
+    }
+});
 
 exports.sendMessage = function(text, callback)
 {

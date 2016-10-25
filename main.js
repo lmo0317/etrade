@@ -3,11 +3,11 @@
  */
 
 var sync = require('synchronize');
-var moment = require('moment');
 var tradinglib = require('./lib/trading');
 var stocklistlib = require('./lib/stocklist');
 var mongoose = require('mongoose');
 var config = require('./config');
+var tradingService = require('./service/trading');
 
 config.init();
 
@@ -22,6 +22,7 @@ console.log('start cron');
         sync.await(stocklistlib.findBestStocks(sync.defer()));
         sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
         sync.await(tradinglib.findTrading(['best'], sync.defer()));
+        sync.await(tradingService.sendRecommendStockData(sync.defer()));
 
     }, function (err, result) {
         if (err) return console.log(err);

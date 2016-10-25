@@ -8,10 +8,10 @@ var sync = require('synchronize');
 var moment = require('moment');
 var tradinglib = require('./lib/trading');
 var stocklistlib = require('./lib/stocklist');
-var yaml = require('yamljs');
 var mongoose = require('mongoose');
 var util = require('./lib/util');
 var config = require('./config');
+var tradingService = require('./service/trading');
 
 config.init();
 
@@ -46,6 +46,7 @@ new cronJob(global.configure.cron.FIND_TRADING_FAVORITE, function(){
     sync.fiber(function() {
 
         sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
+        sync.await(tradingService.sendRecommendStockData(sync.defer()));
 
     }, function(err, result) {
         if(err) return console.log(err);
