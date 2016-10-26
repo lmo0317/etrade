@@ -42,6 +42,8 @@ new cronJob(global.configure.cron.SEND_TRADING_FAVORITE, function(){
 
 		sync.await(stocklistlib.findBestStocks(sync.defer()));
 		sync.await(tradinglib.findTrading(['best'], sync.defer()));
+
+		params.channel = 'favorite';
 		sync.await(slackbotlib.sendRecommendStockData(bot, params, sync.defer()));
 
 	}, function(err, result) {
@@ -52,8 +54,12 @@ new cronJob(global.configure.cron.SEND_TRADING_FAVORITE, function(){
 
 bot.on('message', function(data) {
 	if(data.type === 'message') {
+
+		var channelName = slackbotlib.channelIdToName(bot, data.channel);
+		var userName = slackbotlib.userIdToName(bot, data.user);
+
 		if(data.text === 'hi') {
-			bot.postMessageToChannel('general', 'funck you', params,function(err, res) {
+			bot.postMessageToChannel(channelName, 'funck you', params,function(err, res) {
 
 			});
 		}

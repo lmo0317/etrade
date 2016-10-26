@@ -6,9 +6,39 @@ var tradingservice = require('../service/trading');
 var sync = require('synchronize');
 var moment = require('moment');
 
+exports.channelIdToName = function(bot, id) {
+	var channels = bot.getChannels();
+	if ((typeof channels !== 'undefined')
+		&& (typeof channels._value !== 'undefined')
+		&& (typeof channels._value.channels !== 'undefined')) {
+		channels = channels._value.channels;
+		for (var i=0; i < channels.length; i++) {
+			if (channels[i].id == id) {
+				return channels[i].name;
+			}
+		}
+	}
+	return '';
+};
+
+exports.userIdToName = function(bot, id) {
+	var users = bot.getUsers();
+	if ((typeof users !== 'undefined')
+		&& (users._value !== 'undefined')
+		&& (users._value.members !== 'undefined')) {
+		users = users._value.members;
+		for (var i=0; i < users.length; i++ ) {
+			if (users[i].id == id) {
+				return users[i].name;
+			}
+		}
+	}
+	return '';
+};
+
 exports.sendMessage = function(bot, params, text, callback)
 {
-	bot.postMessageToChannel('general', text, params, function(err, res) {
+	bot.postMessageToChannel(params.channel, text, params, function(err, res) {
 		callback(err, res);
 	});
 };
