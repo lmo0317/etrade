@@ -4,7 +4,7 @@
 var yaml = require('yamljs');
 
 exports.init = function() {
-    global.configure = yaml.load('./default.config.yml')
+    global.configure = yaml.load('./default.config.yml');
     global.DB = {};
     global.program = require('commander');
     global.program

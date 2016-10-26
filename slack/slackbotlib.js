@@ -1,28 +1,45 @@
-var SlackBot = require('slackbots');
+/**
+ * Created by minolee on 2016-10-26.
+ */
+var tradinglib = require('../lib/trading');
+var tradingservice = require('../service/trading');
+var sync = require('synchronize');
+var moment = require('moment');
 
-// create a bot
-var bot = new SlackBot({
-    token: 'xoxb-95893489302-xDVVZ6ueOj9STBj7UHVaSyM6',
-    name: '고명환'
-});
-
+// send aprameter
 var params = {
-    icon_url: 'https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2016-10-26/95997872625_500b9996104fc07bb259.jpg'
+	icon_url: 'https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2016-10-26/95997872625_500b9996104fc07bb259.jpg'
 };
 
-bot.on('message', function(data) {
-    if(data.type === 'message') {
-        if(data.text === 'hi') {
-            bot.postMessageToChannel('general', 'funck you', params,function(err, res) {
-
-            });
-        }
-    }
-});
-
-exports.sendMessage = function(text, callback)
+exports.sendMessage = function(bot, text, callback)
 {
-    bot.postMessageToChannel('general', text, params, function(err, res) {
-        callback(err, res);
-    });
+	bot.postMessageToChannel('general', text, params, function(err, res) {
+		callback(err, res);
+	});
+};
+
+exports.sendRecommendStockData = function(bot, callback)
+{
+	sync.fiber(function() {
+		//parameter setting
+		var today = moment();
+		var param = {
+			start: today.format('YYMMDD'),
+			type: 'favorite'
+		};
+
+		//관심 종목
+		var list = sync.await(tradingservice.getTradingList(param, sync.defer()));
+
+		//기타 추천 종목
+
+		// Text 정렬
+		var text = '<<<<< <<<<< 추천 종목 >>>>> >>>>> \n' + tradinglib.makeSimpleText(list);
+
+		//slack message 전송
+		sync.await(exports.sendMessage(bot, text, sync.defer()));
+
+	}, function(err, res) { 
+		callback(err, res);
+	});
 };

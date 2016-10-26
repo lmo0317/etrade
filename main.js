@@ -22,7 +22,6 @@ console.log('start cron');
         sync.await(stocklistlib.findBestStocks(sync.defer()));
         sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
         sync.await(tradinglib.findTrading(['best'], sync.defer()));
-        sync.await(tradingService.sendRecommendStockData(sync.defer()));
 
     }, function (err, result) {
         if (err) return console.log(err);

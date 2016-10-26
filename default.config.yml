@@ -4,5 +4,6 @@ db:
 cron:
   FIND_TRADING_BEST : '30 */20 9-18 * * 1-5'
   FIND_TRADING_FAVORITE : '30 */5 9-18 * * 1-5'
+  SEND_TRADING_FAVORITE : '0 */1 9-18 * * 1-5'
 log:
   level: 'low' #high: everything log save, middle: eventlog, error log save, low: error log save
