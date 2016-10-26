@@ -6,19 +6,14 @@ var tradingservice = require('../service/trading');
 var sync = require('synchronize');
 var moment = require('moment');
 
-// send aprameter
-var params = {
-	icon_url: 'https://s3-us-west-2.amazonaws.com/slack-files2/avatar-temp/2016-10-26/95997872625_500b9996104fc07bb259.jpg'
-};
-
-exports.sendMessage = function(bot, text, callback)
+exports.sendMessage = function(bot, params, text, callback)
 {
 	bot.postMessageToChannel('general', text, params, function(err, res) {
 		callback(err, res);
 	});
 };
 
-exports.sendRecommendStockData = function(bot, callback)
+exports.sendRecommendStockData = function(bot, params, callback)
 {
 	sync.fiber(function() {
 		//parameter setting
@@ -37,7 +32,7 @@ exports.sendRecommendStockData = function(bot, callback)
 		var text = '<<<<< <<<<< 추천 종목 >>>>> >>>>> \n' + tradinglib.makeSimpleText(list);
 
 		//slack message 전송
-		sync.await(exports.sendMessage(bot, text, sync.defer()));
+		sync.await(exports.sendMessage(bot, params, text, sync.defer()));
 
 	}, function(err, res) { 
 		callback(err, res);
