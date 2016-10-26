@@ -62,6 +62,11 @@ bot.on('message', function(data) {
 			bot.postMessageToChannel(channelName, 'funck you', params,function(err, res) {
 
 			});
+		} else if(data.text === '관심종목') {
+			params.channel = 'favorite';
+			slackbotlib.sendRecommendStockData(bot, params, function(err, res) {
+				console.log('comple favorite send');
+			});
 		}
 	}
 });
