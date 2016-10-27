@@ -40,11 +40,10 @@ new cronJob(global.configure.cron.SEND_TRADING_FAVORITE, function(){
 
 	sync.fiber(function() {
 
-		sync.await(stocklistlib.findBestStocks(sync.defer()));
-		sync.await(tradinglib.findTrading(['best'], sync.defer()));
-
-		params.channel = 'favorite';
-		sync.await(slackbotlib.sendRecommendStockData(bot, params, sync.defer()));
+		//sync.await(stocklistlib.findBestStocks(sync.defer()));
+		//sync.await(tradinglib.findTrading(['best'], sync.defer()));
+		//params.channel = 'favorite';
+		//sync.await(slackbotlib.sendRecommendStockData(bot, params, sync.defer()));
 
 	}, function(err, result) {
 		if(err) return console.log(err);
@@ -63,6 +62,8 @@ bot.on('message', function(data) {
 
 			});
 		} else if(data.text === '관심종목') {
+
+			sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
 			params.channel = 'favorite';
 			slackbotlib.sendRecommendStockData(bot, params, function(err, res) {
 				console.log('comple favorite send');
