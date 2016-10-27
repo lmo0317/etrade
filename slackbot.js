@@ -37,7 +37,8 @@ var params = {
 
 //관심종목 trading list를 slack을 통해 전송한다.
 new cronJob(global.configure.cron.SEND_TRADING_FAVORITE, function(){
-
+	//특정 시간마다 실행 되는 크론
+	
 	sync.fiber(function() {
 
 		//sync.await(stocklistlib.findBestStocks(sync.defer()));
