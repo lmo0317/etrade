@@ -88,3 +88,6 @@ fabric.properties
 
 # media
 public/media
+
+#slack token
+slacktoken.json
