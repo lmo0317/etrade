@@ -38,7 +38,7 @@ var params = {
 //관심종목 trading list를 slack을 통해 전송한다.
 new cronJob(global.configure.cron.SEND_TRADING_FAVORITE, function(){
 	//특정 시간마다 실행 되는 크론
-	
+	/*
 	sync.fiber(function() {
 
 		//sync.await(stocklistlib.findBestStocks(sync.defer()));
@@ -49,26 +49,34 @@ new cronJob(global.configure.cron.SEND_TRADING_FAVORITE, function(){
 	}, function(err, result) {
 		if(err) return console.log(err);
 	});
+	*/
+	console.log('slack cron');
 
 },null, true, 'Asia/Seoul');
 
 bot.on('message', function(data) {
 	if(data.type === 'message') {
 
-		var channelName = slackbotlib.channelIdToName(bot, data.channel);
-		var userName = slackbotlib.userIdToName(bot, data.user);
+		sync.fiber(function() {
 
-		if(data.text === 'hi') {
-			bot.postMessageToChannel(channelName, 'funck you', params,function(err, res) {
+			var channelName = slackbotlib.channelIdToName(bot, data.channel);
+			var userName = slackbotlib.userIdToName(bot, data.user);
 
-			});
-		} else if(data.text === '관심종목') {
+			if(data.text === 'hi') {
+				bot.postMessageToChannel(channelName, 'funck you', params,function(err, res) {
 
-			sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
-			params.channel = 'favorite';
-			slackbotlib.sendRecommendStockData(bot, params, function(err, res) {
-				console.log('comple favorite send');
-			});
-		}
+				});
+			} else if(data.text === '관심종목') {
+
+				sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
+				params.channel = 'favorite';
+				slackbotlib.sendRecommendStockData(bot, params, function(err, res) {
+					console.log('comple favorite send');
+				});
+			}
+
+		}, function(err, res) {
+			console.log('message send complete');
+		});
 	}
 });
