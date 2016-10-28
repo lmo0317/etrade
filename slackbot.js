@@ -66,7 +66,7 @@ bot.on('message', function(data) {
 				bot.postMessageToChannel(channelName, 'funck you', params,function(err, res) {
 
 				});
-			} else if(data.text === '관심종목' || data.text === '관종') {
+			} else if(data.text === '추천' || data.text === 'ㅊㅊ') {
 				sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
 				params.channel = 'favorite';
 				slackbotlib.sendRecommendStockData(bot, params, function(err, res) {
