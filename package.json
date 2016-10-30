@@ -15,6 +15,7 @@
     "moment": "^2.14.1",
     "mongoose": "^4.3.7",
     "node-array": "0.0.7",
+    "node-redis": "^0.1.7",
     "request": "^2.74.0",
     "slack-client": "^2.0.6",
     "slackbots": "^0.5.3",
