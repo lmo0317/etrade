@@ -48,7 +48,7 @@ function clickButtonDetail(buylist) {
         return parseInt(b.time, 10) - parseInt(a.time,10);
     });
 
-    buylist.forEach(function(buy) {
+    buylist.splice(0,10).forEach(function(buy) {
         
         //tr 추가
         var tr = $("<tr>").attr("id", "tr_trading_list");
@@ -152,6 +152,7 @@ function makeTradeTable(data) {
         td_button.append(button_detail);
 
         //favorite에서는 add버튼 추가하지 않는다.
+        /*
         if($("#type").val() !== 'favorite') {
 
             //add 버튼 추가
@@ -167,6 +168,7 @@ function makeTradeTable(data) {
 
             td_button.append(button_add);
         }
+        */
 
         tr.append(td_name);
         tr.append(td_trading_updn_rate);
