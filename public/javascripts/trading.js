@@ -93,7 +93,8 @@ function clickButtonAdd(isu_nm) {
         },
         success:function(data) {
             console.log(data);
-            location.reload();
+            alert('add complete');
+            //location.reload();
         },
         error:function() {
             alert('error');
@@ -152,7 +153,6 @@ function makeTradeTable(data) {
         td_button.append(button_detail);
 
         //favorite에서는 add버튼 추가하지 않는다.
-        /*
         if($("#type").val() !== 'favorite') {
 
             //add 버튼 추가
@@ -168,7 +168,6 @@ function makeTradeTable(data) {
 
             td_button.append(button_add);
         }
-        */
 
         tr.append(td_name);
         tr.append(td_trading_updn_rate);
