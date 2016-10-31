@@ -48,7 +48,7 @@ function clickButtonDetail(buylist) {
         return parseInt(b.time, 10) - parseInt(a.time,10);
     });
 
-    buylist.splice(0,10).forEach(function(buy) {
+    buylist.splice(0,20).forEach(function(buy) {
         
         //tr 추가
         var tr = $("<tr>").attr("id", "tr_trading_list");
