@@ -19,11 +19,6 @@ config.init();
 mongoose.connect(global.configure.db.path);
 console.log('Start Cron');
 
-if(global.program.develop) {
-    global.configure.cron.FIND_TRADING_BEST = '30 */10 * * * *';
-    global.configure.cron.FIND_TRADING_FAVORITE = '0 */1 * * * *';
-}
-
 //favorite
 new cronJob(global.configure.cron.FIND_TRADING_BEST, function(){
 

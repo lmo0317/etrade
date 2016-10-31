@@ -19,11 +19,6 @@ config.init();
 //db
 mongoose.connect(global.configure.db.path);
 
-//development setting
-if(global.program.develop) {
-	global.configure.cron.SEND_TRADING_FAVORITE = '0 * * * * *';
-}
-
 // create a bot
 var bot = new SlackBot({
 	name: '고명환',

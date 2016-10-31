@@ -3,6 +3,7 @@
  */
 var yaml = require('yamljs');
 var redis = require('node-redis');
+var debuglib = require('./lib/debug');
 
 exports.init = function() {
     global.configure = yaml.load('./default.config.yml');
@@ -14,4 +15,8 @@ exports.init = function() {
         .parse(process.argv);
 
     global.REDIS = redis.createClient(configure.redis.port, configure.redis.path);
+
+    if(global.program.develop) {
+        debuglib.init();
+    }
 };

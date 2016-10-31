@@ -69,17 +69,9 @@ function clickButtonDetail(buylist) {
             td_trading_netaskval.text(numberWithCommas(buy.netaskval));
         }
 
-        var td_trading_netaskvol = $("<td>").attr("id", "td_trading_netaskvol");
-        if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
-            td_trading_netaskvol.text(numberWithCommas(buy.netaskvolhidden));
-        } else {
-            td_trading_netaskvol.text(numberWithCommas(buy.netaskvol));
-        }
-
         tr.append(td_time);
         tr.append(td_trading_updn_rate);
         tr.append(td_trading_netaskval);
-        tr.append(td_trading_netaskvol);
         $("#tbody_trading_detail_container").append(tr);
     });
 }
@@ -126,15 +118,6 @@ function makeTradeTable(data) {
         }
         td_trading_netaskval.text(netaskval);
 
-        var td_trading_netaskvol = $("<td>").attr("id", "td_trading_netaskvol");
-        var netaskvol = 0;
-        if( $('input:checkbox[name=check_box_exception_top]').is(':checked')) {
-            netaskvol = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvolhidden);
-        } else {
-            netaskvol = numberWithCommas(value.buylist[value.buylist.length - 1].netaskvol);
-        }
-        td_trading_netaskvol.text(netaskvol);
-
         var td_button = $("<td>").attr("id", "td_button");
         
         //detail 버튼 추가
@@ -172,7 +155,6 @@ function makeTradeTable(data) {
         tr.append(td_name);
         tr.append(td_trading_updn_rate);
         tr.append(td_trading_netaskval);
-        tr.append(td_trading_netaskvol);
         tr.append(td_button);
         $("#tbody_trading_container").append(tr);
     });
