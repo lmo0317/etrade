@@ -9,6 +9,7 @@ cron:
   FIND_TRADING_FAVORITE : '30 */5 9-18 * * 1-5'
   SEND_TRADING_FAVORITE : '0 */1 9-18 * * 1-5'
 autoadd:
-  min: 500000000
+  cosdaq: 500000000
+  cospi: 1000000000
 log:
   level: 'low' #high: everything log save, middle: eventlog, error log save, low: error log save
