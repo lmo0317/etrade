@@ -92,6 +92,7 @@ function makeTradeTable(data) {
 
     $("#tbody_trading_container").html('');
     $("#chart_div").html('');
+    $("#sort_table").show();
 
     //상위 5개 ~ 10개 정도만 추린다.
     //var stocks = data.splice(0,10);
@@ -162,6 +163,7 @@ function makeCharts(element, stocks)
 {
     $("#tbody_trading_container").html('');
     $("#chart_div").html('');
+    $("#sort_table").hide();
 
     stocks.forEach(function(stock) {
        makeChart(element, stock);
