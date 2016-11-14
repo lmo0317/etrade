@@ -9,7 +9,25 @@ $(document).ready(function (){
         },
         change: function(e) {
             console.log('change');
-            makeTradeTable(_tradingData);
+            if($('input:checkbox[name=check_box_graph]').is(':checked')) {
+                makeCharts(document.getElementById('chart_div'), _tradingData.slice(0,10));
+            } else {
+                makeTradeTable(_tradingData);
+            }
+        }
+    });
+
+    $('input:checkbox[name=check_box_graph]').on( {
+        click: function(e) {
+            console.log('click');
+        },
+        change: function(e) {
+            console.log('change', e);
+            if(e.target.checked) {
+                makeCharts(document.getElementById('chart_div'), _tradingData.slice(0,10));
+            } else {
+                makeTradeTable(_tradingData);
+            }
         }
     });
 
@@ -70,27 +88,10 @@ function clickButtonDetail(stock) {
     $("#tbody_trading_detail_container").append(tr);
 }
 
-function clickButtonAdd(isu_nm) {
-    $.ajax({
-        url: '/stock/favorite',
-        type: 'post',
-        data: {
-            isu_nm: isu_nm
-        },
-        success:function(data) {
-            console.log(data);
-            alert('add complete');
-            //location.reload();
-        },
-        error:function() {
-            alert('error');
-        }
-    });
-}
-
 function makeTradeTable(data) {
 
     $("#tbody_trading_container").html('');
+    $("#chart_div").html('');
 
     //상위 5개 ~ 10개 정도만 추린다.
     //var stocks = data.splice(0,10);
@@ -157,43 +158,14 @@ function makeTradeTable(data) {
     });
 }
 
-function getTrading() {
+function makeCharts(element, stocks)
+{
+    $("#tbody_trading_container").html('');
+    $("#chart_div").html('');
 
-    $("#btn_search").click(function(){
-        console.log($("#type").val());
-
-        $.ajax({
-            url: '/trading',
-            type: 'get',
-            data: {
-                start: $("#edit_start").val(),
-                type: $("#type").val()
-            },
-            success:function(data) {
-                _tradingData = data;
-                alert('complete');
-                makeTradeTable(data);
-            },
-            error:function(err) {
-                console.log(err);
-                alert(err.responseText);
-            }
-        });
+    stocks.forEach(function(stock) {
+       makeChart(element, stock);
     });
-
-    $('input[name="datepicker"]').daterangepicker(
-        {
-            singleDatePicker: true,
-            showDropdowns: true,
-            locale: {
-                format: 'YYMMDD'
-            },
-            startDate: new Date()
-        },
-        function(start, end, label) {
-            console.log(start);
-        }
-    );
 }
 
 function makeChart(element, stock)
@@ -250,6 +222,63 @@ function makeChart(element, stock)
 
     var chart = new google.visualization.LineChart(div_graph);
     chart.draw(data, options);
+}
+
+function getTrading() {
+
+    $("#btn_search").click(function(){
+        console.log($("#type").val());
+
+        $.ajax({
+            url: '/trading',
+            type: 'get',
+            data: {
+                start: $("#edit_start").val(),
+                type: $("#type").val()
+            },
+            success:function(data) {
+                _tradingData = data;
+                alert('complete');
+                makeTradeTable(data);
+            },
+            error:function(err) {
+                console.log(err);
+                alert(err.responseText);
+            }
+        });
+    });
+
+    $('input[name="datepicker"]').daterangepicker(
+        {
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'YYMMDD'
+            },
+            startDate: new Date()
+        },
+        function(start, end, label) {
+            console.log(start);
+        }
+    );
+}
+
+function clickButtonAdd(isu_nm) {
+    $.ajax({
+        url: '/stock/favorite',
+        type: 'post',
+        data: {
+            isu_nm: isu_nm
+        },
+        success:function(data) {
+            console.log(data);
+            alert('add complete');
+            //location.reload();
+        },
+        error:function() {
+            alert('error');
+        }
+    });
 }
 
 function init() {
