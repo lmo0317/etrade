@@ -20,6 +20,9 @@
     <script type="text/javascript" src="javascripts/navibar.js"></script>
     <script type="text/javascript"></script>
 
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
     <!-- srot table -->
     <script src='javascripts/tablesort/prettify.js'></script>
     <script src='javascripts/tablesort/src/tablesort.js'></script>
@@ -51,7 +54,11 @@
 
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="check_box_exception_top"> 상위 5개 종목 제외
+                    <input type="checkbox" name="check_box_graph" data-toggle="toggle"> 그래프 모드
+                </label>
+
+                <label>
+                    <input type="checkbox" name="check_box_exception_top" data-toggle="toggle"> 상위 5개 종목 제외
                 </label>
             </div>
 
