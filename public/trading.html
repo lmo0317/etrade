@@ -15,6 +15,7 @@
     <script type="text/javascript" src="bootstrap/js/daterangepicker.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="javascripts/trading.js"></script>
     <script type="text/javascript" src="javascripts/navibar.js"></script>
     <script type="text/javascript"></script>
@@ -54,6 +55,8 @@
                 </label>
             </div>
 
+            <div id="chart_div"></div>
+
             <table id="sort" class ="sort">
                 <thead>
                 <tr>
@@ -71,18 +74,19 @@
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content" style="width:950px">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Modal Header</h4>
                 </div>
+
                 <div class="modal-body" id="modal-body">
+                    <div id="detail_chart_div"></div>
                     <table class ="table table-striped">
                         <thead>
                         <tr>
-                            <th> 시간 </th>
                             <th> 등락률 </th>
                             <th> 거래대금 </th>
                         </tr>

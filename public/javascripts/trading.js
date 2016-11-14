@@ -41,39 +41,33 @@ function getLatestTrading(tradelist) {
     return tradelist[maxKey];
 }
 
-function clickButtonDetail(buylist) {
-    
+function clickButtonDetail(stock) {
+    $("#detail_chart_div").html('');
     $("#tbody_trading_detail_container").html('');
-    buylist.sort(function(a, b) {
-        return parseInt(b.time, 10) - parseInt(a.time,10);
-    });
 
-    buylist.splice(0,20).forEach(function(buy) {
-        
-        //tr 추가
-        var tr = $("<tr>").attr("id", "tr_trading_list");
-        
-        //time
-        var td_time = $("<td>").attr("id", "td_name");
-        td_time.text(buy.time);
+    if(stock.buylist.length <= 0) return;
 
-        var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
-        var updn_rate = numberWithCommas((buy.stockinfo && buy.stockinfo.updn_rate) || 0);
-        td_trading_updn_rate.text(updn_rate);
+    makeChart(document.getElementById('detail_chart_div'), stock);
+    var buy = stock.buylist[stock.buylist.length - 1];
 
-        //trading
-        var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-        if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
-            td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
-        } else {
-            td_trading_netaskval.text(numberWithCommas(buy.netaskval));
-        }
+    //tr 추가
+    var tr = $("<tr>").attr("id", "tr_trading_list");
 
-        tr.append(td_time);
-        tr.append(td_trading_updn_rate);
-        tr.append(td_trading_netaskval);
-        $("#tbody_trading_detail_container").append(tr);
-    });
+    var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
+    var updn_rate = numberWithCommas((buy.stockinfo && buy.stockinfo.updn_rate) || 0);
+    td_trading_updn_rate.text(updn_rate);
+
+    //trading
+    var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
+    if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
+        td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
+    } else {
+        td_trading_netaskval.text(numberWithCommas(buy.netaskval));
+    }
+
+    tr.append(td_trading_updn_rate);
+    tr.append(td_trading_netaskval);
+    $("#tbody_trading_detail_container").append(tr);
 }
 
 function clickButtonAdd(isu_nm) {
@@ -98,8 +92,11 @@ function makeTradeTable(data) {
 
     $("#tbody_trading_container").html('');
 
-    data.forEach(function(value) {
+    //상위 5개 ~ 10개 정도만 추린다.
+    //var stocks = data.splice(0,10);
+    //makeChart(document.getElementById('chart_div'), stocks);
 
+    data.forEach(function(value) {
         var tr = $("<tr>").attr("id", "tr_trading_list");
         var td_name = $("<td>").attr("id", "td_name");
         td_name.text(value.isu_nm);
@@ -119,7 +116,7 @@ function makeTradeTable(data) {
         td_trading_netaskval.text(netaskval);
 
         var td_button = $("<td>").attr("id", "td_button");
-        
+
         //detail 버튼 추가
         var button_detail = $("<input>")
             .attr("type", "button")
@@ -130,7 +127,7 @@ function makeTradeTable(data) {
             .val('DETAIL');
 
         button_detail.click(function() {
-            clickButtonDetail(value.buylist);
+            clickButtonDetail(value);
         });
 
         td_button.append(button_detail);
@@ -199,6 +196,69 @@ function getTrading() {
     );
 }
 
+function makeChart(element, stock)
+{
+    var div_graph = document.createElement("div");
+    div_graph.id = "div_graph";
+    element.append(div_graph);
+
+    //장마감 시간 이상 데이터가 올경우 걸러 낸다.
+    var buylist = [];
+    for(var i = 0;i<stock.buylist.length;i++) {
+        if(stock.buylist[i].time <= 1600) {
+            buylist.push(stock.buylist[i]);
+        }
+    }
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', "time");
+    data.addColumn('number', "거래대금");
+    data.addColumn('number', "등락률");
+
+    var dataTable = [];
+    for(var i=0; i<buylist.length; i++)
+    {
+        dataTable.push([buylist[i].time, buylist[i].netaskval, parseFloat(buylist[i].stockinfo ?  buylist[i].stockinfo.updn_rate : 0)]);
+    }
+
+    data.addRows(dataTable);
+
+    var options = {
+        title: stock.isu_nm,
+        vAxis: {
+        },
+        hAxis: {
+            maxValue: 1600,
+            minTextSpacing: 100
+        },
+        series: {
+            0: {targetAxisIndex: 0},
+            1: {targetAxisIndex: 1}
+        },
+        colors: ['#a52714', '#097138'],
+        width: 900,
+        height: 500,
+        legend: {
+            position: 'none',
+            alignment: 'start',
+            textStyle: {
+                color: 'blue',
+                fontSize: 16
+            }
+        }
+    };
+
+    var chart = new google.visualization.LineChart(div_graph);
+    chart.draw(data, options);
+}
+
 function init() {
+    google.charts.load('current', {'packages':['line', 'corechart']});
+    google.charts.setOnLoadCallback(onLoadCallback);
     getTrading();
+}
+
+function onLoadCallback()
+{
+    console.log('OnLoadCallback');
 }
