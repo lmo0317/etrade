@@ -1,4 +1,8 @@
 var stocklistlib = require('../lib/stocklist');
+var sync = require('synchronize');
+var otplib = require('../lib/otp');
+var request = require('../lib/request');
+var moment = require('moment');
 
 exports.getStockList = function(callback) {
     stocklistlib.getStockList(callback);
@@ -38,4 +42,22 @@ exports.addExceptionStock = function(isu_nm, callback) {
 
 exports.deleteExceptionStock = function(isu_nm, callback) {
     stocklistlib.deleteExceptionStock(isu_nm, callback);
+};
+
+/**
+ * FINDING
+ **/
+exports.findBestStocks = function(callback) {
+    sync.fiber(function() {
+        console.log('Find Best Stocks');
+        var code = sync.await(otplib.requestBestStocksOTP(sync.defer())).text;
+        var today = moment();
+
+        sync.await(request.requestBestStock(code, today, 'kosdaq', sync.defer()));
+        sync.await(request.requestBestStock(code, today, 'kospi', sync.defer()));
+
+    }, function(err, res) {
+        console.log('Complete find stocks');
+        callback(err, res);
+    });
 };

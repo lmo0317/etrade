@@ -12,6 +12,7 @@ var mongoose = require('mongoose');
 var util = require('./lib/util');
 var config = require('./config');
 var tradingService = require('./service/trading');
+var stocklistService = require('./service/stocklist');
 
 config.init();
 
@@ -25,8 +26,8 @@ new cronJob(global.configure.cron.FIND_TRADING_BEST, function(){
     console.log('Cron Schedule Facorite Stock', moment().format("YYYYMMDDHHmm"));
     sync.fiber(function() {
 
-        sync.await(stocklistlib.findBestStocks(sync.defer()));
-        sync.await(tradinglib.findTrading(['best'], sync.defer()));
+        sync.await(stocklistService.findBestStocks(sync.defer()));
+        sync.await(tradingService.findTrading(['best'], sync.defer()));
 
     }, function(err, result) {
         if(err) return console.log(err);
@@ -40,7 +41,7 @@ new cronJob(global.configure.cron.FIND_TRADING_FAVORITE, function(){
     console.log('Cron Schedule Best Stock', moment().format("YYYYMMDDHHmm"));
     sync.fiber(function() {
 
-        sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
+        sync.await(tradingService.findTrading(['favorite'], sync.defer()));
 
     }, function(err, result) {
         if(err) return console.log(err);

@@ -2,6 +2,7 @@
  * Created by minolee on 2016-10-26.
  */
 var tradinglib = require('../lib/trading');
+var stringlib = require('../lib/stringlib');
 var tradingservice = require('../service/trading');
 var sync = require('synchronize');
 var moment = require('moment');
@@ -59,7 +60,7 @@ exports.sendRecommendStockData = function(bot, params, callback)
 		//기타 추천 종목
 
 		// Text 정렬
-		var text = '<<<<< <<<<< 추천 종목 >>>>> >>>>> \n' + tradinglib.makeSimpleText(list);
+		var text = '<<<<< <<<<< 추천 종목 >>>>> >>>>> \n' + stringlib.makeSimpleText(list);
 
 		//slack message 전송
 		sync.await(exports.sendMessage(bot, params, text, sync.defer()));

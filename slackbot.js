@@ -12,6 +12,7 @@ var slackbotlib = require('./slack/slackbotlib');
 var jsonloader = require('jsonloader');
 
 var slacktoken = require('./slacktoken.json');
+var tradingService = require('./service/trading');
 
 //초기화
 config.init();
@@ -62,7 +63,7 @@ bot.on('message', function(data) {
 
 				});
 			} else if(data.text === '추천' || data.text === 'ㅊㅊ') {
-				sync.await(tradinglib.findTrading(['favorite'], sync.defer()));
+				sync.await(tradingService.findTrading(['favorite'], sync.defer()));
 				params.channel = 'favorite';
 				slackbotlib.sendRecommendStockData(bot, params, function(err, res) {
 					console.log('comple favorite send');
