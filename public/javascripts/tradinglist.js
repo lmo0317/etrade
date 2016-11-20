@@ -46,19 +46,6 @@ function getAccumlateTrading(tradelist) {
     return accumlate;
 }
 
-function getLatestTrading(tradelist) {
-
-    var maxKey = 0;
-    Object.keys(tradelist).forEach(function(key) {
-        if(key >= maxKey) {
-            maxKey = key;
-        }
-    });
-
-    console.log(tradelist[maxKey]);
-    return tradelist[maxKey];
-}
-
 function clickButtonDetail(stock) {
 
     if(stock.buylist.length <= 0) return;
@@ -72,25 +59,32 @@ function clickButtonDetail(stock) {
 
         makeChart(chart, stock);
 
-        //tr 추가
-        var tr = $("<tr>").attr("id", "tr_trading_list");
+        stock.buylist.forEach(function(buy) {
+            //tr 추가
+            var tr = $("<tr>").attr("id", "tr_trading_list");
 
-        //등락률
-        var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
-        var updn_rate = numberWithCommas((buy.stockinfo && buy.stockinfo.updn_rate) || 0);
-        td_trading_updn_rate.text(updn_rate);
+            //time
+            var td_time = $("<td>").attr("id", "td_name");
+            td_time.text(buy.time);
 
-        //거래대금
-        var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-        if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
-            td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
-        } else {
-            td_trading_netaskval.text(numberWithCommas(buy.netaskval));
-        }
+            //등락률
+            var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
+            var updn_rate = numberWithCommas((buy.stockinfo && buy.stockinfo.updn_rate) || 0);
+            td_trading_updn_rate.text(updn_rate);
 
-        tr.append(td_trading_updn_rate);
-        tr.append(td_trading_netaskval);
-        tbody.append(tr);
+            //거래대금
+            var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
+            if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
+                td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
+            } else {
+                td_trading_netaskval.text(numberWithCommas(buy.netaskval));
+            }
+
+            tr.append(td_time);
+            tr.append(td_trading_updn_rate);
+            tr.append(td_trading_netaskval);
+            tbody.append(tr);
+        });
     };
 }
 
@@ -307,4 +301,21 @@ function init() {
 function onLoadCallback()
 {
     console.log('OnLoadCallback');
+}
+
+/**
+ * dead code
+ */
+
+function getLatestTrading(tradelist) {
+
+    var maxKey = 0;
+    Object.keys(tradelist).forEach(function(key) {
+        if(key >= maxKey) {
+            maxKey = key;
+        }
+    });
+
+    console.log(tradelist[maxKey]);
+    return tradelist[maxKey];
 }
