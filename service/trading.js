@@ -7,14 +7,61 @@ var otplib = require('../lib/otp');
 var moment = require('moment');
 var request = require('../lib/request');
 
+exports.filterBestStock = function(date, type, tradingList, callback) {
+    sync.fiber(function() {
+
+        var bestStock = sync.await(exports.getBestStock(date, type, sync.defer()));
+        if(!bestStock) {
+            throw 'best stock is null';
+        }
+
+        var bestStockList = bestStock.list;
+        var result = [];
+        for(var i = 0; i<tradingList.length; i++) {
+            var trading = tradingList[i];
+            if(bestStockList.isIn('kor_shrt_isu_nm', trading.isu_nm)) {
+                result.push(trading);
+            }
+        }
+
+        return result;
+
+    }, function(err, res) {
+        callback(err, res);
+    });
+};
+
+exports.filterFavoriteStock = function(tradingList, callback) {
+    sync.fiber(function() {
+
+        var favoriteStockList = sync.await(exports.getFavoriteStockList(sync.defer()));
+        favoriteStockList = favoriteStockList.map(function(favoriteStock) {
+            return favoriteStock.toJSON();
+        });
+
+        var result = [];
+        for(var i = 0; i<tradingList.length; i++) {
+            var trading = tradingList[i];
+            if(favoriteStockList.isIn('isu_nm', trading.isu_nm)) {
+                result.push(trading);
+            }
+        }
+
+        return result;
+
+    }, function(err, res) {
+        callback(err, res);
+    });
+};
+
 exports.getTradingList = function(param, callback) {
     sync.fiber(function() {
         var result = [];
         var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
         if(param.type === 'favorite') {
-            result = sync.await(stocklistlib.filterFavoriteStock(tradingList, sync.defer()));
+            result = sync.await(exports.filterFavoriteStock(tradingList, sync.defer()));
         } else if(param.type === 'kosdaq' || param.type === 'kospi') {
-            result = sync.await(stocklistlib.filterBestStock("20" + param.start, param.type, tradingList, sync.defer()));
+            result = sync.await(exports.filterBestStock("20" + param.start, param.type, tradingList, sync.defer()));
         }
         
         return result;
