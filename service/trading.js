@@ -34,7 +34,7 @@ exports.filterBestStock = function(date, type, tradingList, callback) {
 exports.filterFavoriteStock = function(tradingList, callback) {
     sync.fiber(function() {
 
-        var favoriteStockList = sync.await(exports.getFavoriteStockList(sync.defer()));
+        var favoriteStockList = sync.await(stocklistlib.getFavoriteStockList(sync.defer()));
         favoriteStockList = favoriteStockList.map(function(favoriteStock) {
             return favoriteStock.toJSON();
         });
