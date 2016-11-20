@@ -60,32 +60,38 @@ function getLatestTrading(tradelist) {
 }
 
 function clickButtonDetail(stock) {
-    $("#detail_chart_div").html('');
-    $("#tbody_trading_detail_container").html('');
 
     if(stock.buylist.length <= 0) return;
-
-    makeChart(document.getElementById('detail_chart_div'), stock);
     var buy = stock.buylist[stock.buylist.length - 1];
 
-    //tr 추가
-    var tr = $("<tr>").attr("id", "tr_trading_list");
+    var pop = window.open('detailtrading.html');
+    pop.onload = function() {
 
-    var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
-    var updn_rate = numberWithCommas((buy.stockinfo && buy.stockinfo.updn_rate) || 0);
-    td_trading_updn_rate.text(updn_rate);
+        var chart = pop.document.getElementById('detail_chart_div');
+        var tbody = $(pop.document).find("#tbody_trading_detail_container");
 
-    //trading
-    var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-    if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
-        td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
-    } else {
-        td_trading_netaskval.text(numberWithCommas(buy.netaskval));
-    }
+        makeChart(chart, stock);
 
-    tr.append(td_trading_updn_rate);
-    tr.append(td_trading_netaskval);
-    $("#tbody_trading_detail_container").append(tr);
+        //tr 추가
+        var tr = $("<tr>").attr("id", "tr_trading_list");
+
+        //등락률
+        var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
+        var updn_rate = numberWithCommas((buy.stockinfo && buy.stockinfo.updn_rate) || 0);
+        td_trading_updn_rate.text(updn_rate);
+
+        //거래대금
+        var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
+        if( $('input:checkbox[name=check_box_exception_top]').is(':checked') ) {
+            td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
+        } else {
+            td_trading_netaskval.text(numberWithCommas(buy.netaskval));
+        }
+
+        tr.append(td_trading_updn_rate);
+        tr.append(td_trading_netaskval);
+        tbody.append(tr);
+    };
 }
 
 function makeTradeTable(data) {
@@ -124,8 +130,6 @@ function makeTradeTable(data) {
             .attr("type", "button")
             .attr("id", "btn_detail" )
             .attr("class", "btn btn-danger")
-            .attr("data-toggle", "modal")
-            .attr("data-target", "#myModal")
             .val('DETAIL');
 
         button_detail.click(function() {
@@ -135,6 +139,7 @@ function makeTradeTable(data) {
         td_button.append(button_detail);
 
         //favorite에서는 add버튼 추가하지 않는다.
+        /*
         if($("#type").val() !== 'favorite') {
 
             //add 버튼 추가
@@ -150,6 +155,7 @@ function makeTradeTable(data) {
 
             td_button.append(button_add);
         }
+        */
 
         tr.append(td_name);
         tr.append(td_trading_updn_rate);
@@ -184,6 +190,10 @@ function makeChart(element, stock)
         }
     }
 
+    if(buylist.length === 0) {
+        return;
+    }
+
     var data = new google.visualization.DataTable();
     data.addColumn('string', "time");
     data.addColumn('number', "거래대금");
@@ -197,8 +207,10 @@ function makeChart(element, stock)
 
     data.addRows(dataTable);
 
+    var buy = buylist[buylist.length - 1];
+    var title = stock.isu_nm;
     var options = {
-        title: stock.isu_nm,
+        title: title,
         vAxis: {
         },
         hAxis: {
@@ -210,8 +222,6 @@ function makeChart(element, stock)
             1: {targetAxisIndex: 1}
         },
         colors: ['#a52714', '#097138'],
-        width: 900,
-        height: 500,
         legend: {
             position: 'none',
             alignment: 'start',
@@ -241,7 +251,12 @@ function getTrading() {
             success:function(data) {
                 _tradingData = data;
                 alert('complete');
-                makeTradeTable(data);
+                //makeTradeTable(data);
+                if($('input:checkbox[name=check_box_graph]').is(':checked')) {
+                    makeCharts(document.getElementById('chart_div'), _tradingData.slice(0,10));
+                } else {
+                    makeTradeTable(_tradingData);
+                }
             },
             error:function(err) {
                 console.log(err);

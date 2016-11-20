@@ -15,7 +15,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="javascripts/trading.js"></script>
+    <script type="text/javascript" src="javascripts/tradinglist.js"></script>
     <script type="text/javascript" src="javascripts/navibar.js"></script>
     <script type="text/javascript"></script>
 
@@ -53,16 +53,11 @@
 
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="check_box_graph" data-toggle="toggle"> 그래프 모드
-                </label>
-
-                <label>
                     <input type="checkbox" name="check_box_exception_top" data-toggle="toggle"> 상위 5개 종목 제외
                 </label>
             </div>
 
             <div id="chart_div"></div>
-
             <div id="sort_table">
                 <table id="sort" class ="sort">
                     <thead>
@@ -78,35 +73,5 @@
             </div>
         </div>
     </form>
-
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content" style="width:920px">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-
-                <div class="modal-body" id="modal-body">
-                    <div id="detail_chart_div"></div>
-                    <table class ="table table-striped">
-                        <thead>
-                        <tr>
-                            <th> 등락률 </th>
-                            <th> 거래대금 </th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody_trading_detail_container"></tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
