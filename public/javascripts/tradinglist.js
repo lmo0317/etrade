@@ -49,7 +49,11 @@ function getAccumlateTrading(tradelist) {
 function clickButtonDetail(stock) {
 
     if(stock.buylist.length <= 0) return;
-    var buy = stock.buylist[stock.buylist.length - 1];
+
+    var buylist = stock.buylist;
+    buylist.sort(function(a, b) {
+        return parseInt(b.time, 10) - parseInt(a.time,10);
+    });
 
     var pop = window.open('detailtrading.html');
     pop.onload = function() {
@@ -59,7 +63,7 @@ function clickButtonDetail(stock) {
 
         makeChart(chart, stock);
 
-        stock.buylist.forEach(function(buy) {
+        buylist.forEach(function(buy) {
             //tr 추가
             var tr = $("<tr>").attr("id", "tr_trading_list");
 
