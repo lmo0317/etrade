@@ -10,7 +10,7 @@ var request = require('../lib/request');
 exports.filterBestStock = function(date, type, tradingList, callback) {
     sync.fiber(function() {
 
-        var bestStock = sync.await(exports.getBestStock(date, type, sync.defer()));
+        var bestStock = sync.await(stocklistlib.getBestStock(date, type, sync.defer()));
         if(!bestStock) {
             throw 'best stock is null';
         }

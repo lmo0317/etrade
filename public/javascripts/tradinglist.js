@@ -50,11 +50,6 @@ function clickButtonDetail(stock) {
 
     if(stock.buylist.length <= 0) return;
 
-    var buylist = stock.buylist;
-    buylist.sort(function(a, b) {
-        return parseInt(b.time, 10) - parseInt(a.time,10);
-    });
-
     var pop = window.open('detailtrading.html');
     pop.onload = function() {
 
@@ -62,6 +57,11 @@ function clickButtonDetail(stock) {
         var tbody = $(pop.document).find("#tbody_trading_detail_container");
 
         makeChart(chart, stock);
+
+        var buylist = stock.buylist;
+        buylist.sort(function(a, b) {
+            return parseInt(b.time, 10) - parseInt(a.time,10);
+        });
 
         buylist.forEach(function(buy) {
             //tr 추가
