@@ -2,18 +2,13 @@
  * Created by LEE-DESKTOP on 2016-11-22.
  */
 
-function chartInit()
+function chartInit(callback)
 {
     google.charts.load('current', {'packages':['line', 'corechart']});
-    google.charts.setOnLoadCallback(onLoadCallback);
+    google.charts.setOnLoadCallback(callback);
 }
 
-function onLoadCallback()
-{
-    console.log('OnLoadCallback');
-}
-
-function makeDetailTable(exception, tableTarget, stock) {
+function makeDetailTable(tableTarget, stock) {
 
     stock = deepCopy(stock);
     convertProperData('table', stock);
@@ -32,11 +27,11 @@ function makeDetailTable(exception, tableTarget, stock) {
 
         //거래대금
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-        if( exception ) {
-            td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
-        } else {
+        //if( exception ) {
+        //    td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
+        //} else {
             td_trading_netaskval.text(numberWithCommas(buy.netaskval));
-        }
+        //}
 
         tr.append(td_time);
         tr.append(td_trading_updn_rate);
@@ -90,11 +85,9 @@ function createDetailButton(parameter, value, td_button)
         .attr("id", "btn_detail" )
         .attr("class", "btn btn-danger")
         .val('DETAIL');
-
     button_detail.click(function() {
         clickDetailButton(parameter, value);
     });
-
     td_button.append(button_detail);
 }
 
@@ -116,10 +109,14 @@ function clickDetailButton(parameter, stock) {
     if(stock.buylist.length <= 0) return;
     var pop = window.open('detailtrading.html');
     pop.onload = function() {
-        var chart = pop.document.getElementById('detail_chart_div');
-        var tbody = $(pop.document).find("#tbody_trading_detail_container");
-        var exception = parameter.exception;
-        makeDetailPage(exception, chart, tbody, stock);
+        var title = $(pop.document).find("#modal-title");
+        title.text = stock.isu_nm;
+
+        var isu_nm = $(pop.document).find("#isu_nm");
+        isu_nm.val(stock.isu_nm);
+
+        var edit_start = $(pop.document).find("#edit_start");
+        edit_start.val(parameter.edit_start);
     };
 }
 
@@ -197,10 +194,10 @@ function makeChart(element, stock)
     chart.draw(data, options);
 }
 
-function makeDetailPage(exception, chartTarget, tableTarget, stock)
+function makeDetailPage(chartTarget, tableTarget, stock)
 {
     makeChart(chartTarget, stock);
-    makeDetailTable(exception, tableTarget, stock);
+    makeDetailTable(tableTarget, stock);
 }
 
 function convertProperData(type, stock)

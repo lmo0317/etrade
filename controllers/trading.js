@@ -2,10 +2,27 @@ var tradingService = require('../service/trading');
 
 exports.delegate = function(app) {
     console.info('trading delegate');
-    app.get('/trading', getTrading);
+    app.get('/tradinglist', getTradingList);
+    app.get('/trading', getTrading)
 };
 
 function getTrading(req, res) {
+    var param = {
+        start: req.query.start,
+        isu_nm: req.query.isu_nm
+    };
+
+    tradingService.getTrading(param, function(err, result) {
+        if(err) {
+            console.log(err);
+            return res.send(500, err);
+        }
+
+        res.send(result);
+    });
+}
+
+function getTradingList(req, res) {
     var param = {
         start: req.query.start,
         type: req.query.type

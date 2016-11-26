@@ -71,6 +71,10 @@ exports.getTradingList = function(param, callback) {
     });
 };
 
+exports.getTrading = function(param, callback) {
+    tradinglib.getTrading(param, callback);
+};
+
 exports.findTrading = function(typelist, callback) {
 
     sync.fiber(function() {

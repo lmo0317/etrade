@@ -15,8 +15,11 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="javascripts/tradinglist.js"></script>
-    <script type="text/javascript"></script>
+
+    <script type="text/javascript" src="javascripts/util.js"></script>
+    <script type="text/javascript" src="javascripts/stringlib.js"></script>
+    <script type="text/javascript" src="javascripts/tradinglib.js"></script>
+    <script type="text/javascript" src="javascripts/detailtrading.js"></script>
 
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -30,9 +33,13 @@
     <script src='javascripts/tablesort/src/sorts/tablesort.number.js'></script>
 </head>
 <body>
+
+    <!-- hidden data -->
+    <input type="text" id="edit_start" hidden="true">
+    <input type="text" id="isu_nm" hidden="true">
+
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Detail Page</h4>
+        <h4 class="modal-title" id="modal-title">Detail Page</h4>
     </div>
 
     <div class="modal-body" id="modal-body">
