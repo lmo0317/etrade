@@ -75,7 +75,22 @@ exports.getTrading = function(param, callback) {
     tradinglib.getTrading(param, callback);
 };
 
-exports.findTrading = function(typelist, callback) {
+exports.findTrading = function(param, callback) {
+    var today = moment();
+    sync.fiber(function() {
+        var stocklist = [];
+        stocklist.push(sync.await(stocklistlib.getStock(param.isu_nm, sync.defer())));
+        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
+        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
+        var trading = sync.await(tradinglib.getTrading(param, sync.defer()));
+        return trading;
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    });
+};
+
+exports.findTradingList = function(typelist, callback) {
 
     sync.fiber(function() {
         console.log('Find Trading');
@@ -105,9 +120,7 @@ exports.findTrading = function(typelist, callback) {
         //기관 리스트 조회
         var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
         sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
-
         console.log('Complete find trading');
-        return;
 
     }, function(err, res) {
         if(err) console.log(err);

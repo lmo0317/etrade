@@ -34,16 +34,27 @@
 </head>
 <body>
 
-    <!-- hidden data -->
-    <input type="text" id="edit_start" hidden="true">
-    <input type="text" id="isu_nm" hidden="true">
-
     <div class="modal-header">
         <h4 class="modal-title" id="modal-title">Detail Page</h4>
     </div>
 
     <div class="modal-body" id="modal-body">
         <div id="detail_chart_div"></div>
+        <div>
+            <input type="text" class="form-control" id="edit_start" placeholder="160505" name="datepicker">
+        </div>
+        <div style="margin-top: 10px">
+            <input type="text" class="form-control" id="isu_nm" placeholder="삼성전자">
+        </div>
+
+        <div id="div_button" style="margin-top: 10px">
+            <button id="btn_search" type="button" class="btn btn-primary btn-lg btn-block">검색</button>
+        </div>
+
+        <div id="div_button" style="margin-top: 10px">
+            <button id="btn_find" type="button" class="btn btn-danger btn-lg btn-block">바로 찾기</button>
+        </div>
+
         <table class ="table table-striped">
             <thead>
             <tr>

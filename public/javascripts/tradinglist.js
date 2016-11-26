@@ -6,6 +6,8 @@ $(document).ready(function (){
 
 function init() {
 
+    setInterval(process, 1000 * 60);
+
     $('input[name="datepicker"]').daterangepicker(
         {
             singleDatePicker: true,
@@ -34,6 +36,12 @@ function init() {
     new Tablesort(document.getElementById('sort'));
 }
 
+function process()
+{
+    getTradingList();
+    console.log('process');
+}
+
 function refreshData(tradingData)
 {
     makeTradeTableProcess(tradingData);
@@ -51,25 +59,29 @@ function makeTradeTableProcess(data)
     makeTradeTable(parameter, data);
 }
 
+function getTradingList()
+{
+    $.ajax({
+        url: '/tradinglist',
+        type: 'get',
+        data: {
+            start: $("#edit_start").val(),
+            type: $("#type").val()
+        },
+        success:function(data) {
+            _tradingData = data;
+            refreshData(_tradingData);
+        },
+        error:function(err) {
+            console.log(err);
+            alert(err.responseText);
+        }
+    });
+}
+
 function addSearchButton() {
 
     $("#btn_search").click(function(){
-        $.ajax({
-            url: '/tradinglist',
-            type: 'get',
-            data: {
-                start: $("#edit_start").val(),
-                type: $("#type").val()
-            },
-            success:function(data) {
-                _tradingData = data;
-                alert('complete');
-                refreshData(_tradingData);
-            },
-            error:function(err) {
-                console.log(err);
-                alert(err.responseText);
-            }
-        });
+        getTradingList();
     });
 }

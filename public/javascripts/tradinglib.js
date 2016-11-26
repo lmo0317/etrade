@@ -141,7 +141,6 @@ function makeChart(element, stock)
 {
     stock = deepCopy(stock);
     convertProperData('chart', stock);
-    console.log(stock);
 
     var div_graph = document.createElement("div");
     div_graph.id = "div_graph";

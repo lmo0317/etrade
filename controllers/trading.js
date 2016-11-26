@@ -3,8 +3,24 @@ var tradingService = require('../service/trading');
 exports.delegate = function(app) {
     console.info('trading delegate');
     app.get('/tradinglist', getTradingList);
-    app.get('/trading', getTrading)
+    app.get('/trading', getTrading);
+    app.post('/trading', findTrading);
 };
+
+function findTrading(req, res) {
+    var param = {
+        start: req.body.start,
+        isu_nm: req.body.isu_nm
+    };
+
+    tradingService.findTrading(param, function(err, result) {
+        if(err) {
+            console.log(err);
+            return res.send(500, err);
+        }
+        res.send(result);
+    });
+}
 
 function getTrading(req, res) {
     var param = {
@@ -17,7 +33,6 @@ function getTrading(req, res) {
             console.log(err);
             return res.send(500, err);
         }
-
         res.send(result);
     });
 }
