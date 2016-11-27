@@ -27,8 +27,6 @@ function addFavoritStock()
         },
         success:function(data) {
             alert('complete add favorite stock');
-            console.log(data);
-            alert('add complete');
         },
         error:function() {
             alert('error');
@@ -47,8 +45,6 @@ function findTrading()
         },
         success:function(data) {
             alert('complete find trading');
-            _tradingData = data;
-            refreshData(_tradingData);
         },
         error:function(err) {
             console.log(err);
@@ -69,8 +65,6 @@ function editTrading()
         },
         success:function(data) {
             alert('complete edit trading');
-            _tradingData = data;
-            refreshData(_tradingData);
         },
         error:function(err) {
             console.log(err);
@@ -97,7 +91,6 @@ function addButton() {
     });
 
     $("#btn_add_favorite").click(function() {
-        console.log('add favorite stock');
         addFavoritStock();
     });
 }
