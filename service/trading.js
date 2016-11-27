@@ -7,6 +7,90 @@ var otplib = require('../lib/otp');
 var moment = require('moment');
 var request = require('../lib/request');
 
+exports.getTradingList = function(param, callback) {
+    sync.fiber(function() {
+        var result = [];
+        var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
+        if(param.type === 'favorite') {
+            result = sync.await(exports.filterFavoriteStock(tradingList, sync.defer()));
+        } else if(param.type === 'kosdaq' || param.type === 'kospi') {
+            result = sync.await(exports.filterBestStock("20" + param.start, param.type, tradingList, sync.defer()));
+        }
+        
+        return result;
+
+    }, function(err, res) {
+        callback(err, res);
+    });
+};
+
+exports.getTrading = function(param, callback) {
+    tradinglib.getTrading(param, callback);
+};
+
+exports.findTrading = function(param, callback) {
+    var today = moment();
+    sync.fiber(function() {
+        var stocklist = [];
+        stocklist.push(sync.await(stocklistlib.getStock(param.isu_nm, sync.defer())));
+        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
+        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
+        var trading = sync.await(tradinglib.getTrading(param, sync.defer()));
+        return trading;
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    });
+};
+
+exports.editTrading = function(param, callback) {
+    sync.fiber(function() {
+        sync.await(tradinglib.editTrading(param, sync.defer()));
+
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    })
+};
+
+exports.findTradingList = function(typelist, callback) {
+
+    sync.fiber(function() {
+        console.log('Find Trading');
+        var today = moment();
+        var stocklist = [];
+        if(typelist.contains('favorite')) {
+
+            //관심 종목
+            var favoriteStockList = sync.await(stocklistlib.getFavoriteStockList(sync.defer()));
+            favoriteStockList.forEach(function(favoriteStock) {
+                var isu_nm = favoriteStock.isu_nm;
+                stocklist.push(sync.await(stocklistlib.getStock(isu_nm, sync.defer())));
+            });
+
+        } else if(typelist.contains('best')) {
+            //제외 종목
+            var exceptionStockList = sync.await(stocklistlib.getExceptionStockList(sync.defer()));
+
+            //현재 시간 최대 매매 종목
+            stocklist = stocklist.concat(sync.await(stocklistlib.getAllBestStockList(today, exceptionStockList, sync.defer())));
+
+            if(global.program.develop) {
+                stocklist = debuglib.setFindTrading();
+            }
+        }
+
+        //기관 리스트 조회
+        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
+        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
+        console.log('Complete find trading');
+
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    });
+};
+
 exports.filterBestStock = function(date, type, tradingList, callback) {
     sync.fiber(function() {
 
@@ -50,80 +134,6 @@ exports.filterFavoriteStock = function(tradingList, callback) {
         return result;
 
     }, function(err, res) {
-        callback(err, res);
-    });
-};
-
-exports.getTradingList = function(param, callback) {
-    sync.fiber(function() {
-        var result = [];
-        var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
-        if(param.type === 'favorite') {
-            result = sync.await(exports.filterFavoriteStock(tradingList, sync.defer()));
-        } else if(param.type === 'kosdaq' || param.type === 'kospi') {
-            result = sync.await(exports.filterBestStock("20" + param.start, param.type, tradingList, sync.defer()));
-        }
-        
-        return result;
-
-    }, function(err, res) {
-        callback(err, res);
-    });
-};
-
-exports.getTrading = function(param, callback) {
-    tradinglib.getTrading(param, callback);
-};
-
-exports.findTrading = function(param, callback) {
-    var today = moment();
-    sync.fiber(function() {
-        var stocklist = [];
-        stocklist.push(sync.await(stocklistlib.getStock(param.isu_nm, sync.defer())));
-        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
-        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
-        var trading = sync.await(tradinglib.getTrading(param, sync.defer()));
-        return trading;
-    }, function(err, res) {
-        if(err) console.log(err);
-        callback(err, res);
-    });
-};
-
-exports.findTradingList = function(typelist, callback) {
-
-    sync.fiber(function() {
-        console.log('Find Trading');
-        var today = moment();
-        var stocklist = [];
-        if(typelist.contains('favorite')) {
-
-            //관심 종목
-            var favoriteStockList = sync.await(stocklistlib.getFavoriteStockList(sync.defer()));
-            favoriteStockList.forEach(function(favoriteStock) {
-                var isu_nm = favoriteStock.isu_nm;
-                stocklist.push(sync.await(stocklistlib.getStock(isu_nm, sync.defer())));
-            });
-
-        } else if(typelist.contains('best')) {
-            //제외 종목
-            var exceptionStockList = sync.await(stocklistlib.getExceptionStockList(sync.defer()));
-
-            //현재 시간 최대 매매 종목
-            stocklist = stocklist.concat(sync.await(stocklistlib.getAllBestStockList(today, exceptionStockList, sync.defer())));
-
-            if(global.program.develop) {
-                stocklist = debuglib.setFindTrading();
-            }
-        }
-
-        //기관 리스트 조회
-        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
-        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
-        console.log('Complete find trading');
-
-    }, function(err, res) {
-        if(err) console.log(err);
         callback(err, res);
     });
 };

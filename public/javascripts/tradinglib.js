@@ -67,15 +67,33 @@ function makeTradeTable(parameter, data) {
         //detail 버튼 추가
         createDetailButton(parameter, value, td_button);
 
-        //add button 추가
-        //createAddButton(td_button);
+        //edit 버튽 추가
+        createEditButton(parameter, value, td_button);
+
+        var td_grade = $("<td>").attr("id", "td_grade");
+        td_grade.text(value.grade || 0);
 
         tr.append(td_name);
         tr.append(td_trading_updn_rate);
         tr.append(td_trading_netaskval);
+        tr.append(td_grade);
         tr.append(td_button);
         $("#tbody_trading_container").append(tr);
     });
+}
+
+function createEditButton(parameter, value, td_button)
+{
+    var button_edit = $("<input>")
+        .attr("type", "button")
+        .attr("id", "btn_edit" )
+        .attr("class", "btn btn-primary")
+        .attr("style", "margin-left: 10px")
+        .val('EDIT');
+    button_edit.click(function() {
+        clickEditButton(parameter, value);
+    });
+    td_button.append(button_edit);
 }
 
 function createDetailButton(parameter, value, td_button)
@@ -83,7 +101,7 @@ function createDetailButton(parameter, value, td_button)
     var button_detail = $("<input>")
         .attr("type", "button")
         .attr("id", "btn_detail" )
-        .attr("class", "btn btn-danger")
+        .attr("class", "btn btn-primary")
         .val('DETAIL');
     button_detail.click(function() {
         clickDetailButton(parameter, value);
@@ -91,18 +109,19 @@ function createDetailButton(parameter, value, td_button)
     td_button.append(button_detail);
 }
 
-function createAddButton(td_button)
-{
-    //add 버튼 추가
-    var button_add = $("<input>")
-        .attr("type", "button")
-        .attr("id", "btn_add")
-        .attr("class", "btn btn-primary")
-        .val('ADD');
-    button_add.click(function () {
-        clickAddButton(value.isu_nm);
-    });
-    td_button.append(button_add);
+function clickEditButton(parameter, stock) {
+    if(stock.buylist.length <= 0) return;
+    var pop = window.open('edittrading.html');
+    pop.onload = function() {
+        var title = $(pop.document).find("#modal-title");
+        title.text = stock.isu_nm;
+
+        var isu_nm = $(pop.document).find("#isu_nm");
+        isu_nm.val(stock.isu_nm);
+
+        var edit_start = $(pop.document).find("#edit_start");
+        edit_start.val(parameter.edit_start);
+    };
 }
 
 function clickDetailButton(parameter, stock) {
@@ -118,23 +137,6 @@ function clickDetailButton(parameter, stock) {
         var edit_start = $(pop.document).find("#edit_start");
         edit_start.val(parameter.edit_start);
     };
-}
-
-function clickAddButton(isu_nm) {
-    $.ajax({
-        url: '/stock/favorite',
-        type: 'post',
-        data: {
-            isu_nm: isu_nm
-        },
-        success:function(data) {
-            console.log(data);
-            alert('add complete');
-        },
-        error:function() {
-            alert('error');
-        }
-    });
 }
 
 function makeChart(element, stock)

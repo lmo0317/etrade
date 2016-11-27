@@ -27,7 +27,7 @@ function init() {
         
         //거래 정보 요청
         getTrading();
-        
+
         //1분에 한번씩 process 호출
         setInterval(process, 1000 * 60);
 
@@ -66,26 +66,6 @@ function getTrading()
     $.ajax({
         url: '/trading',
         type: 'get',
-        data: {
-            start: $("#edit_start").val(),
-            isu_nm: $("#isu_nm").val()
-        },
-        success:function(data) {
-            _tradingData = data;
-            refreshData(_tradingData);
-        },
-        error:function(err) {
-            console.log(err);
-            alert(err.responseText);
-        }
-    });
-}
-
-function findTrading()
-{
-    $.ajax({
-        url: '/trading',
-        type: 'post',
         data: {
             start: $("#edit_start").val(),
             isu_nm: $("#isu_nm").val()

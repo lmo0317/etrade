@@ -1,15 +1,35 @@
 var tradingService = require('../service/trading');
+var moment = require('moment');
 
 exports.delegate = function(app) {
     console.info('trading delegate');
     app.get('/tradinglist', getTradingList);
     app.get('/trading', getTrading);
-    app.post('/trading', findTrading);
+    app.put('/trading', editTrading);
+    app.post('/trading/find', findTrading);
 };
 
-function findTrading(req, res) {
+function editTrading(req, res) {
     var param = {
         start: req.body.start,
+        isu_nm: req.body.isu_nm,
+        grade: req.body.grade
+    };
+
+    tradingService.editTrading(param, function(err, result) {
+        if(err) {
+            console.log(err);
+            return res.send(500, err);
+        }
+        res.send(result);
+    });
+}
+
+function findTrading(req, res) {
+    var today = moment();
+
+    var param = {
+        start: today.format("YYMMDD"),
         isu_nm: req.body.isu_nm
     };
 

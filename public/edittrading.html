@@ -19,7 +19,7 @@
     <script type="text/javascript" src="javascripts/util.js"></script>
     <script type="text/javascript" src="javascripts/stringlib.js"></script>
     <script type="text/javascript" src="javascripts/tradinglib.js"></script>
-    <script type="text/javascript" src="javascripts/detailtrading.js"></script>
+    <script type="text/javascript" src="javascripts/edittrading.js"></script>
 
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -35,11 +35,10 @@
 <body>
 
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-title">Detail Page</h4>
+        <h4 class="modal-title" id="modal-title">Edit Page</h4>
     </div>
 
     <div class="modal-body" id="modal-body">
-        <div id="detail_chart_div"></div>
         <div>
             <input type="text" class="form-control" id="edit_start" placeholder="160505" name="datepicker">
         </div>
@@ -48,20 +47,25 @@
             <input type="text" class="form-control" id="isu_nm" placeholder="삼성전자">
         </div>
 
-        <div id="div_button" style="margin-top: 10px">
-            <button id="btn_search" type="button" class="btn btn-primary btn-lg btn-block">검색</button>
+        <div style="margin-top: 10px">
+            <select class="form-control" id="grade">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
         </div>
 
-        <table class ="table table-striped">
-            <thead>
-            <tr>
-                <th> 시간 </th>
-                <th> 등락률 </th>
-                <th> 거래대금 </th>
-            </tr>
-            </thead>
-            <tbody id="tbody_trading_detail_container"></tbody>
-        </table>
+        <div id="div_button" style="margin-top: 10px">
+            <button id="btn_edit" type="button" class="btn btn-primary btn-lg btn-block">변경</button>
+        </div>
+
+        <div id="div_button" style="margin-top: 10px">
+            <button id="btn_add_favorite" type="button" class="btn btn-primary btn-lg btn-block">관심종목 추가</button>
+        </div>
+
+        <div id="div_button" style="margin-top: 10px">
+            <button id="btn_find" type="button" class="btn btn-danger btn-lg btn-block">바로 찾기</button>
+        </div>
     </div>
 </body>
 </html>
