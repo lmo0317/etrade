@@ -7,6 +7,8 @@ var otplib = require('../lib/otp');
 var moment = require('moment');
 var request = require('../lib/request');
 
+var IGNORE_GRADE = 3;
+
 exports.getTradingList = function(param, callback) {
     sync.fiber(function() {
         var result = [];
@@ -95,6 +97,20 @@ exports.findTradingList = function(param, callback) {
     });
 };
 
+exports.filterIgnoreGrade = function(tradinglist) {
+    var result  = tradinglist.filter(function(trading) {
+        return trading.grade != IGNORE_GRADE;
+    });
+    return result;
+};
+
+/**
+ * 특정 grade의 stock만 얻어온다.
+ * @param grade
+ * @param stocklist
+ * @param tradinglist
+ * @returns {Array}
+ */
 exports.filterGrade = function(grade, stocklist, tradinglist) {
     var result = [];
     stocklist.forEach(function(stock) {

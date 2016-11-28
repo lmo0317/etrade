@@ -70,6 +70,8 @@ function getTradingList(req, res) {
             return res.send(500, err);
         }
 
+        result = tradingService.filterIgnoreGrade(result);
+
         result.sort(function(a, b) {
             return b.buylist[b .buylist.length-1].netaskval - a.buylist[a.buylist.length-1].netaskval;
         });
