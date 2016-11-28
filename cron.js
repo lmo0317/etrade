@@ -3,13 +3,10 @@
  */
 
 var cronJob = require('cron').CronJob;
-var fs = require('fs')
+var fs = require('fs');
 var sync = require('synchronize');
 var moment = require('moment');
-var tradinglib = require('./lib/trading');
-var stocklistlib = require('./lib/stocklist');
 var mongoose = require('mongoose');
-var util = require('./lib/util');
 var config = require('./config');
 var tradingService = require('./service/trading');
 var stocklistService = require('./service/stocklist');
@@ -20,28 +17,41 @@ config.init();
 mongoose.connect(global.configure.db.path);
 console.log('Start Cron');
 
-//favorite
-new cronJob(global.configure.cron.FIND_TRADING_BEST, function(){
+//find best stock
+var findBestTrading = [ { time: global.configure.cron.FIND_TRADING_BEST_TIME.GRADE_1, grade: 1 },
+                            { time: global.configure.cron.FIND_TRADING_BEST_TIME.GRADE_2, grade: 2}];
 
-    console.log('Cron Schedule Facorite Stock', moment().format("YYYYMMDDHHmm"));
-    sync.fiber(function() {
+findBestTrading.forEach(function(trading) {
+    new cronJob(trading.time, function(){
+        console.log('Cron Schedule Best Stock', moment().format("YYYYMMDDHHmm"));
+        sync.fiber(function() {
 
-        sync.await(stocklistService.findBestStocks(sync.defer()));
-        sync.await(tradingService.findTradingList(['best'], sync.defer()));
+            var param = {
+                type: 'best',
+                grade: trading.grade
+            };
 
-    }, function(err, result) {
-        if(err) return console.log(err);
-    });
+            sync.await(stocklistService.findBestStocks(sync.defer()));
+            sync.await(tradingService.findTradingList(param, sync.defer()));
 
-},null, true, 'Asia/Seoul');
+        }, function(err, result) {
+            if(err) return console.log(err);
+        });
 
-//best
+    },null, true, 'Asia/Seoul');
+});
+
+//find favorite stock
 new cronJob(global.configure.cron.FIND_TRADING_FAVORITE, function(){
 
-    console.log('Cron Schedule Best Stock', moment().format("YYYYMMDDHHmm"));
+    console.log('Cron Schedule Favorite Stock', moment().format("YYYYMMDDHHmm"));
     sync.fiber(function() {
 
-        sync.await(tradingService.findTradingList(['favorite'], sync.defer()));
+        var param = {
+            type: 'favorite'
+        };
+
+        sync.await(tradingService.findTradingList(param, sync.defer()));
 
     }, function(err, result) {
         if(err) return console.log(err);

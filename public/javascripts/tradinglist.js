@@ -69,13 +69,20 @@ function getTradingList()
             type: $("#type").val()
         },
         success:function(data) {
-            _tradingData = data;
+            _tradingData = filterIgnoreGrade(data);
             refreshData(_tradingData);
         },
         error:function(err) {
             console.log(err);
             alert(err.responseText);
         }
+    });
+}
+
+function filterIgnoreGrade(data)
+{
+    return data.filter(function(_data) {
+        return _data.grade != 3;
     });
 }
 

@@ -53,14 +53,15 @@ exports.editTrading = function(param, callback) {
     })
 };
 
-exports.findTradingList = function(typelist, callback) {
+exports.findTradingList = function(param, callback) {
 
     sync.fiber(function() {
         console.log('Find Trading');
         var today = moment();
-        var stocklist = [];
-        if(typelist.contains('favorite')) {
+        param.start = today.format("YYMMDD");
 
+        var stocklist = [];
+        if(param.type === 'favorite') {
             //관심 종목
             var favoriteStockList = sync.await(stocklistlib.getFavoriteStockList(sync.defer()));
             favoriteStockList.forEach(function(favoriteStock) {
@@ -68,7 +69,7 @@ exports.findTradingList = function(typelist, callback) {
                 stocklist.push(sync.await(stocklistlib.getStock(isu_nm, sync.defer())));
             });
 
-        } else if(typelist.contains('best')) {
+        } else if(param.type === 'best') {
             //제외 종목
             var exceptionStockList = sync.await(stocklistlib.getExceptionStockList(sync.defer()));
 
@@ -76,8 +77,11 @@ exports.findTradingList = function(typelist, callback) {
             stocklist = stocklist.concat(sync.await(stocklistlib.getAllBestStockList(today, exceptionStockList, sync.defer())));
 
             if(global.program.develop) {
-                stocklist = debuglib.setFindTrading();
+                stocklist = debuglib.setFindTrading(stocklist);
             }
+
+            var tradinglist = sync.await(tradinglib.getTradingList(param, sync.defer()));
+            stocklist = exports.filterGrade(param.grade, stocklist, tradinglist, sync.defer());
         }
 
         //기관 리스트 조회
@@ -89,6 +93,32 @@ exports.findTradingList = function(typelist, callback) {
         if(err) console.log(err);
         callback(err, res);
     });
+};
+
+exports.filterGrade = function(grade, stocklist, tradinglist) {
+    var result = [];
+    stocklist.forEach(function(stock) {
+
+        //저장되어있는 stock의 grade를 얻어온다. 거래 리스트가 없을경우 무조건 검색
+        var _grade = exports.getGrade(tradinglist, stock.isu_nm);
+        if(_grade === -1 || _grade === grade) {
+            result.push(stock);
+        }
+    });
+
+    return result;
+};
+
+exports.getGrade = function(tradinglist, isu_nm) {
+    for(var i = 0; i<tradinglist.length; i++)
+    {
+        var trading = tradinglist[i];
+        if(trading.isu_nm === isu_nm) {
+            return trading.grade;
+        }
+    }
+
+    return -1;
 };
 
 exports.filterBestStock = function(date, type, tradingList, callback) {

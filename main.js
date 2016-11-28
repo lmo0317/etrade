@@ -20,9 +20,15 @@ console.log('start cron');
     console.log('START MAIN TEST');
     sync.fiber(function () {
 
+        var param = {};
         sync.await(stocklistService.findBestStocks(sync.defer()));
-        sync.await(tradingService.findTradingList(['favorite'], sync.defer()));
-        sync.await(tradingService.findTradingList(['best'], sync.defer()));
+
+        param.type = 'favorite';
+        sync.await(tradingService.findTradingList(param, sync.defer()));
+
+        param.type = 'best';
+        param.grade = 1;
+        sync.await(tradingService.findTradingList(param, sync.defer()));
 
     }, function (err, result) {
         if (err) return console.log(err);

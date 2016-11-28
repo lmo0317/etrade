@@ -63,7 +63,11 @@ bot.on('message', function(data) {
 
 				});
 			} else if(data.text === '추천' || data.text === 'ㅊㅊ') {
-				sync.await(tradingService.findTradingList(['favorite'], sync.defer()));
+                var param = {
+                	type: 'favorite'
+				};
+
+				sync.await(tradingService.findTradingList(param, sync.defer()));
 				params.channel = 'favorite';
 				slackbotlib.sendRecommendStockData(bot, params, function(err, res) {
 					console.log('comple favorite send');
