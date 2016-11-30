@@ -118,8 +118,17 @@ function makeTradeTable(parameter, data) {
         //delete 버튼 추가
         createDeleteButton(stock, td_button);
 
-        var td_grade = $("<td>").attr("id", "td_grade");
-        td_grade.text(stock.grade || 0);
+        var td_grade = $("<td>").attr("id", "td_grade").attr("width", "200");
+        var input_grade = $("<input>").attr("id", "after")
+                                        .attr("type", "number")
+                                        .attr("value", stock.grade)
+                                        .attr("min", "1")
+                                        .attr("max", "3")
+                                        .attr("class", "form-control");
+        td_grade.append(input_grade);
+        input_grade.bootstrapNumber();
+
+        //td_grade.text(stock.grade || 0);
 
         tr.append(td_name);
         tr.append(td_trading_updn_rate);
