@@ -6,10 +6,10 @@ redis:
   port: 6379
 cron:
   FIND_TRADING_BEST_TIME :
-    GRADE_1: '30 */5 9-18 * * 1-5'
-    GRADE_2: '30 */20 9-18 * * 1-5'
-  FIND_TRADING_FAVORITE : '30 */5 9-18 * * 1-5'
-  SEND_TRADING_FAVORITE : '0 */1 9-18 * * 1-5'
+    GRADE_1: '30 */5 9-16 * * 1-5'
+    GRADE_2: '30 */20 9-16 * * 1-5'
+  FIND_TRADING_FAVORITE : '30 */5 9-16 * * 1-5'
+  SEND_TRADING_FAVORITE : '0 */1 9-16 * * 1-5'
 autoadd:
   min: 500000000
 log:
