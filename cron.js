@@ -18,8 +18,9 @@ mongoose.connect(global.configure.db.path);
 console.log('Start Cron');
 
 //find best stock
-var findBestTrading = [ { time: global.configure.cron.FIND_TRADING_BEST_TIME.GRADE_1, grade: 1 },
-                            { time: global.configure.cron.FIND_TRADING_BEST_TIME.GRADE_2, grade: 2}];
+var findBestTrading = [{ time: global.configure.cron.FIND_TRADING_BEST_TIME.GRADE_1, grade: 1 },
+                        { time: global.configure.cron.FIND_TRADING_BEST_TIME.GRADE_2, grade: 2 },
+                        { time: global.configure.cron.FIND_TRADING_BEST_TIME.GRADE_3, grade: 3 }];
 
 findBestTrading.forEach(function(trading) {
     new cronJob(trading.time, function(){

@@ -183,11 +183,10 @@ function createDetailButton(stock, td_button)
 function deleteStock(stock, callback) {
     $.ajax({
         url: '/trading',
-        type: 'put',
+        type: 'delete',
         data: {
             start: $("#edit_start").val(),
-            isu_nm: stock.isu_nm,
-            grade: 3
+            isu_nm: stock.isu_nm
         },
         success: function (data) {
             alert('complete edit trading');

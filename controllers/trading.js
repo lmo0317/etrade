@@ -6,6 +6,7 @@ exports.delegate = function(app) {
     app.get('/tradinglist', getTradingList);
     app.get('/trading', getTrading);
     app.put('/trading', editTrading);
+    app.delete('/trading', removeTrading);
     app.post('/trading/find', findTrading);
 };
 
@@ -17,6 +18,21 @@ function editTrading(req, res) {
     };
 
     tradingService.editTrading(param, function(err, result) {
+        if(err) {
+            console.log(err);
+            return res.send(500, err);
+        }
+        res.send(result);
+    });
+}
+
+function removeTrading(req, res) {
+    var param = {
+        start: req.body.start,
+        isu_nm: req.body.isu_nm
+    };
+
+    tradingService.removeTrading(param, function(err, result) {
         if(err) {
             console.log(err);
             return res.send(500, err);
@@ -70,7 +86,7 @@ function getTradingList(req, res) {
             return res.send(500, err);
         }
 
-        result = tradingService.filterIgnoreGrade(result);
+        result = tradingService.filterRemove(result);
 
         result.sort(function(a, b) {
             return b.buylist[b .buylist.length-1].netaskval - a.buylist[a.buylist.length-1].netaskval;

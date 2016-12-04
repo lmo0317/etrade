@@ -7,8 +7,6 @@ var otplib = require('../lib/otp');
 var moment = require('moment');
 var request = require('../lib/request');
 
-var IGNORE_GRADE = 3;
-
 exports.getTradingList = function(param, callback) {
     sync.fiber(function() {
         var result = [];
@@ -45,6 +43,15 @@ exports.findTrading = function(param, callback) {
     });
 };
 
+exports.removeTrading = function(param, callback) {
+    sync.fiber(function() {
+        sync.await(tradinglib.removeTrading(param, sync.defer()));
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    });
+};
+
 exports.editTrading = function(param, callback) {
     sync.fiber(function() {
         sync.await(tradinglib.editTrading(param, sync.defer()));
@@ -52,7 +59,7 @@ exports.editTrading = function(param, callback) {
     }, function(err, res) {
         if(err) console.log(err);
         callback(err, res);
-    })
+    });
 };
 
 exports.findTradingList = function(param, callback) {
@@ -97,9 +104,12 @@ exports.findTradingList = function(param, callback) {
     });
 };
 
-exports.filterIgnoreGrade = function(tradinglist) {
+exports.filterRemove = function(tradinglist) {
     var result  = tradinglist.filter(function(trading) {
-        return trading.grade != IGNORE_GRADE;
+        if(trading.remove && trading.remove === true) {
+            return false;
+        }
+        return true;
     });
     return result;
 };
