@@ -108,7 +108,7 @@ function makeTradeTable(parameter, data) {
         //delete 버튼 추가
         createDeleteButton(stock, td_button);
 
-        var td_grade = $("<td>").attr("id", "td_grade").attr("width", "200");
+        var td_grade = $("<td>").attr("id", "td_grade").attr("width", "120");
         var input_grade = $("<input>").attr("id", "input_grade")
                                         .attr("type", "number")
                                         .attr("value", stock.grade)
