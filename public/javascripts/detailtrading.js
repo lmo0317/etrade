@@ -81,6 +81,42 @@ function getTrading()
     });
 }
 
+function addFavoritStock()
+{
+    $.ajax({
+        url: '/stock/favorite',
+        type: 'post',
+        data: {
+            isu_nm: $("#isu_nm").val()
+        },
+        success:function(data) {
+            alert('complete add favorite stock');
+        },
+        error:function() {
+            alert('error');
+        }
+    });
+}
+
+function findTrading()
+{
+    $.ajax({
+        url: '/trading/find',
+        type: 'post',
+        data: {
+            start: $("#edit_start").val(),
+            isu_nm: $("#isu_nm").val()
+        },
+        success:function(data) {
+            alert('complete find trading');
+        },
+        error:function(err) {
+            console.log(err);
+            alert(err.responseText);
+        }
+    });
+}
+
 function addButton() {
 
     $("#btn_search").click(function(){
@@ -89,6 +125,10 @@ function addButton() {
 
     $("#btn_find").click(function(){
         findTrading();
+    });
+
+    $("#btn_add_favorite").click(function() {
+        addFavoritStock();
     });
 }
 

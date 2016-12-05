@@ -78,13 +78,6 @@ function getTradingList()
     });
 }
 
-function addButton() {
-
-    $("#btn_search").click(function(){
-        getTradingList();
-    });
-}
-
 function makeTradeTable(parameter, data) {
 
     data.forEach(function(stock) {
@@ -112,22 +105,34 @@ function makeTradeTable(parameter, data) {
         //detail 버튼 추가
         createDetailButton(stock, td_button);
 
-        //edit 버튼 추가
-        createEditButton(stock, td_button);
-        
         //delete 버튼 추가
         createDeleteButton(stock, td_button);
 
         var td_grade = $("<td>").attr("id", "td_grade").attr("width", "200");
-        var input_grade = $("<input>").attr("id", "after")
+        var input_grade = $("<input>").attr("id", "input_grade")
                                         .attr("type", "number")
                                         .attr("value", stock.grade)
                                         .attr("min", "1")
                                         .attr("max", "3")
                                         .attr("class", "form-control");
         td_grade.append(input_grade);
-        input_grade.bootstrapNumber();
+        input_grade.bootstrapNumber({
+            up: function(value) {
+                console.log(value);
+                editTrading(stock, value);
+            },
+            down: function(value) {
+                console.log(value);
+                editTrading(stock, value);
+            }
+        });
 
+        /*
+        input_grade.onLoad(function() {
+            console.log('onLoad');
+            console.log(input_grade);
+        });
+        */
         //td_grade.text(stock.grade || 0);
 
         tr.append(td_name);
@@ -136,6 +141,13 @@ function makeTradeTable(parameter, data) {
         tr.append(td_grade);
         tr.append(td_button);
         $("#tbody_trading_container").append(tr);
+    });
+}
+
+function addButton() {
+
+    $("#btn_search").click(function(){
+        getTradingList();
     });
 }
 
@@ -151,20 +163,6 @@ function createDeleteButton(stock, td_button)
         clickDeleteButton(stock);
     });
     td_button.append(button_delete);
-}
-
-function createEditButton(stock, td_button)
-{
-    var button_edit = $("<input>")
-        .attr("type", "button")
-        .attr("id", "btn_edit" )
-        .attr("class", "btn btn-primary")
-        .attr("style", "margin-left: 10px")
-        .val('EDIT');
-    button_edit.click(function() {
-        clickEditButton(stock);
-    });
-    td_button.append(button_edit);
 }
 
 function createDetailButton(stock, td_button)
@@ -200,25 +198,30 @@ function deleteStock(stock, callback) {
     });
 }
 
+function editTrading(stock, value)
+{
+    $.ajax({
+        url: '/trading',
+        type: 'put',
+        data: {
+            start: $("#edit_start").val(),
+            isu_nm: stock.isu_nm,
+            grade: value
+        },
+        success:function(data) {
+            console.log('complete edit trading');
+        },
+        error:function(err) {
+            console.log(err);
+            alert(err.responseText);
+        }
+    });
+}
+
 function clickDeleteButton(stock) {
     deleteStock(stock, function() {
         getTradingList();
     });
-}
-
-function clickEditButton(stock) {
-    if(stock.buylist.length <= 0) return;
-    var pop = window.open('edittrading.html');
-    pop.onload = function() {
-        var title = $(pop.document).find("#modal-title");
-        title.text = stock.isu_nm;
-
-        var isu_nm = $(pop.document).find("#isu_nm");
-        isu_nm.val(stock.isu_nm);
-
-        var edit_start = $(pop.document).find("#edit_start");
-        edit_start.val($("#edit_start").val());
-    };
 }
 
 function clickDetailButton(stock) {
