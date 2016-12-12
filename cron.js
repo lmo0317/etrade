@@ -26,13 +26,12 @@ var findBestTrading = [
 ];
 
 findBestTrading.forEach(function(trading) {
-
     new cronJob(trading.time, function(){
         console.log('Cron Schedule', trading.type, trading.grade || 0, moment().format("HHmm"));
         sync.fiber(function() {
 
             var param = {
-                type: trading.time,
+                type: trading.type,
                 grade: trading.grade
             };
 
