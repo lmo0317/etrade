@@ -49,7 +49,7 @@ exports.deleteExceptionStock = function(isu_nm, callback) {
  **/
 exports.findBestStocks = function(callback) {
     sync.fiber(function() {
-        console.log('Find Best Stocks');
+        console.log('Find Best Stocks List');
         var code = sync.await(otplib.requestBestStocksOTP(sync.defer())).text;
         var today = moment();
 

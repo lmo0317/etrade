@@ -172,18 +172,13 @@ function makeMemberChart(element, stock)
     stock = deepCopy(stock);
     convertProperData('member_chart', stock);
 
-    var buylist = stock.buylist;
-    if(buylist.length === 0) {
-        return;
-    }
-
     //graph전용 div 생성
     var div_graph = document.createElement("div");
     div_graph.id = "div_graph";
     element.append(div_graph);
 
     //memberlist 얻어온다.
-    var memberlist = buylist[buylist.length - 1].memberlist;
+    var memberlist = stock.memberlist;
 
     //data 세팅
     var dataTable = [];

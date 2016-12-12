@@ -31,28 +31,26 @@ function convertProperData(type, stock)
             return parseInt(a.time, 10) - parseInt(b.time,10);
         });
     } else if(type === 'member_chart') {
-        if(buylist.length > 0) {
-            var memberlist = buylist[buylist.length - 1].memberlist;
+        var memberlist = stock.memberlist;
 
-            //0이하는 버린다.
-            memberlist = memberlist.filter(function(member) {
-                var netaskval = parseInt(member.netaskval.replace(/,/g, ""),10);
-                if(parseInt(netaskval,10) > 0) {
-                    return true;
-                }
-            });
+        //0이하는 버린다.
+        memberlist = memberlist.filter(function(member) {
+            var netaskval = parseInt(member.netaskval.replace(/,/g, ""),10);
+            if(parseInt(netaskval,10) > 0) {
+                return true;
+            }
+        });
 
-            //내림 차순 정렬
-            memberlist = memberlist.sort(function(a, b) {
-                var v1 = parseInt(a.netaskval.replace(/,/g, ""),10);
-                var v2 = parseInt(b.netaskval.replace(/,/g, ""),10);
-                return v2- v1;
-            });
+        //내림 차순 정렬
+        memberlist = memberlist.sort(function(a, b) {
+            var v1 = parseInt(a.netaskval.replace(/,/g, ""),10);
+            var v2 = parseInt(b.netaskval.replace(/,/g, ""),10);
+            return v2- v1;
+        });
 
-            //상위 15개 까지만 구한다.
-            memberlist = memberlist.splice(0, 15);
-            buylist[buylist.length - 1].memberlist = memberlist;
-        }
+        //상위 15개 까지만 구한다.
+        memberlist = memberlist.splice(0, 15);
+        stock.memberlist = memberlist;
     }
 
     stock.buylist = buylist;

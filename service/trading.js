@@ -65,7 +65,7 @@ exports.editTrading = function(param, callback) {
 exports.findTradingList = function(param, callback) {
 
     sync.fiber(function() {
-        console.log('Find Trading');
+        console.log('Find Trading', param);
         var today = moment();
         param.start = today.format("YYMMDD");
 
@@ -306,11 +306,10 @@ function makeTradingData(today, stocklist, memberlist, callback)
                 netaskvol: netaskvolSum,
                 netaskvalhidden: netaskvalSumHidden,
                 netaskvolhidden: netaskvolSumHidden,
-                stockinfo: stockInfo,
-                memberlist: tradingMemberList
+                stockinfo: stockInfo
             };
 
-            sync.await(tradinglib.addTrading(trading, buy, sync.defer()));
+            sync.await(tradinglib.addTrading(trading, buy, tradingMemberList, sync.defer()));
 
             //거래 대금 순매수가 정해진 값 이상일경우 관심종목에 추가한다.
             /*
