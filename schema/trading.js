@@ -7,4 +7,4 @@ exports.TradingSchema = new mongoose.Schema({
     grade: {type: Number, require:true, default:3},
     remove: {type: Boolean, require:true, default:false},
     buylist: {type: Array}
-});
+}, {versionKey: false});
