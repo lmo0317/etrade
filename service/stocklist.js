@@ -49,7 +49,7 @@ exports.deleteExceptionStock = function(isu_nm, callback) {
  **/
 exports.findBestStocks = function(callback) {
     sync.fiber(function() {
-        console.log('Find Best Stocks List');
+        console.log('Start [ Find Best Stocks List ]');
         var code = sync.await(otplib.requestBestStocksOTP(sync.defer())).text;
         var today = moment();
 
@@ -57,7 +57,7 @@ exports.findBestStocks = function(callback) {
         sync.await(request.requestBestStock(code, today, 'kospi', sync.defer()));
 
     }, function(err, res) {
-        console.log('Complete find stocks');
+        console.log('Complete [ Find Best Stocks List ]');
         callback(err, res);
     });
 };

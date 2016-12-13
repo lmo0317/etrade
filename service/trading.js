@@ -65,7 +65,7 @@ exports.editTrading = function(param, callback) {
 exports.findTradingList = function(param, callback) {
 
     sync.fiber(function() {
-        console.log('Find Trading', param);
+        console.log('Start [ Find Trading ]', param);
         var today = moment();
         param.start = today.format("YYMMDD");
 
@@ -96,7 +96,7 @@ exports.findTradingList = function(param, callback) {
         //기관 리스트 조회
         var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
         sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
-        console.log('Complete find trading');
+        console.log('Complete [ Find Trading ]');
 
     }, function(err, res) {
         if(err) console.log(err);
