@@ -48,8 +48,10 @@ function process()
 function refreshData(tradingData)
 {
     var chart = $("#detail_chart_div");
+    var memberChart = $("#member_chart_div");
     var tbody = $("#tbody_trading_detail_container");
     chart.html('');
+    memberChart.html('');
     tbody.html('');
 
     if(!tradingData) {
@@ -58,7 +60,7 @@ function refreshData(tradingData)
     }
 
     $("#edit_start").val(tradingData.date.substr(2,6));
-    makeDetailPage(chart, tbody, tradingData);
+    makeDetailPage(chart, memberChart, tbody, tradingData);
 }
 
 function getTrading()
@@ -165,6 +167,47 @@ function makeDetailTable(tableTarget, stock) {
     });
 }
 
+function makeMemberChart(element, stock)
+{
+    stock = deepCopy(stock);
+    convertProperData('member_chart', stock);
+
+    var buylist = stock.buylist;
+    if(buylist.length === 0) {
+        return;
+    }
+
+    //graph전용 div 생성
+    var div_graph = document.createElement("div");
+    div_graph.id = "div_graph";
+    element.append(div_graph);
+
+    //memberlist 얻어온다.
+    var memberlist = buylist[buylist.length - 1].memberlist;
+
+    //data 세팅
+    var dataTable = [];
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', "기관");
+    data.addColumn('number', "거래대금");
+    for(var i=0; i<memberlist.length; i++)
+    {
+        var netaskval = memberlist[i].netaskval.replace(/,/g, "");
+        dataTable.push([memberlist[i].mbr_nm, parseInt(netaskval,10)]);
+    }
+    data.addRows(dataTable);
+
+    //option 설정
+    var title = stock.isu_nm;
+    var options = {
+        title: title
+    };
+
+    //차트 생성
+    var chart = new google.visualization.ColumnChart(div_graph);
+    chart.draw(data, options);
+}
+
 function makeChart(element, stock)
 {
     stock = deepCopy(stock);
@@ -221,8 +264,9 @@ function makeChart(element, stock)
     chart.draw(data, options);
 }
 
-function makeDetailPage(chartTarget, tableTarget, stock)
+function makeDetailPage(chartTarget, memberChartTarget, tableTarget, stock)
 {
     makeChart(chartTarget, stock);
+    makeMemberChart(memberChartTarget, stock);
     makeDetailTable(tableTarget, stock);
 }

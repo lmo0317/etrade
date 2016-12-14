@@ -306,7 +306,8 @@ function makeTradingData(today, stocklist, memberlist, callback)
                 netaskvol: netaskvolSum,
                 netaskvalhidden: netaskvalSumHidden,
                 netaskvolhidden: netaskvolSumHidden,
-                stockinfo: stockInfo
+                stockinfo: stockInfo,
+                memberlist: tradingMemberList
             };
 
             sync.await(tradinglib.addTrading(trading, buy, sync.defer()));
