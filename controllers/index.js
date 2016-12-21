@@ -5,7 +5,7 @@ var fs = require('fs');
 exports.delegate = function(app)
 {
     var controllers = [
-        'trading', 'stocklist', 'memberlist'
+        'trading', 'stocklist', 'memberlist', 'manager'
     ];
 
     controllers.forEach(function(c) {
