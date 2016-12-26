@@ -326,6 +326,7 @@ function makeTradingData(today, stocklist, memberlist, callback)
              }
              */
             //TODO : 거래 대금 순매수가 정해진 값 이상일경우 grade를 올린다.
+            //TEST
         }
 
     }, function(err, res) {
