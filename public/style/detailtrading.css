@@ -1,0 +1,6 @@
+.member_chart_div_left {
+    float:left; width:50%;
+}
+.member_chart_div_right {
+    float:right; display:inline-block; width:50%;
+}

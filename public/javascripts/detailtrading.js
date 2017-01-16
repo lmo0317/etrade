@@ -47,20 +47,13 @@ function process()
 
 function refreshData(tradingData)
 {
-    var chart = $("#detail_chart_div");
-    var memberChart = $("#member_chart_div");
-    var tbody = $("#tbody_trading_detail_container");
-    chart.html('');
-    memberChart.html('');
-    tbody.html('');
-
     if(!tradingData) {
         $("#edit_start").val(moment().format("YYMMDD"));
         return;
     }
 
     $("#edit_start").val(tradingData.date.substr(2,6));
-    makeDetailPage(chart, memberChart, tbody, tradingData);
+    makeDetailPage(tradingData);
 }
 
 function getTrading()
@@ -167,18 +160,39 @@ function makeDetailTable(tableTarget, stock) {
     });
 }
 
-function makeMemberChart(element, stock)
+function makeMemberChart(element, stock, type)
 {
+    var selectiveValue = {
+        sell: {
+            title: '매도 상위',
+            color: 'blue',
+            sortkey: 'askval'
+        },
+        buy: {
+            title: '매수 상위',
+            color: 'red',
+            sortkey: 'bidval'
+        }
+    };
+
+    //stock이 오염되지 않게 deepcopy
     stock = deepCopy(stock);
+    
+    //member_chart에 적절하게 변환
     convertProperData('member_chart', stock);
 
-    //graph전용 div 생성
+    //그래프 전용 div 생성
     var div_graph = document.createElement("div");
     div_graph.id = "div_graph";
     element.append(div_graph);
 
     //memberlist 얻어온다.
     var memberlist = stock.memberlist;
+
+    //type에 맞는 정렬방식 (매도기준, 매수 기준) 으로 정렬 한뒤 상위 5개만 추린다.
+    memberlist = memberlist.sort(function(lhs, rhs) {
+        return parseInt(rhs[selectiveValue[type].sortkey].replace(/,/g, ""),10) - parseInt(lhs[selectiveValue[type].sortkey].replace(/,/g, ""),10);
+    }).splice(0,5);
 
     //data 세팅
     var dataTable = [];
@@ -193,9 +207,10 @@ function makeMemberChart(element, stock)
     data.addRows(dataTable);
 
     //option 설정
-    var title = stock.isu_nm;
+    var title = selectiveValue[type].title;
     var options = {
-        title: title
+        title: title,
+        colors: [selectiveValue[type].color]
     };
 
     //차트 생성
@@ -259,9 +274,20 @@ function makeChart(element, stock)
     chart.draw(data, options);
 }
 
-function makeDetailPage(chartTarget, memberChartTarget, tableTarget, stock)
+function makeDetailPage(stock)
 {
-    makeChart(chartTarget, stock);
-    makeMemberChart(memberChartTarget, stock);
-    makeDetailTable(tableTarget, stock);
+    var chart = $("#detail_chart_div");
+    var memberChartBuy = $("#member_chart_buy_div");
+    var memberChartSell = $("#member_chart_sell_div");
+    var tbody = $("#tbody_trading_detail_container");
+
+    chart.html('');
+    memberChartBuy.html('');
+    memberChartSell.html('');
+    tbody.html('');
+
+    makeChart(chart, stock);
+    makeMemberChart(memberChartBuy, stock, 'sell');
+    makeMemberChart(memberChartSell, stock, 'buy');
+    makeDetailTable(tbody, stock);
 }
