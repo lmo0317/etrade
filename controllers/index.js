@@ -13,9 +13,14 @@ exports.delegate = function(app)
     });
 
     app.get('/', getIndex);
+    app.get('/manager', getManager);
     console.info('index complete');
 };
 
 function getIndex(req, res) {
     res.sendfile('public/tradinglist.html');
+}
+
+function getManager(req, res) {
+    res.sendfile('public/manager.html');
 }
