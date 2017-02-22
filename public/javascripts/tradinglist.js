@@ -6,7 +6,8 @@ $(document).ready(function (){
 
 function init() {
 
-    setInterval(process, 1000 * 60);
+    //1분에 한번씩 process 호출
+    //setInterval(process, 1000 * 60);
 
     $('input[name="datepicker"]').daterangepicker(
         {
@@ -106,6 +107,7 @@ function makeTradeTable(parameter, data) {
         createDetailButton(stock, td_button);
 
         //delete 버튼 추가
+        /*
         createDeleteButton(stock, td_button);
 
         var td_grade = $("<td>").attr("id", "td_grade").attr("width", "120");
@@ -126,6 +128,7 @@ function makeTradeTable(parameter, data) {
                 editTrading(stock, value);
             }
         });
+        */
 
         /*
         input_grade.onLoad(function() {
@@ -138,7 +141,7 @@ function makeTradeTable(parameter, data) {
         tr.append(td_name);
         tr.append(td_trading_updn_rate);
         tr.append(td_trading_netaskval);
-        tr.append(td_grade);
+        //tr.append(td_grade);
         tr.append(td_button);
         $("#tbody_trading_container").append(tr);
     });

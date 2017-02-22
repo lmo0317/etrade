@@ -29,7 +29,7 @@ function init() {
         getTrading();
 
         //1분에 한번씩 process 호출
-        setInterval(process, 1000 * 60);
+        //setInterval(process, 1000 * 60);
 
         //search 버튼 기능 부여
         addButton();
@@ -147,11 +147,7 @@ function makeDetailTable(tableTarget, stock) {
 
         //거래대금
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-        //if( exception ) {
-        //    td_trading_netaskval.text(numberWithCommas(buy.netaskvalhidden));
-        //} else {
         td_trading_netaskval.text(numberWithCommas(buy.netaskval));
-        //}
 
         tr.append(td_time);
         tr.append(td_trading_updn_rate);
@@ -201,8 +197,8 @@ function makeMemberChart(element, stock, type)
     data.addColumn('number', "거래대금");
     for(var i=0; i<memberlist.length; i++)
     {
-        var netaskval = memberlist[i].netaskval.replace(/,/g, "");
-        dataTable.push([memberlist[i].mbr_nm, parseInt(netaskval,10)]);
+        var val = memberlist[i][selectiveValue[type].sortkey].replace(/,/g, "");
+        dataTable.push([memberlist[i].mbr_nm, parseInt(val,10)]);
     }
     data.addRows(dataTable);
 
