@@ -87,20 +87,27 @@ function makeTradeTable(parameter, data) {
         var td_name = $("<td>").attr("id", "td_name");
         td_name.text(stock.isu_nm);
 
-        var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
         var stockInfo = stock.buylist[stock.buylist.length - 1].stockinfo;
-        var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0);
+        var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0); //등락률
+        var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
         td_trading_updn_rate.text(updn_rate);
 
+        //순매수
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-        var netaskval = 0;
-        if( parameter.exception ) {
-            netaskval = numberWithCommas(stock.buylist[stock.buylist.length - 1].netaskvalhidden);
-        } else {
-            netaskval = numberWithCommas(stock.buylist[stock.buylist.length - 1].netaskval);
-        }
+        var netaskval = numberWithCommas(stock.buylist[stock.buylist.length - 1].netaskval);
         td_trading_netaskval.text(netaskval);
 
+        //거래대금
+        var isu_tr_amt = stockInfo.isu_tr_amt;
+        var td_trading_isu_tr_amt = $("<td>").attr("id", "td_trading_isu_tr_amt");
+        td_trading_isu_tr_amt.text(isu_tr_amt);
+
+        //거래량
+        var isu_tr_vl = stockInfo.isu_tr_vl;
+        var td_trading_isu_tr_vl = $("<td>").attr("id", "td_trading_isu_tr_vl");
+        td_trading_isu_tr_vl.text(isu_tr_vl);
+
+        //버튼 추가
         var td_button = $("<td>").attr("id", "td_button");
 
         //detail 버튼 추가
@@ -139,8 +146,10 @@ function makeTradeTable(parameter, data) {
         //td_grade.text(stock.grade || 0);
 
         tr.append(td_name);
-        tr.append(td_trading_updn_rate);
-        tr.append(td_trading_netaskval);
+        tr.append(td_trading_updn_rate); //등락률
+        tr.append(td_trading_netaskval); //순매수
+        tr.append(td_trading_isu_tr_amt); //거래 대금
+        tr.append(td_trading_isu_tr_vl); //거래량
         //tr.append(td_grade);
         tr.append(td_button);
         $("#tbody_trading_container").append(tr);
