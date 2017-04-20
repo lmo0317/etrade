@@ -98,12 +98,12 @@ function makeTradeTable(parameter, data) {
         td_trading_netaskval.text(netaskval);
 
         //거래대금
-        var isu_tr_amt = stockInfo.isu_tr_amt;
+        var isu_tr_amt = (stockInfo && stockInfo.isu_tr_amt) || 0;
         var td_trading_isu_tr_amt = $("<td>").attr("id", "td_trading_isu_tr_amt");
         td_trading_isu_tr_amt.text(isu_tr_amt);
 
         //거래량
-        var isu_tr_vl = stockInfo.isu_tr_vl;
+        var isu_tr_vl = (stockInfo && stockInfo.isu_tr_vl) || 0;
         var td_trading_isu_tr_vl = $("<td>").attr("id", "td_trading_isu_tr_vl");
         td_trading_isu_tr_vl.text(isu_tr_vl);
 
