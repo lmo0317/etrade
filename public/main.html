@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- style -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="bootstrap/css/daterangepicker.css" rel="stylesheet">
+    <link href='style/style.css' rel='stylesheet'>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link href="style/main.css" rel="stylesheet">
+
+    <!-- jqeury -->
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
+
+    <!-- bootstrap -->
+    <script type="text/javascript" src="bootstrap/js/moment.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/daterangepicker.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <!-- srot table -->
+    <script src='javascripts/tablesort/prettify.js'></script>
+    <script src='javascripts/tablesort/src/tablesort.js'></script>
+    <script src='javascripts/tablesort/src/sorts/tablesort.date.js'></script>
+    <script src='javascripts/tablesort/src/sorts/tablesort.dotsep.js'></script>
+    <script src='javascripts/tablesort/src/sorts/tablesort.filesize.js'></script>
+    <script src='javascripts/tablesort/src/sorts/tablesort.number.js'></script>
+
+    <!-- spinner -->
+    <script type="text/javascript" src="javascripts/spinner/bootstrap-number-input.js" ></script>
+
+    <!-- script -->
+    <script type="text/javascript" src="javascripts/util.js"></script>
+    <script type="text/javascript" src="javascripts/stringlib.js"></script>
+    <script type="text/javascript" src="javascripts/tradinglib.js"></script>
+    <script type="text/javascript" src="javascripts/main.js"></script>
+    <script type="text/javascript" src="javascripts/navibar.js"></script>
+</head>
+
+<body>
+<form>
+    <div class="container">
+        <h2>주식 대장정의 수급 포착기</h2>
+        <label>주식 대장정의 관심 종목</label>
+
+        <form name="trading_form" method="post">
+            <div id="sort_table">
+                <table id="sort" class ="sort">
+                    <thead>
+                    <tr>
+                        <th> name </th>
+                        <th> 등락률 </th>
+                        <th> 순매수 </th>
+                        <th> 당일 거래대금 </th>
+                        <th> 차트누적 </th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody_trading_favorite_container"></tbody>
+                </table>
+            </div>
+        </form>
+
+        <div>
+            <div class="left-box">
+                <label>KOSDAQ</label>
+                <form name="trading_form" method="post">
+                    <div id="sort_table">
+                        <table id="sort" class ="sort">
+                            <thead>
+                            <tr>
+                                <th> name </th>
+                                <th> 등락률 </th>
+                                <th> 순매수 </th>
+                                <th> 당일 거래대금 </th>
+                                <th> 차트누적 </th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody_trading_kosdaq_container"></tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+            <div class="right-box">
+                <label>KOSPI</label>
+                <form name="trading_form" method="post">
+                    <div id="sort_table">
+                        <table id="sort" class ="sort">
+                            <thead>
+                            <tr>
+                                <th> name </th>
+                                <th> 등락률 </th>
+                                <th> 순매수 </th>
+                                <th> 당일 거래대금 </th>
+                                <th> 차트누적 </th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody_trading_kospi_container"></tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

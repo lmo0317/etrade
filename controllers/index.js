@@ -18,7 +18,7 @@ exports.delegate = function(app)
 };
 
 function getIndex(req, res) {
-    res.sendfile('public/tradinglist.html');
+    res.sendfile('public/main.html');
 }
 
 function getManager(req, res) {
