@@ -102,11 +102,6 @@ function makeTradeTable(parameter, data) {
         var td_trading_isu_tr_amt = $("<td>").attr("id", "td_trading_isu_tr_amt");
         td_trading_isu_tr_amt.text(isu_tr_amt);
 
-        //거래량
-        var isu_tr_vl = (stockInfo && stockInfo.isu_tr_vl) || 0;
-        var td_trading_isu_tr_vl = $("<td>").attr("id", "td_trading_isu_tr_vl");
-        td_trading_isu_tr_vl.text(isu_tr_vl);
-
         //버튼 추가
         var td_button = $("<td>").attr("id", "td_button");
 
@@ -149,7 +144,6 @@ function makeTradeTable(parameter, data) {
         tr.append(td_trading_updn_rate); //등락률
         tr.append(td_trading_netaskval); //순매수
         tr.append(td_trading_isu_tr_amt); //거래 대금
-        tr.append(td_trading_isu_tr_vl); //거래량
         //tr.append(td_grade);
         tr.append(td_button);
         $("#tbody_trading_container").append(tr);
