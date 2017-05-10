@@ -43,10 +43,19 @@ function getTradingList(type)
         },
         success:function(data) {
             _tradingData = data;
-            refreshData(_tradingData, type);
+            if(_tradingData.length == 0) {
+                //표시할 데이터가 없을경우 default 날짜로 다시 표시
+                date = '170510';
+                getTradingList(type);
+            } else {
+                refreshData(_tradingData, type);
+            }
         },
         error:function(err) {
             console.log(err);
+            //표시할 데이터가 없을경우 default 날짜로 다시 표시
+            date = '170510';
+            getTradingList(type);
         }
     });
 }
