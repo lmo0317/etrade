@@ -85,7 +85,11 @@ function makeTradeTable(parameter, data) {
 
         var tr = $("<tr>").attr("id", "tr_trading_list");
         var td_name = $("<td>").attr("id", "td_name");
-        td_name.text(stock.isu_nm);
+        //td_name.text(stock.isu_nm);
+        td_name.html("<a href='#'>" + stock.isu_nm + "</a>");
+        td_name.click(function() {
+            clickDetailButton(stock);
+        });
 
         var stockInfo = stock.buylist[stock.buylist.length - 1].stockinfo;
         var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0); //등락률
@@ -105,47 +109,10 @@ function makeTradeTable(parameter, data) {
         //버튼 추가
         var td_button = $("<td>").attr("id", "td_button");
 
-        //detail 버튼 추가
-        createDetailButton(stock, td_button);
-
-        //delete 버튼 추가
-        /*
-        createDeleteButton(stock, td_button);
-
-        var td_grade = $("<td>").attr("id", "td_grade").attr("width", "120");
-        var input_grade = $("<input>").attr("id", "input_grade")
-                                        .attr("type", "number")
-                                        .attr("value", stock.grade)
-                                        .attr("min", "1")
-                                        .attr("max", "3")
-                                        .attr("class", "form-control");
-        td_grade.append(input_grade);
-        input_grade.bootstrapNumber({
-            up: function(value) {
-                console.log(value);
-                editTrading(stock, value);
-            },
-            down: function(value) {
-                console.log(value);
-                editTrading(stock, value);
-            }
-        });
-        */
-
-        /*
-        input_grade.onLoad(function() {
-            console.log('onLoad');
-            console.log(input_grade);
-        });
-        */
-        //td_grade.text(stock.grade || 0);
-
         tr.append(td_name);
         tr.append(td_trading_updn_rate); //등락률
         tr.append(td_trading_netaskval); //순매수
         tr.append(td_trading_isu_tr_amt); //거래 대금
-        //tr.append(td_grade);
-        tr.append(td_button);
         $("#tbody_trading_container").append(tr);
     });
 }
@@ -153,79 +120,6 @@ function makeTradeTable(parameter, data) {
 function addButton() {
 
     $("#btn_search").click(function(){
-        getTradingList();
-    });
-}
-
-function createDeleteButton(stock, td_button)
-{
-    var button_delete = $("<input>")
-        .attr("type", "button")
-        .attr("id", "btn_edit" )
-        .attr("class", "btn btn-danger")
-        .attr("style", "margin-left: 10px")
-        .val('DELETE');
-    button_delete.click(function() {
-        clickDeleteButton(stock);
-    });
-    td_button.append(button_delete);
-}
-
-function createDetailButton(stock, td_button)
-{
-    var button_detail = $("<input>")
-        .attr("type", "button")
-        .attr("id", "btn_detail" )
-        .attr("class", "btn btn-primary")
-        .val('DETAIL');
-    button_detail.click(function() {
-        clickDetailButton(stock);
-    });
-    td_button.append(button_detail);
-}
-
-function deleteStock(stock, callback) {
-    $.ajax({
-        url: '/trading',
-        type: 'delete',
-        data: {
-            start: $("#edit_start").val(),
-            isu_nm: stock.isu_nm
-        },
-        success: function (data) {
-            alert('complete edit trading');
-            callback();
-        },
-        error: function (err) {
-            console.log(err);
-            alert(err.responseText);
-            callback();
-        }
-    });
-}
-
-function editTrading(stock, value)
-{
-    $.ajax({
-        url: '/trading',
-        type: 'put',
-        data: {
-            start: $("#edit_start").val(),
-            isu_nm: stock.isu_nm,
-            grade: value
-        },
-        success:function(data) {
-            console.log('complete edit trading');
-        },
-        error:function(err) {
-            console.log(err);
-            alert(err.responseText);
-        }
-    });
-}
-
-function clickDeleteButton(stock) {
-    deleteStock(stock, function() {
         getTradingList();
     });
 }

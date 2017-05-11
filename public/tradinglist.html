@@ -1,90 +1,81 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
 
-    <!-- style -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link href="bootstrap/css/daterangepicker.css" rel="stylesheet">
-    <link href='style/style.css' rel='stylesheet'>
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <!-- style -->
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link href="bootstrap/css/daterangepicker.css" rel="stylesheet">
+        <link href='style/style.css' rel='stylesheet'>
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
-    <!-- jqeury -->
-    <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
+        <!-- jqeury -->
+        <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
 
-    <!-- bootstrap -->
-    <script type="text/javascript" src="bootstrap/js/moment.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/daterangepicker.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://www.w3schools.com/lib/w3data.js"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+        <!-- bootstrap -->
+        <script type="text/javascript" src="bootstrap/js/moment.min.js"></script>
+        <script type="text/javascript" src="bootstrap/js/daterangepicker.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="http://www.w3schools.com/lib/w3data.js"></script>
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
-    <!-- srot table -->
-    <script src='javascripts/tablesort/prettify.js'></script>
-    <script src='javascripts/tablesort/src/tablesort.js'></script>
-    <script src='javascripts/tablesort/src/sorts/tablesort.date.js'></script>
-    <script src='javascripts/tablesort/src/sorts/tablesort.dotsep.js'></script>
-    <script src='javascripts/tablesort/src/sorts/tablesort.filesize.js'></script>
-    <script src='javascripts/tablesort/src/sorts/tablesort.number.js'></script>
+        <!-- srot table -->
+        <script src='javascripts/tablesort/prettify.js'></script>
+        <script src='javascripts/tablesort/src/tablesort.js'></script>
+        <script src='javascripts/tablesort/src/sorts/tablesort.date.js'></script>
+        <script src='javascripts/tablesort/src/sorts/tablesort.dotsep.js'></script>
+        <script src='javascripts/tablesort/src/sorts/tablesort.filesize.js'></script>
+        <script src='javascripts/tablesort/src/sorts/tablesort.number.js'></script>
 
-    <!-- spinner -->
-    <script type="text/javascript" src="javascripts/spinner/bootstrap-number-input.js" ></script>
+        <!-- spinner -->
+        <script type="text/javascript" src="javascripts/spinner/bootstrap-number-input.js" ></script>
 
-    <!-- script -->
-    <script type="text/javascript" src="javascripts/util.js"></script>
-    <script type="text/javascript" src="javascripts/stringlib.js"></script>
-    <script type="text/javascript" src="javascripts/tradinglib.js"></script>
-    <script type="text/javascript" src="javascripts/tradinglist.js"></script>
-    <script type="text/javascript" src="javascripts/navibar.js"></script>
-</head>
+        <!-- script -->
+        <script type="text/javascript" src="javascripts/util.js"></script>
+        <script type="text/javascript" src="javascripts/stringlib.js"></script>
+        <script type="text/javascript" src="javascripts/tradinglib.js"></script>
+        <script type="text/javascript" src="javascripts/tradinglist.js"></script>
+        <script type="text/javascript" src="javascripts/navibar.js"></script>
+    </head>
 
-<body>
-    <form>
-        <div class="container">
-            <h2>거래</h2>
+    <body>
+        <form>
+            <div class="container">
+                <h2>거래</h2>
 
-            <label for="edit_start">Start</label>
-            <input type="text" class="form-control" id="edit_start" placeholder="160505" name="datepicker">
+                <label for="edit_start">Start</label>
+                <input type="text" class="form-control" id="edit_start" placeholder="160505" name="datepicker">
 
-            <div id="div_button" style="margin-top: 10px">
-                <button id="btn_search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
-            </div>
-
-            <div style="margin-top: 10px">
-                <select class="form-control" id="type">
-                   <option value="kosdaq">코스닥</option>
-                   <option value="kospi">코스피</option>
-                </select>
-            </div>
-
-            <!--
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="check_box_exception_top" data-toggle="toggle"> 상위 5개 종목 제외
-                </label>
-            </div>
-            -->
-
-            <form name="trading_form" method="post">
-                <div id="sort_table">
-                    <table id="sort" class ="sort">
-                        <thead>
-                        <tr>
-                            <th> name </th>
-                            <th> 등락률 </th>
-                            <th> 순매수 </th>
-                            <th> 당일 거래대금 </th>
-                            <th> 차트누적 </th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody_trading_container"></tbody>
-                    </table>
+                <div id="div_button" style="margin-top: 10px">
+                    <button id="btn_search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
                 </div>
-            </form>
-        </div>
-    </form>
-</body>
+
+                <div style="margin-top: 10px">
+                    <select class="form-control" id="type">
+                       <option value="kosdaq">코스닥</option>
+                       <option value="kospi">코스피</option>
+                    </select>
+                </div>
+
+                <form name="trading_form" method="post">
+                    <div id="sort_table">
+                        <table id="sort" class ="sort">
+                            <thead>
+                            <tr>
+                                <th> name </th>
+                                <th> 등락률 </th>
+                                <th> 순매수 </th>
+                                <th> 당일 거래대금 </th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody_trading_container"></tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </form>
+    </body>
 </html>

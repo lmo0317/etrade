@@ -89,34 +89,13 @@ function makeTradeTable(data, type) {
         var td_trading_isu_tr_amt = $("<td>").attr("id", "td_trading_isu_tr_amt");
         td_trading_isu_tr_amt.text(isu_tr_amt);
 
-        //버튼 추가
-        //var td_button = $("<td>").attr("id", "td_button");
-
-        //detail 버튼 추가
-        //createDetailButton(stock, td_button);
-
         tr.append(td_name);
         tr.append(td_trading_updn_rate); //등락률
         tr.append(td_trading_netaskval); //순매수
         tr.append(td_trading_isu_tr_amt); //거래 대금
-        //tr.append(td_button);
         container.append(tr);
     });
 }
-/*
-function createDetailButton(stock, td_button)
-{
-    var button_detail = $("<input>")
-        .attr("type", "button")
-        .attr("id", "btn_detail" )
-        .attr("class", "btn btn-primary")
-        .val('DETAIL');
-    button_detail.click(function() {
-        clickDetailButton(stock);
-    });
-    td_button.append(button_detail);
-}
-*/
 
 function clickDetailButton(stock) {
     if(stock.buylist.length <= 0) return;
