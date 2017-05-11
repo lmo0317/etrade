@@ -69,7 +69,10 @@ function makeTradeTable(data, type) {
 
         var tr = $("<tr>").attr("id", "tr_trading_list");
         var td_name = $("<td>").attr("id", "td_name");
-        td_name.text(stock.isu_nm);
+        td_name.html("<a href='#'>" + stock.isu_nm + "</a>");
+        td_name.click(function() {
+            clickDetailButton(stock);
+        });
 
         var stockInfo = stock.buylist[stock.buylist.length - 1].stockinfo;
         var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0); //등락률
@@ -87,20 +90,20 @@ function makeTradeTable(data, type) {
         td_trading_isu_tr_amt.text(isu_tr_amt);
 
         //버튼 추가
-        var td_button = $("<td>").attr("id", "td_button");
+        //var td_button = $("<td>").attr("id", "td_button");
 
         //detail 버튼 추가
-        createDetailButton(stock, td_button);
+        //createDetailButton(stock, td_button);
 
         tr.append(td_name);
         tr.append(td_trading_updn_rate); //등락률
         tr.append(td_trading_netaskval); //순매수
         tr.append(td_trading_isu_tr_amt); //거래 대금
-        tr.append(td_button);
+        //tr.append(td_button);
         container.append(tr);
     });
 }
-
+/*
 function createDetailButton(stock, td_button)
 {
     var button_detail = $("<input>")
@@ -113,6 +116,7 @@ function createDetailButton(stock, td_button)
     });
     td_button.append(button_detail);
 }
+*/
 
 function clickDetailButton(stock) {
     if(stock.buylist.length <= 0) return;

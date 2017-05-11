@@ -1,6 +1,8 @@
 .left-box {
     float: left;
+    width: 49%
 }
 .right-box {
     float: right;
+    width: 49%;
 }
