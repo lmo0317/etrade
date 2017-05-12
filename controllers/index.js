@@ -1,6 +1,6 @@
 //주석 테스트
 var fs = require('fs');
-
+var logsService = require('../service/logs');
 
 exports.delegate = function(app)
 {
@@ -18,7 +18,9 @@ exports.delegate = function(app)
 };
 
 function getIndex(req, res) {
-    res.sendfile('public/main.html');
+    logsService.addConnection(function() {
+        res.sendfile('public/main.html');
+    });
 }
 
 function getManager(req, res) {
