@@ -94,7 +94,14 @@ function makeTradeTable(parameter, data) {
         var stockInfo = stock.buylist[stock.buylist.length - 1].stockinfo;
         var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0); //등락률
         var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
-        td_trading_updn_rate.text(updn_rate);
+
+        if(updn_rate > 0) {
+            td_trading_updn_rate.html('<font color="#FF0000">' + updn_rate + '</font>');
+        } else if (updn_rate < 0) {
+            td_trading_updn_rate.html('<font color="#0000FF">' + updn_rate + '</font>');
+        } else {
+            td_trading_updn_rate.text(updn_rate);
+        }
 
         //순매수
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");

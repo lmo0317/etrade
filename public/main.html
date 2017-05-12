@@ -36,8 +36,8 @@
 
     <!-- script -->
     <script type="text/javascript" src="javascripts/util.js"></script>
-    <script type="text/javascript" src="javascripts/stringlib.js"></script>
-    <script type="text/javascript" src="javascripts/tradinglib.js"></script>
+    <script type="text/javascript" src="javascripts/lib/stringlib.js"></script>
+    <script type="text/javascript" src="javascripts/lib/tradinglib.js"></script>
     <script type="text/javascript" src="javascripts/main.js"></script>
     <script type="text/javascript" src="javascripts/navibar.js"></script>
 </head>
@@ -51,7 +51,7 @@
             <label>주식 대장정의 관심 종목</label>
             <form name="trading_form" method="post">
                 <div id="sort_table">
-                    <table id="sort" class ="sort">
+                    <table id="sort_table_favorite" class ="sort_table_favorite">
                         <thead>
                         <tr>
                             <th> name </th>
@@ -71,7 +71,7 @@
                 <label>KOSDAQ</label>
                 <form name="trading_form" method="post">
                     <div id="sort_table">
-                        <table id="sort" class ="sort">
+                        <table id="sort_table_kosdaq" class ="sort_table_kosdaq">
                             <thead>
                             <tr>
                                 <th> name </th>
@@ -90,7 +90,7 @@
                 <label>KOSPI</label>
                 <form name="trading_form" method="post">
                     <div id="sort_table">
-                        <table id="sort" class ="sort">
+                        <table id="sort_table_kospi" class ="sort_table_kospi">
                             <thead>
                             <tr>
                                 <th> name </th>

@@ -8,7 +8,9 @@ $(document).ready(function (){
 
 function init() {
     console.log(moment().format('YYMMDD'));
-    new Tablesort(document.getElementById('sort'));
+    new Tablesort(document.getElementById('sort_table_favorite'));
+    new Tablesort(document.getElementById('sort_table_kosdaq'));
+    new Tablesort(document.getElementById('sort_table_kospi'));
 
     //1분에 한번씩 process 호출
     setInterval(process, 1000 * 60);
@@ -79,6 +81,14 @@ function makeTradeTable(data, type) {
         var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
         td_trading_updn_rate.text(updn_rate);
 
+        if(updn_rate > 0) {
+            td_trading_updn_rate.html('<font color="#FF0000">' + updn_rate + '</font>');
+        } else if (updn_rate < 0) {
+            td_trading_updn_rate.html('<font color="#0000FF">' + updn_rate + '</font>');
+        } else {
+            td_trading_updn_rate.text(updn_rate);
+        }
+
         //순매수
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
         var netaskval = numberWithCommas(stock.buylist[stock.buylist.length - 1].netaskval);
@@ -108,6 +118,6 @@ function clickDetailButton(stock) {
         isu_nm.val(stock.isu_nm);
 
         var edit_start = $(pop.document).find("#edit_start");
-        edit_start.val($("#edit_start").val());
+        edit_start.val(date);
     };
 }
