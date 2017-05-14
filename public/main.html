@@ -51,69 +51,79 @@
 </head>
 
 <body>
-<form>
-    <div class="container">
-        <h2>수급 포착기</h2>
 
-        <div>
-            <label>주식 대장정의 관심 종목</label>
-            <form name="trading_form" method="post">
-                <div id="sort_table">
-                    <table id="sort_table_favorite" class ="sort_table_favorite">
-                        <thead>
-                        <tr>
-                            <th> name </th>
-                            <th> 등락률 </th>
-                            <th> 순매수 </th>
-                            <th> 당일 거래대금 </th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody_trading_favorite_container"></tbody>
-                    </table>
+    <form>
+
+        <div class="container">
+            <h2>수급 포착기</h2>
+
+            <div>
+                <script type="text/javascript">
+                    (function(cl,i,c,k,m,o,n){m=cl.location.protocol+c;o=cl.referrer;m+='&mon_rf='+encodeURIComponent(o);
+                        n='<'+i+' type="text/javascript" src="'+m+'"></'+i+'>';cl.writeln(n);
+                    })(document,'script','//tab2.clickmon.co.kr/pop/wp_ad_728_js.php?PopAd=CM_M_1003067%7C%5E%7CCM_A_1033838%7C%5E%7CAdver_M_1003115');
+                </script>
+            </div>
+
+            <div>
+                <label>주식 대장정의 관심 종목</label>
+                <form name="trading_form" method="post">
+                    <div id="sort_table">
+                        <table id="sort_table_favorite" class ="sort_table_favorite">
+                            <thead>
+                            <tr>
+                                <th> name </th>
+                                <th> 등락률 </th>
+                                <th> 순매수 </th>
+                                <th> 당일 거래대금 </th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody_trading_favorite_container"></tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <div class="left-box">
+                    <label>KOSDAQ</label>
+                    <form name="trading_form" method="post">
+                        <div id="sort_table">
+                            <table id="sort_table_kosdaq" class ="sort_table_kosdaq">
+                                <thead>
+                                <tr>
+                                    <th> name </th>
+                                    <th> 등락률 </th>
+                                    <th> 순매수 </th>
+                                    <th> 당일 거래대금 </th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody_trading_kosdaq_container"></tbody>
+                            </table>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
 
-        <div>
-            <div class="left-box">
-                <label>KOSDAQ</label>
-                <form name="trading_form" method="post">
-                    <div id="sort_table">
-                        <table id="sort_table_kosdaq" class ="sort_table_kosdaq">
-                            <thead>
-                            <tr>
-                                <th> name </th>
-                                <th> 등락률 </th>
-                                <th> 순매수 </th>
-                                <th> 당일 거래대금 </th>
-                            </tr>
-                            </thead>
-                            <tbody id="tbody_trading_kosdaq_container"></tbody>
-                        </table>
-                    </div>
-                </form>
-            </div>
-
-            <div class="right-box">
-                <label>KOSPI</label>
-                <form name="trading_form" method="post">
-                    <div id="sort_table">
-                        <table id="sort_table_kospi" class ="sort_table_kospi">
-                            <thead>
-                            <tr>
-                                <th> name </th>
-                                <th> 등락률 </th>
-                                <th> 순매수 </th>
-                                <th> 당일 거래대금 </th>
-                            </tr>
-                            </thead>
-                            <tbody id="tbody_trading_kospi_container"></tbody>
-                        </table>
-                    </div>
-                </form>
+                <div class="right-box">
+                    <label>KOSPI</label>
+                    <form name="trading_form" method="post">
+                        <div id="sort_table">
+                            <table id="sort_table_kospi" class ="sort_table_kospi">
+                                <thead>
+                                <tr>
+                                    <th> name </th>
+                                    <th> 등락률 </th>
+                                    <th> 순매수 </th>
+                                    <th> 당일 거래대금 </th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody_trading_kospi_container"></tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 </body>
 </html>
