@@ -76,7 +76,8 @@ function getTrading(req, res) {
 function getTradingList(req, res) {
     var param = {
         start: req.query.start,
-        type: req.query.type
+        type: req.query.type,
+        count: req.query.count
     };
 
     tradingService.getTradingList(param, function(err, result) {

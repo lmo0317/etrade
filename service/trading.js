@@ -7,14 +7,27 @@ var otplib = require('../lib/otp');
 var moment = require('moment');
 var request = require('../lib/request');
 
+function limitCount(list, count) {
+    if(!count) return;
+
+    list = list.sort(function(left, right) {
+        if(left.buylist && left.buylist.length > 0 && right.buylist && right.buylist.length > 0) {
+            return right.buylist[right.buylist.length - 1].netaskval - left.buylist[left.buylist.length - 1].netaskval;
+        }
+        return 0;
+    });
+
+    return list.splice(0, count);
+}
+
 exports.getTradingList = function(param, callback) {
     sync.fiber(function() {
         var result = [];
         var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
         if(param.type === 'favorite') {
-            result = sync.await(exports.filterFavoriteStock(tradingList, sync.defer()));
+            result = limitCount(sync.await(exports.filterFavoriteStock(tradingList, sync.defer())), param.count);
         } else if(param.type === 'kosdaq' || param.type === 'kospi') {
-            result = sync.await(exports.filterBestStock("20" + param.start, param.type, tradingList, sync.defer()));
+            result = limitCount(sync.await(exports.filterBestStock("20" + param.start, param.type, tradingList, sync.defer())),param.count);
         }
         
         return result;

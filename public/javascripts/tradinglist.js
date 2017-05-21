@@ -56,7 +56,7 @@ function makeTradeTableProcess(data)
         exception: $('input:checkbox[name=check_box_exception_top]').is(':checked')
     };
 
-    makeTradeTable(parameter, data);
+    makeTradeTable(data);
 }
 
 function getTradingList()
@@ -79,7 +79,7 @@ function getTradingList()
     });
 }
 
-function makeTradeTable(parameter, data) {
+function makeTradeTable(data) {
 
     data.forEach(function(stock) {
 

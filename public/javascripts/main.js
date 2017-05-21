@@ -41,7 +41,8 @@ function getTradingList(type)
         type: 'get',
         data: {
             start: date,
-            type: type
+            type: type,
+            count: 50
         },
         success:function(data) {
             _tradingData = data;
