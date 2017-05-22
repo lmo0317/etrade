@@ -165,7 +165,7 @@ exports.filterBestStock = function(date, type, tradingList, callback) {
 
         var bestStock = sync.await(stocklistlib.getBestStock(date, type, sync.defer()));
         if(!bestStock) {
-            throw 'best stock is null';
+            throw 'trading is null';
         }
 
         var bestStockList = bestStock.list;

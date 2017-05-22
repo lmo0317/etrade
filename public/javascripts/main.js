@@ -12,6 +12,23 @@ function init() {
     new Tablesort(document.getElementById('sort_table_kosdaq'));
     new Tablesort(document.getElementById('sort_table_kospi'));
 
+    $('input[name="datepicker"]').daterangepicker(
+        {
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'YYMMDD'
+            },
+            startDate: new Date()
+        },
+        function(start, end, label) {
+            console.log(moment(start._d).format('YYMMDD'));
+            date = moment(start._d).format('YYMMDD');
+            console.log(date);
+            getTradingListAll();
+        }
+    );
+
     //1분에 한번씩 process 호출
     setInterval(process, 1000 * 60);
     getTradingListAll();
@@ -42,23 +59,14 @@ function getTradingList(type)
         data: {
             start: date,
             type: type,
-            count: 50
+            count: 30
         },
         success:function(data) {
             _tradingData = data;
-            if(_tradingData.length == 0) {
-                //표시할 데이터가 없을경우 default 날짜로 다시 표시
-                date = '170510';
-                getTradingList(type);
-            } else {
-                refreshData(_tradingData, type);
-            }
+            refreshData(_tradingData, type);
         },
         error:function(err) {
             console.log(err);
-            //표시할 데이터가 없을경우 default 날짜로 다시 표시
-            date = '170510';
-            getTradingList(type);
         }
     });
 }

@@ -23,16 +23,6 @@ function init() {
         }
     );
 
-    $('input:checkbox[name=check_box_exception_top]').on( {
-        click: function(e) {
-            console.log('click');
-        },
-        change: function(e) {
-            console.log('change');
-            refreshData(_tradingData);
-        }
-    });
-
     addButton();
     new Tablesort(document.getElementById('sort'));
 }
@@ -51,11 +41,6 @@ function refreshData(tradingData)
 function makeTradeTableProcess(data)
 {
     $("#tbody_trading_container").html('');
-
-    var parameter = {
-        exception: $('input:checkbox[name=check_box_exception_top]').is(':checked')
-    };
-
     makeTradeTable(data);
 }
 
