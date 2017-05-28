@@ -20,6 +20,9 @@ console.log('start cron');
     console.log('START MAIN TEST');
     sync.fiber(function () {
 
+        /**
+         * find trading test
+         */
         var param = {};
         sync.await(stocklistService.findBestStocks(sync.defer()));
 
@@ -29,6 +32,8 @@ console.log('start cron');
         param.type = 'best';
         param.grade = 1;
         sync.await(tradingService.findTradingList(param, sync.defer()));
+
+        //sync.await(stocklistService.makeStockTrend(sync.defer()));
 
     }, function (err, result) {
         if (err) return console.log(err);

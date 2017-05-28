@@ -20,6 +20,23 @@ function limitCount(list, count) {
     return list.splice(0, count);
 }
 
+/**
+ * 거래 결과 만들기
+ * @param tradingList
+ * @param callback
+ */
+function makeTradingResult(trading, callback) {
+    sync.fiber(function() {
+        var trend = sync.await(stocklistlib.getStockTrend(trading.isu_nm, null, sync.defer()));
+        if(!trend) return;
+        trend = trend.trendlist[0];
+        trading.volume = trend.alltrd;
+        trading.fornnetask = trend.fornnetask;
+    }, function(err, res) {
+        callback(err, res);
+    });
+}
+
 exports.getTradingList = function(param, callback) {
     sync.fiber(function() {
         var result = [];
@@ -28,6 +45,19 @@ exports.getTradingList = function(param, callback) {
             result = limitCount(sync.await(exports.filterFavoriteStock(tradingList, sync.defer())), param.count);
         } else if(param.type === 'kosdaq' || param.type === 'kospi') {
             result = limitCount(sync.await(exports.filterBestStock("20" + param.start, param.type, tradingList, sync.defer())),param.count);
+        }
+
+        /*
+        result.forEach(function(trading) {
+            sync.await(makeTradingResult(trading, sync.defer()));
+            trading = trading.toJSON();
+        });
+        */
+
+        for(var i=0; i<result.length; i++)
+        {
+            result[i] = result[i].toJSON();
+            sync.await(makeTradingResult(result[i], sync.defer()));
         }
         
         return result;
@@ -75,6 +105,34 @@ exports.editTrading = function(param, callback) {
     });
 };
 
+function getStockList(param, date)
+{
+    var stocklist = [];
+    if(param.type === 'favorite') {
+        //관심 종목
+        var favoriteStockList = sync.await(stocklistlib.getFavoriteStockList(sync.defer()));
+        favoriteStockList.forEach(function(favoriteStock) {
+            var isu_nm = favoriteStock.isu_nm;
+            stocklist.push(sync.await(stocklistlib.getStock(isu_nm, sync.defer())));
+        });
+
+    } else if(param.type === 'best') {
+        //제외 종목
+        var exceptionStockList = sync.await(stocklistlib.getExceptionStockList(sync.defer()));
+
+        //현재 시간 최대 매매 종목
+        stocklist = stocklist.concat(sync.await(stocklistlib.getAllBestStockList(date, exceptionStockList, sync.defer())));
+
+        if(global.program.develop) {
+            stocklist = debuglib.setFindTrading(stocklist);
+        }
+
+        var tradinglist = sync.await(tradinglib.getTradingList(param, sync.defer()));
+        stocklist = exports.filterGrade(param.grade, stocklist, tradinglist, sync.defer());
+    }
+    return stocklist;
+}
+
 exports.findTradingList = function(param, callback) {
 
     sync.fiber(function() {
@@ -82,29 +140,8 @@ exports.findTradingList = function(param, callback) {
         var today = moment();
         param.start = today.format("YYMMDD");
 
-        var stocklist = [];
-        if(param.type === 'favorite') {
-            //관심 종목
-            var favoriteStockList = sync.await(stocklistlib.getFavoriteStockList(sync.defer()));
-            favoriteStockList.forEach(function(favoriteStock) {
-                var isu_nm = favoriteStock.isu_nm;
-                stocklist.push(sync.await(stocklistlib.getStock(isu_nm, sync.defer())));
-            });
-
-        } else if(param.type === 'best') {
-            //제외 종목
-            var exceptionStockList = sync.await(stocklistlib.getExceptionStockList(sync.defer()));
-
-            //현재 시간 최대 매매 종목
-            stocklist = stocklist.concat(sync.await(stocklistlib.getAllBestStockList(today, exceptionStockList, sync.defer())));
-
-            if(global.program.develop) {
-                stocklist = debuglib.setFindTrading(stocklist);
-            }
-
-            var tradinglist = sync.await(tradinglib.getTradingList(param, sync.defer()));
-            stocklist = exports.filterGrade(param.grade, stocklist, tradinglist, sync.defer());
-        }
+        //stock list 조회
+        var stocklist = getStockList(param, today);
 
         //기관 리스트 조회
         var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
@@ -323,6 +360,9 @@ function makeTradingData(today, stocklist, memberlist, callback)
             };
 
             sync.await(tradinglib.addTrading(trading, buy, tradingMemberList, sync.defer()));
+
+            //종목의 수급 동향을 찾는다.
+            sync.await(stocklistlib.makeStockTrend(stock, sync.defer()));
 
             //거래 대금 순매수가 정해진 값 이상일경우 관심종목에 추가한다.
             /*

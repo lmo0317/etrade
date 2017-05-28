@@ -22,7 +22,7 @@ mongoose.connect(global.configure.db.path);
 
 // create a bot
 var bot = new SlackBot({
-	name: '고명환',
+	name: '주식대장정',
 	token: slacktoken.token
 });
 

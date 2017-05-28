@@ -77,6 +77,7 @@ function makeTradeTable(data, type) {
     var container = $(name);
     container.html('');
     data.forEach(function(stock) {
+        console.log(stock);
 
         var tr = $("<tr>").attr("id", "tr_trading_list");
         var td_name = $("<td>").attr("id", "td_name");
@@ -85,7 +86,8 @@ function makeTradeTable(data, type) {
             clickDetailButton(stock);
         });
 
-        var stockInfo = stock.buylist[stock.buylist.length - 1].stockinfo;
+        var buylist = stock.buylist[stock.buylist.length - 1];
+        var stockInfo = buylist.stockinfo;
         var updn_rate = numberWithCommas((stockInfo && stockInfo.updn_rate) || 0); //등락률
         var td_trading_updn_rate = $("<td>").attr("id", "td_trading_updn_rate");
         td_trading_updn_rate.text(updn_rate);
@@ -100,13 +102,33 @@ function makeTradeTable(data, type) {
 
         //순매수
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-        var netaskval = numberWithCommas(stock.buylist[stock.buylist.length - 1].netaskval);
-        td_trading_netaskval.text(netaskval);
+        var netaskval = numberWithCommas(buylist.netaskval);
+        if(stock.fornnetask && buylist.netaskvol) {
+            var percent = (parseIntRemoveComma(buylist.netaskvol) / parseIntRemoveComma(stock.fornnetask)) * 100;
+            netaskval += "(" + percent.toFixed(2) + "%" + ")";
+            if(percent > 100) {
+                td_trading_netaskval.html('<font color="#FF0000">' + netaskval + '</font>');
+            } else {
+                td_trading_netaskval.html('<font color="#000000">' + netaskval + '</font>');
+            }
+        } else {
+            td_trading_netaskval.text(netaskval);
+        }
 
         //거래대금
-        var isu_tr_amt = (stockInfo && stockInfo.isu_tr_amt) || 0;
         var td_trading_isu_tr_amt = $("<td>").attr("id", "td_trading_isu_tr_amt");
-        td_trading_isu_tr_amt.text(isu_tr_amt);
+        var isu_tr_amt = (stockInfo && stockInfo.isu_tr_amt) || 0;
+        if(stock.volume && stockInfo.isu_tr_vl) {
+            var percent = (parseIntRemoveComma(stockInfo.isu_tr_vl) / parseIntRemoveComma(stock.volume)) * 100;
+            isu_tr_amt += "(" + percent.toFixed(2) + "%" + ")";
+            if(percent > 100) {
+                td_trading_isu_tr_amt.html('<font color="#FF0000">' + isu_tr_amt + '</font>');
+            } else {
+                td_trading_isu_tr_amt.html('<font color="#000000">' + isu_tr_amt + '</font>');
+            }
+        } else {
+            td_trading_isu_tr_amt.text(isu_tr_amt);
+        }
 
         tr.append(td_name);
         tr.append(td_trading_updn_rate); //등락률

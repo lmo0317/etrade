@@ -17,7 +17,6 @@ exports.delegate = function(app) {
 /**
  * STOCK
  */
-
 function getStockList(req, res) {
     stocklistService.getStockList(function(err, result) {
         res.send(result);
@@ -47,7 +46,6 @@ function deleteStock(req, res) {
 /**
  * FAVORITE STOCK
  */
-
 function getFavoriteStockList(req, res) {
     stocklistService.getFavoriteStockList(function(err, result) {
         res.send(result);
@@ -76,7 +74,6 @@ function deleteFavoriteStock(req, res) {
 /**
  * EXCEPTION STOCK
  */
-
 function getExceptionStockList(req, res) {
     stocklistService.getExceptionStockList(function(err, result) {
         res.send(result);

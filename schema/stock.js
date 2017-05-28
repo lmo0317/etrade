@@ -21,3 +21,9 @@ exports.BestStockSchema = new mongoose.Schema({
     type: {type: String, require: true},
     list: {type: Array} //isu_nm
 }, {versionKey: false});
+
+exports.StockTrendSchema = new mongoose.Schema({
+    isu_nm: {type:String, require:true},
+    lastdate: {type:String},
+    trendlist: {type: Array}
+}, {versionKey: false});

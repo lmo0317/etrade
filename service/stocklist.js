@@ -52,10 +52,8 @@ exports.findBestStocks = function(callback) {
         console.log('Start [ Find Best Stocks List ]');
         var code = sync.await(otplib.requestBestStocksOTP(sync.defer())).text;
         var today = moment();
-
         sync.await(request.requestBestStock(code, today, 'kosdaq', sync.defer()));
         sync.await(request.requestBestStock(code, today, 'kospi', sync.defer()));
-
     }, function(err, res) {
         console.log('Complete [ Find Best Stocks List ]');
         callback(err, res);
