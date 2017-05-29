@@ -1,6 +1,7 @@
 var _tradingData = null;
 var date = moment().format('YYMMDD');
 var types = ['favorite', 'kosdaq', 'kospi'];
+var unit = 100000000;
 
 $(document).ready(function (){
     init();
@@ -102,7 +103,7 @@ function makeTradeTable(data, type) {
 
         //순매수
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
-        var netaskval = numberWithCommas((buylist.netaskval/1000000).toFixed(0));
+        var netaskval = numberWithCommas((buylist.netaskval/unit).toFixed(0));
         if(stock.fornnetask && buylist.netaskvol) {
             var percent = (parseIntRemoveComma(buylist.netaskvol) / parseIntRemoveComma(stock.fornnetask)) * 100;
             netaskval += "(" + percent.toFixed(2) + "%" + ")";
@@ -118,7 +119,7 @@ function makeTradeTable(data, type) {
         //거래대금
         var td_trading_isu_tr_amt = $("<td>").attr("id", "td_trading_isu_tr_amt");
         var isu_tr_amt = (stockInfo && stockInfo.isu_tr_amt) || 0;
-        isu_tr_amt = (parseIntRemoveComma(isu_tr_amt) / 1000000).toFixed(0);
+        isu_tr_amt = (parseIntRemoveComma(isu_tr_amt) / unit).toFixed(0);
         isu_tr_amt = numberWithCommas(isu_tr_amt);
         if(stock.volume && stockInfo.isu_tr_vl) {
             var percent = (parseIntRemoveComma(stockInfo.isu_tr_vl) / parseIntRemoveComma(stock.volume)) * 100;
