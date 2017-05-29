@@ -36,7 +36,7 @@ function process()
 function refreshData(data)
 {
     var container = $("#tbody_trading_container");
-    makeTradeTable(data, container, "detail");
+    makeTradeTable(data, container, "detail", $("#edit_start").val());
 }
 
 function getTradingList()
@@ -60,7 +60,6 @@ function getTradingList()
 }
 
 function addButton() {
-
     $("#btn_search").click(function(){
         getTradingList();
     });

@@ -56,7 +56,7 @@ function convertProperData(type, stock)
     stock.buylist = buylist;
 }
 
-function makeTradeTable(data, container, tableType) {
+function makeTradeTable(data, container, tableType, date) {
 
     container.html('');
     if(tableType == "simple") {
@@ -70,7 +70,7 @@ function makeTradeTable(data, container, tableType) {
         var td_name = $("<td>").attr("id", "td_name");
         td_name.html("<a href='#'>" + stock.isu_nm + "</a>");
         td_name.click(function() {
-            clickDetailButton(stock);
+            clickDetailButton(stock, date);
         });
 
         var buylist = stock.buylist[stock.buylist.length - 1];
@@ -127,7 +127,7 @@ function makeTradeTable(data, container, tableType) {
     });
 }
 
-function clickDetailButton(stock) {
+function clickDetailButton(stock, date) {
     if(stock.buylist.length <= 0) return;
     var pop = window.open('detailtrading.html');
     pop.onload = function() {

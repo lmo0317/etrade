@@ -51,7 +51,7 @@ function refreshData(data, type)
     var name = "#tbody_trading_" + type + "_container";
     var container = $(name);
     console.log(type);
-    makeTradeTable(data, container, type=="favorite" ? "detail" : "simple");
+    makeTradeTable(data, container, type=="favorite" ? "detail" : "simple", $("#edit_start").val());
 }
 
 function getTradingList(type)
