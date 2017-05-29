@@ -8,7 +8,6 @@ function parseIntRemoveComma(value)
     } else if(typeof(value) == 'string') {
         return parseInt(value.replace(/,/g, ""),10);
     }
-
     return 0;
 }
 

@@ -8,7 +8,6 @@ var moment = require('moment');
 var request = require('../lib/request');
 
 function limitCount(list, count) {
-    if(!count) return;
 
     list = list.sort(function(left, right) {
         if(left.buylist && left.buylist.length > 0 && right.buylist && right.buylist.length > 0) {
@@ -16,6 +15,10 @@ function limitCount(list, count) {
         }
         return 0;
     });
+
+    if(!count) {
+        return list;
+    }
 
     return list.splice(0, count);
 }
