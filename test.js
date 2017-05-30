@@ -4,11 +4,10 @@
 
 var sync = require('synchronize');
 var tradinglib = require('./lib/trading');
-var stocklistlib = require('./lib/stocklist');
 var mongoose = require('mongoose');
 var config = require('./config');
 var tradingService = require('./service/trading');
-var stocklistService = require('./service/stocklist');
+var stocklistlib = require('./lib/stocklist');
 
 config.init();
 
@@ -24,7 +23,7 @@ console.log('start cron');
          * find trading test
          */
         var param = {};
-        sync.await(stocklistService.findBestStocks(sync.defer()));
+        sync.await(stocklistlib.findBestStocks(sync.defer()));
 
         param.type = 'favorite';
         sync.await(tradingService.findTradingList(param, sync.defer()));
@@ -32,8 +31,6 @@ console.log('start cron');
         param.type = 'best';
         param.grade = 1;
         sync.await(tradingService.findTradingList(param, sync.defer()));
-
-        //sync.await(stocklistService.makeStockTrend(sync.defer()));
 
     }, function (err, result) {
         if (err) return console.log(err);

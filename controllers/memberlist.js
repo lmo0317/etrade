@@ -1,7 +1,7 @@
 /**
  * Created by LEE-DESKTOP on 2016-09-03.
  */
-var memberlistService = require('../service/memberlist');
+var memberlistlib = require('../lib/memberlist');
 
 exports.delegate = function(app) {
     console.info('memberlist delegate');
@@ -11,7 +11,7 @@ exports.delegate = function(app) {
 };
 
 function getMemberList(req, res) {
-    memberlistService.getMemberList(function(err, result) {
+    memberlistlib.getMemberList(function(err, result) {
         if(err) return res.send({result: false});
         res.send(result);
     });
@@ -22,7 +22,7 @@ function addMember(req, res) {
         mbr_nm: req.body.mbr_nm
     };
 
-    memberlistService.addMember(member, function(err, result) {
+    memberlistlib.addMember(member, function(err, result) {
         if(err) return res.send({result:false});
         res.send(result);
     });
@@ -31,7 +31,7 @@ function addMember(req, res) {
 function deleteMember(req, res) {
     var mbr_nm = req.body.mbr_nm;
 
-    memberlistService.deleteMember(mbr_nm, function(err, result) {
+    memberlistlib.deleteMember(mbr_nm, function(err, result) {
         if(err) return res.send({result: false});
         res.send({result: true});
     });

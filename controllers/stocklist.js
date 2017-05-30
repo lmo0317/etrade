@@ -1,5 +1,5 @@
 
-var stocklistService = require('../service/stocklist');
+var stocklistlib = require('../lib/stocklist');
 
 exports.delegate = function(app) {
     console.info('stocklist delegate');
@@ -18,14 +18,14 @@ exports.delegate = function(app) {
  * STOCK
  */
 function getStockList(req, res) {
-    stocklistService.getStockList(function(err, result) {
+    stocklistlib.getStockList(function(err, result) {
         res.send(result);
     });
 }
 
 function addStock(req, res) {
     var isu_nm = req.body.isu_nm;
-    stocklistService.addStock(isu_nm, function(err, result) {
+    stocklistlib.addStock(isu_nm, function(err, result) {
         if(err) {
             console.log(err);
             return res.send({result: false});
@@ -37,7 +37,7 @@ function addStock(req, res) {
 function deleteStock(req, res) {
     var isu_srt_cd = req.body.isu_srt_cd;
 
-    stocklistService.deleteStock(isu_srt_cd, function(err, result) {
+    stocklistlib.deleteStock(isu_srt_cd, function(err, result) {
         if(err) return res.send({result: false});
         res.send({result: true});
     });
@@ -47,14 +47,14 @@ function deleteStock(req, res) {
  * FAVORITE STOCK
  */
 function getFavoriteStockList(req, res) {
-    stocklistService.getFavoriteStockList(function(err, result) {
+    stocklistlib.getFavoriteStockList(function(err, result) {
         res.send(result);
     });
 }
 
 function addFavoriteStock(req, res) {
     var isu_nm = req.body.isu_nm;
-    stocklistService.addFavoriteStock(isu_nm, function(err, result) {
+    stocklistlib.addFavoriteStock(isu_nm, function(err, result) {
         if(err) {
             console.log(err);
             return res.send({result: false});
@@ -65,7 +65,7 @@ function addFavoriteStock(req, res) {
 
 function deleteFavoriteStock(req, res) {
     var isu_nm = req.body.isu_nm;
-    stocklistService.deleteFavoriteStock(isu_nm, function(err, result) {
+    stocklistlib.deleteFavoriteStock(isu_nm, function(err, result) {
         if(err) return res.send({result: false});
         res.send({result: true});
     });
@@ -75,14 +75,14 @@ function deleteFavoriteStock(req, res) {
  * EXCEPTION STOCK
  */
 function getExceptionStockList(req, res) {
-    stocklistService.getExceptionStockList(function(err, result) {
+    stocklistlib.getExceptionStockList(function(err, result) {
         res.send(result);
     });
 }
 
 function addExceptionStock(req, res) {
     var isu_nm = req.body.isu_nm;
-    stocklistService.addExceptionStock(isu_nm, function(err, result) {
+    stocklistlib.addExceptionStock(isu_nm, function(err, result) {
         if(err) {
             console.log(err);
             return res.send({result: false});
@@ -93,7 +93,7 @@ function addExceptionStock(req, res) {
 
 function deleteExceptionStock(req, res) {
     var isu_nm = req.body.isu_nm;
-    stocklistService.deleteExceptionStock(isu_nm, function(err, result) {
+    stocklistlib.deleteExceptionStock(isu_nm, function(err, result) {
         if(err) return res.send({result: false});
         res.send({result: true});
     });

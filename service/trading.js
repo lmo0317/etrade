@@ -29,8 +29,10 @@ function limitCount(list, count) {
  */
 function makeTradingResult(trading, callback) {
     sync.fiber(function() {
-        var trend = sync.await(stocklistlib.getStockTrend(trading.isu_nm, null, sync.defer()));
-        if(!trend) return;
+        var trend = sync.await(stocklistlib.getStockTrend(trading.isu_nm, null, sync.defer()))
+        if(!trend || !trend.trendlist || trend.trendlist.length == 0) {
+            return;
+        }
         trend = trend.trendlist[0];
         trading.volume = trend.alltrd;
         trading.fornnetask = trend.fornnetask;
@@ -38,74 +40,6 @@ function makeTradingResult(trading, callback) {
         callback(err, res);
     });
 }
-
-exports.getTradingList = function(param, callback) {
-    sync.fiber(function() {
-        var result = [];
-        var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
-        if(param.type === 'favorite') {
-            result = limitCount(sync.await(exports.filterFavoriteStock(tradingList, sync.defer())), param.count);
-        } else if(param.type === 'kosdaq' || param.type === 'kospi') {
-            result = limitCount(sync.await(exports.filterBestStock("20" + param.start, param.type, tradingList, sync.defer())),param.count);
-        }
-
-        /*
-        result.forEach(function(trading) {
-            sync.await(makeTradingResult(trading, sync.defer()));
-            trading = trading.toJSON();
-        });
-        */
-
-        for(var i=0; i<result.length; i++)
-        {
-            result[i] = result[i].toJSON();
-            sync.await(makeTradingResult(result[i], sync.defer()));
-        }
-        
-        return result;
-
-    }, function(err, res) {
-        callback(err, res);
-    });
-};
-
-exports.getTrading = function(param, callback) {
-    tradinglib.getTrading(param, callback);
-};
-
-exports.findTrading = function(param, callback) {
-    var today = moment();
-    sync.fiber(function() {
-        var stocklist = [];
-        stocklist.push(sync.await(stocklistlib.getStock(param.isu_nm, sync.defer())));
-        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
-        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
-        var trading = sync.await(tradinglib.getTrading(param, sync.defer()));
-        return trading;
-    }, function(err, res) {
-        if(err) console.log(err);
-        callback(err, res);
-    });
-};
-
-exports.removeTrading = function(param, callback) {
-    sync.fiber(function() {
-        sync.await(tradinglib.removeTrading(param, sync.defer()));
-    }, function(err, res) {
-        if(err) console.log(err);
-        callback(err, res);
-    });
-};
-
-exports.editTrading = function(param, callback) {
-    sync.fiber(function() {
-        sync.await(tradinglib.editTrading(param, sync.defer()));
-
-    }, function(err, res) {
-        if(err) console.log(err);
-        callback(err, res);
-    });
-};
 
 function getStockList(param, date)
 {
@@ -134,117 +68,6 @@ function getStockList(param, date)
     }
     return stocklist;
 }
-
-exports.findTradingList = function(param, callback) {
-
-    sync.fiber(function() {
-        console.log('Start [ Find Trading ]', param);
-        var today = moment();
-        param.start = today.format("YYMMDD");
-
-        //stock list 조회
-        var stocklist = getStockList(param, today);
-
-        //기관 리스트 조회
-        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
-        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
-        console.log('Complete [ Find Trading ]');
-
-    }, function(err, res) {
-        if(err) console.log(err);
-        callback(err, res);
-    });
-};
-
-exports.filterRemove = function(tradinglist) {
-    var result  = tradinglist.filter(function(trading) {
-        if(trading.remove && trading.remove === true) {
-            return false;
-        }
-        return true;
-    });
-    return result;
-};
-
-/**
- * 특정 grade의 stock만 얻어온다.
- * @param grade
- * @param stocklist
- * @param tradinglist
- * @returns {Array}
- */
-exports.filterGrade = function(grade, stocklist, tradinglist) {
-    var result = [];
-    stocklist.forEach(function(stock) {
-
-        //저장되어있는 stock의 grade를 얻어온다. 거래 리스트가 없을경우 무조건 검색
-        var _grade = exports.getGrade(tradinglist, stock.isu_nm);
-        if(_grade === -1 || _grade === grade) {
-            result.push(stock);
-        }
-    });
-
-    return result;
-};
-
-exports.getGrade = function(tradinglist, isu_nm) {
-    for(var i = 0; i<tradinglist.length; i++)
-    {
-        var trading = tradinglist[i];
-        if(trading.isu_nm === isu_nm) {
-            return trading.grade;
-        }
-    }
-
-    return -1;
-};
-
-exports.filterBestStock = function(date, type, tradingList, callback) {
-    sync.fiber(function() {
-
-        var bestStock = sync.await(stocklistlib.getBestStock(date, type, sync.defer()));
-        if(!bestStock) {
-            throw 'trading is null';
-        }
-
-        var bestStockList = bestStock.list;
-        var result = [];
-        for(var i = 0; i<tradingList.length; i++) {
-            var trading = tradingList[i];
-            if(bestStockList.isIn('kor_shrt_isu_nm', trading.isu_nm)) {
-                result.push(trading);
-            }
-        }
-
-        return result;
-
-    }, function(err, res) {
-        callback(err, res);
-    });
-};
-
-exports.filterFavoriteStock = function(tradingList, callback) {
-    sync.fiber(function() {
-
-        var favoriteStockList = sync.await(stocklistlib.getFavoriteStockList(sync.defer()));
-        favoriteStockList = favoriteStockList.map(function(favoriteStock) {
-            return favoriteStock.toJSON();
-        });
-
-        var result = [];
-        for(var i = 0; i<tradingList.length; i++) {
-            var trading = tradingList[i];
-            if(favoriteStockList.isIn('isu_nm', trading.isu_nm)) {
-                result.push(trading);
-            }
-        }
-
-        return result;
-
-    }, function(err, res) {
-        callback(err, res);
-    });
-};
 
 function makeTradingData(today, stocklist, memberlist, callback)
 {
@@ -369,15 +192,15 @@ function makeTradingData(today, stocklist, memberlist, callback)
             //거래 대금 순매수가 정해진 값 이상일경우 관심종목에 추가한다.
             /*
              if(netaskvalSum >= getAtutoAddValue(stock)) {
-                 var result = sync.await(stocklistlib.addFavoriteStock(stocklist[i]['isu_nm'], sync.defer()));
-                 if(result) {
-                     REDIS.sadd(exports.getAutoAddRedisKey(), isu_nm, function(err, result) {
-                         if(err) console.log(err);
-                         REDIS.smembers(exports.getAutoAddRedisKey(), function(err, result) {
-                            console.log(result);
-                         });
-                     });
-                 }
+             var result = sync.await(stocklistlib.addFavoriteStock(stocklist[i]['isu_nm'], sync.defer()));
+             if(result) {
+             REDIS.sadd(exports.getAutoAddRedisKey(), isu_nm, function(err, result) {
+             if(err) console.log(err);
+             REDIS.smembers(exports.getAutoAddRedisKey(), function(err, result) {
+             console.log(result);
+             });
+             });
+             }
              }
              */
             //TODO : 거래 대금 순매수가 정해진 값 이상일경우 grade를 올린다.
@@ -388,3 +211,175 @@ function makeTradingData(today, stocklist, memberlist, callback)
         callback(err, res);
     });
 }
+
+exports.getTradingList = function(param, callback) {
+    sync.fiber(function() {
+        var result = [];
+        var tradingList = sync.await(tradinglib.getTradingList(param, sync.defer()));
+        if(param.type === 'favorite') {
+            result = limitCount(sync.await(exports.filterFavoriteStock(tradingList, sync.defer())), param.count);
+        } else if(param.type === 'kosdaq' || param.type === 'kospi') {
+            result = limitCount(sync.await(exports.filterBestStock("20" + param.start, param.type, tradingList, sync.defer())),param.count);
+        }
+
+        for(var i=0; i<result.length; i++)
+        {
+            result[i] = result[i].toJSON();
+            sync.await(makeTradingResult(result[i], sync.defer()));
+        }
+        
+        return result;
+
+    }, function(err, res) {
+        callback(err, res);
+    });
+};
+
+exports.getTrading = function(param, callback) {
+    tradinglib.getTrading(param, callback);
+};
+
+exports.findTrading = function(param, callback) {
+    var today = moment();
+    sync.fiber(function() {
+        var stocklist = [];
+        stocklist.push(sync.await(stocklistlib.getStock(param.isu_nm, sync.defer())));
+        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
+        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
+        var trading = sync.await(tradinglib.getTrading(param, sync.defer()));
+        return trading;
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    });
+};
+
+exports.removeTrading = function(param, callback) {
+    sync.fiber(function() {
+        sync.await(tradinglib.removeTrading(param, sync.defer()));
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    });
+};
+
+exports.editTrading = function(param, callback) {
+    sync.fiber(function() {
+        sync.await(tradinglib.editTrading(param, sync.defer()));
+
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    });
+};
+
+exports.findTradingList = function(param, callback) {
+
+    sync.fiber(function() {
+        console.log('Start [ Find Trading ]', param);
+        var today = moment();
+        param.start = today.format("YYMMDD");
+
+        //stock list 조회
+        var stocklist = getStockList(param, today);
+
+        //기관 리스트 조회
+        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
+        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
+        console.log('Complete [ Find Trading ]');
+
+    }, function(err, res) {
+        if(err) console.log(err);
+        callback(err, res);
+    });
+};
+
+exports.filterRemove = function(tradinglist) {
+    var result  = tradinglist.filter(function(trading) {
+        if(trading.remove && trading.remove === true) {
+            return false;
+        }
+        return true;
+    });
+    return result;
+};
+
+/**
+ * 특정 grade의 stock만 얻어온다.
+ * @param grade
+ * @param stocklist
+ * @param tradinglist
+ * @returns {Array}
+ */
+exports.filterGrade = function(grade, stocklist, tradinglist) {
+    var result = [];
+    stocklist.forEach(function(stock) {
+
+        //저장되어있는 stock의 grade를 얻어온다. 거래 리스트가 없을경우 무조건 검색
+        var _grade = exports.getGrade(tradinglist, stock.isu_nm);
+        if(_grade === -1 || _grade === grade) {
+            result.push(stock);
+        }
+    });
+
+    return result;
+};
+
+exports.getGrade = function(tradinglist, isu_nm) {
+    for(var i = 0; i<tradinglist.length; i++)
+    {
+        var trading = tradinglist[i];
+        if(trading.isu_nm === isu_nm) {
+            return trading.grade;
+        }
+    }
+
+    return -1;
+};
+
+exports.filterBestStock = function(date, type, tradingList, callback) {
+    sync.fiber(function() {
+
+        var bestStock = sync.await(stocklistlib.getBestStock(date, type, sync.defer()));
+        if(!bestStock) {
+            throw 'trading is null';
+        }
+
+        var bestStockList = bestStock.list;
+        var result = [];
+        for(var i = 0; i<tradingList.length; i++) {
+            var trading = tradingList[i];
+            if(bestStockList.isIn('kor_shrt_isu_nm', trading.isu_nm)) {
+                result.push(trading);
+            }
+        }
+
+        return result;
+
+    }, function(err, res) {
+        callback(err, res);
+    });
+};
+
+exports.filterFavoriteStock = function(tradingList, callback) {
+    sync.fiber(function() {
+
+        var favoriteStockList = sync.await(stocklistlib.getFavoriteStockList(sync.defer()));
+        favoriteStockList = favoriteStockList.map(function(favoriteStock) {
+            return favoriteStock.toJSON();
+        });
+
+        var result = [];
+        for(var i = 0; i<tradingList.length; i++) {
+            var trading = tradingList[i];
+            if(favoriteStockList.isIn('isu_nm', trading.isu_nm)) {
+                result.push(trading);
+            }
+        }
+
+        return result;
+
+    }, function(err, res) {
+        callback(err, res);
+    });
+};

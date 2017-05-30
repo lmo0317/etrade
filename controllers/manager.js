@@ -2,7 +2,7 @@
  * Created by LEE-DESKTOP on 2016-12-14.
  */
 
-var managerService = require('../service/manager');
+var managerlib = require('../lib/manager');
 
 exports.delegate = function(app) {
     console.info('manager delegate');
@@ -11,7 +11,7 @@ exports.delegate = function(app) {
 };
 
 function getManagerSetting(req, res) {
-    managerService.getManagerSetting(function(err, result) {
+    managerlib.getManagerSetting(function(err, result) {
         if(err) return res.send({result: false});
         res.send(result);
     });
@@ -22,7 +22,7 @@ function setManagerSetting(req, res) {
         cron: JSON.parse(req.body.cron)
     };
 
-    managerService.setManagerSetting(setting, function(err, result) {
+    managerlib.setManagerSetting(setting, function(err, result) {
         if(err) return res.send({result: false});
         res.send(result);
     });

@@ -105,9 +105,11 @@ function makeTradeTable(data, container, tableType, date) {
         //거래대금
         var td_trading_isu_tr_amt = $("<td>").attr("id", "td_trading_isu_tr_amt");
         var isu_tr_amt = (stockInfo && stockInfo.isu_tr_amt) || 0;
+        var isu_tr_vl = (stockInfo && stockInfo.isu_tr_vl) || 0;
+
         isu_tr_amt = (parseIntRemoveComma(isu_tr_amt) / unit).toFixed(0);
         isu_tr_amt = numberWithCommas(isu_tr_amt);
-        if(stock.volume && stockInfo.isu_tr_vl) {
+        if(stock.volume && isu_tr_vl) {
             var percent = (parseIntRemoveComma(stockInfo.isu_tr_vl) / parseIntRemoveComma(stock.volume)) * 100;
             isu_tr_amt += "(" + percent.toFixed(2) + "%" + ")";
             if(percent > 100) {

@@ -7,7 +7,6 @@ $(document).ready(function (){
 });
 
 function init() {
-    console.log(moment().format('YYMMDD'));
     new Tablesort(document.getElementById('sort_table_favorite'));
     new Tablesort(document.getElementById('sort_table_kosdaq'));
     new Tablesort(document.getElementById('sort_table_kospi'));
@@ -22,9 +21,7 @@ function init() {
             startDate: new Date()
         },
         function(start, end, label) {
-            console.log(moment(start._d).format('YYMMDD'));
             date = moment(start._d).format('YYMMDD');
-            console.log(date);
             getTradingListAll();
         }
     );
@@ -50,7 +47,6 @@ function refreshData(data, type)
 {
     var name = "#tbody_trading_" + type + "_container";
     var container = $(name);
-    console.log(type);
     makeTradeTable(data, container, type=="favorite" ? "detail" : "simple", $("#edit_start").val());
 }
 
@@ -69,7 +65,6 @@ function getTradingList(type)
             refreshData(_tradingData, type);
         },
         error:function(err) {
-            console.log(err);
         }
     });
 }

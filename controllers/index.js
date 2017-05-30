@@ -1,6 +1,6 @@
 //주석 테스트
 var fs = require('fs');
-var logsService = require('../service/logs');
+var logslib = require('../lib/logs');
 
 exports.delegate = function(app)
 {
@@ -18,7 +18,7 @@ exports.delegate = function(app)
 };
 
 function getIndex(req, res) {
-    logsService.addConnection(function() {
+    logslib.addConnection(function() {
         res.sendfile('public/main.html');
     });
 }
