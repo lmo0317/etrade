@@ -19,7 +19,6 @@ function limitCount(list, count) {
     if(!count) {
         return list;
     }
-
     return list.splice(0, count);
 }
 
