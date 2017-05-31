@@ -91,7 +91,9 @@ function makeTradeTable(data, container, tableType, date) {
         var td_trading_netaskval = $("<td>").attr("id", "td_trading_netaskval");
         var netaskval = numberWithCommas((buylist.netaskval/unit).toFixed(0));
         if(stock.fornnetask && buylist.netaskvol) {
-            var percent = (parseIntRemoveComma(buylist.netaskvol) / parseIntRemoveComma(stock.fornnetask)) * 100;
+            var netaskvol = parseIntRemoveComma(buylist.netaskvol);
+            var fornnetask = parseIntRemoveComma(stock.fornnetask);
+            var percent = ((netaskvol - fornnetask) / Math.abs(fornnetask)) * 100;
             netaskval += "(" + percent.toFixed(2) + "%" + ")";
             if(percent > 100) {
                 td_trading_netaskval.html('<font color="#FF0000">' + netaskval + '</font>');
@@ -110,7 +112,9 @@ function makeTradeTable(data, container, tableType, date) {
         isu_tr_amt = (parseIntRemoveComma(isu_tr_amt) / unit).toFixed(0);
         isu_tr_amt = numberWithCommas(isu_tr_amt);
         if(stock.volume && isu_tr_vl) {
-            var percent = (parseIntRemoveComma(stockInfo.isu_tr_vl) / parseIntRemoveComma(stock.volume)) * 100;
+            isu_tr_vl = parseIntRemoveComma(isu_tr_vl);
+            var volume = parseIntRemoveComma(stock.volume);
+            var percent = ((isu_tr_vl - volume) / Math.abs(volume)) * 100;
             isu_tr_amt += "(" + percent.toFixed(2) + "%" + ")";
             if(percent > 100) {
                 td_trading_isu_tr_amt.html('<font color="#FF0000">' + isu_tr_amt + '</font>');
