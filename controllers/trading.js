@@ -1,5 +1,5 @@
 var tradingService = require('../service/trading');
-var moment = require('moment');
+var timelib = require('../lib/time');
 
 exports.delegate = function(app) {
     console.info('trading delegate');
@@ -42,10 +42,8 @@ function removeTrading(req, res) {
 }
 
 function findTrading(req, res) {
-    var today = moment();
-
     var param = {
-        start: today.format("YYMMDD"),
+        start: timelib.getCurrentTime().format("YYMMDD"),
         isu_nm: req.body.isu_nm
     };
 

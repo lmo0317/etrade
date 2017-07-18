@@ -2,9 +2,8 @@ var sync = require('synchronize');
 var tradinglib = require('../lib/trading');
 var stocklistlib = require('../lib/stocklist');
 var debuglib = require('../lib/debug');
-var memberlistlib = require('../lib/memberlist')
 var otplib = require('../lib/otp');
-var moment = require('moment');
+var timelib = require('../lib/time');
 var request = require('../lib/request');
 
 function limitCount(list, count) {
@@ -69,11 +68,12 @@ function getStockList(param, date)
     return stocklist;
 }
 
-function makeTradingData(today, stocklist, memberlist, callback)
+function makeTradingData(stocklist, memberlist, callback)
 {
     sync.fiber(function() {
 
         //시간
+        var today = timelib.getCurrentTime();
         var time = today.format('HHmm');
 
         //OTP 코드 생성
@@ -192,15 +192,15 @@ function makeTradingData(today, stocklist, memberlist, callback)
             //거래 대금 순매수가 정해진 값 이상일경우 관심종목에 추가한다.
             /*
              if(netaskvalSum >= getAtutoAddValue(stock)) {
-             var result = sync.await(stocklistlib.addFavoriteStock(stocklist[i]['isu_nm'], sync.defer()));
-             if(result) {
-             REDIS.sadd(exports.getAutoAddRedisKey(), isu_nm, function(err, result) {
-             if(err) console.log(err);
-             REDIS.smembers(exports.getAutoAddRedisKey(), function(err, result) {
-             console.log(result);
-             });
-             });
-             }
+                 var result = sync.await(stocklistlib.addFavoriteStock(stocklist[i]['isu_nm'], sync.defer()));
+                 if(result) {
+                     REDIS.sadd(exports.getAutoAddRedisKey(), isu_nm, function(err, result) {
+                     if(err) console.log(err);
+                        REDIS.smembers(exports.getAutoAddRedisKey(), function(err, result) {
+                            console.log(result);
+                        });
+                     });
+                 }
              }
              */
             //TODO : 거래 대금 순매수가 정해진 값 이상일경우 grade를 올린다.
@@ -240,12 +240,11 @@ exports.getTrading = function(param, callback) {
 };
 
 exports.findTrading = function(param, callback) {
-    var today = moment();
     sync.fiber(function() {
         var stocklist = [];
         stocklist.push(sync.await(stocklistlib.getStock(param.isu_nm, sync.defer())));
-        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
-        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
+        //var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
+        sync.await(makeTradingData(stocklist, DB.MEMBER_LIST, sync.defer()));
         var trading = sync.await(tradinglib.getTrading(param, sync.defer()));
         return trading;
     }, function(err, res) {
@@ -277,15 +276,14 @@ exports.findTradingList = function(param, callback) {
 
     sync.fiber(function() {
         console.log('Start [ Find Trading ]', param);
-        var today = moment();
+        var today = timelib.getCurrentTime();
         param.start = today.format("YYMMDD");
 
         //stock list 조회
         var stocklist = getStockList(param, today);
 
         //기관 리스트 조회
-        var memberlist = sync.await(memberlistlib.getMemberList(sync.defer()));
-        sync.await(makeTradingData(today, stocklist, memberlist, sync.defer()));
+        sync.await(makeTradingData( stocklist, DB.MEMBER_LIST, sync.defer()));
         console.log('Complete [ Find Trading ]');
 
     }, function(err, res) {

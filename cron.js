@@ -5,7 +5,7 @@
 var cronJob = require('cron').CronJob;
 var fs = require('fs');
 var sync = require('synchronize');
-var moment = require('moment');
+var timelib = require('./lib/time');
 var mongoose = require('mongoose');
 var config = require('./config');
 var tradingService = require('./service/trading');
@@ -22,7 +22,7 @@ function makeCron() {
 
     new cronJob(global.configure.cron.FIND_TRADING_TIME.TIME, function(){
 
-        var time = moment().format("mm");
+        var time = timelib.getCurrentTime().format("mm");
         time = parseInt(time, 10);
         sync.fiber(function() {
 
@@ -40,7 +40,6 @@ function makeCron() {
                     return;
                 }
 
-                console.log('Cron Schedule', moment().format("HHmm"));
                 var param = {
                     type: trading.type,
                     grade: trading.grade || 0

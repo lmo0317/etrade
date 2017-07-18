@@ -5,7 +5,7 @@ var logslib = require('../lib/logs');
 exports.delegate = function(app)
 {
     var controllers = [
-        'trading', 'stocklist', 'memberlist', 'manager'
+        'trading', 'stocklist', 'manager'
     ];
 
     controllers.forEach(function(c) {
