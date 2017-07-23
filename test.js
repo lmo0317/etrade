@@ -29,7 +29,6 @@ console.log('start cron');
         sync.await(tradingService.findTradingList(param, sync.defer()));
 
         param.type = 'best';
-        param.grade = 1;
         sync.await(tradingService.findTradingList(param, sync.defer()));
 
     }, function (err, result) {

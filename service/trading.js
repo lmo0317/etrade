@@ -61,9 +61,6 @@ function getStockList(param, date)
         if(global.program.develop) {
             stocklist = debuglib.setFindTrading(stocklist);
         }
-
-        var tradinglist = sync.await(tradinglib.getTradingList(param, sync.defer()));
-        stocklist = exports.filterGrade(param.grade, stocklist, tradinglist, sync.defer());
     }
     return stocklist;
 }
@@ -188,23 +185,6 @@ function makeTradingData(stocklist, memberlist, callback)
 
             //종목의 수급 동향을 찾는다.
             sync.await(stocklistlib.makeStockTrend(stock, sync.defer()));
-
-            //거래 대금 순매수가 정해진 값 이상일경우 관심종목에 추가한다.
-            /*
-             if(netaskvalSum >= getAtutoAddValue(stock)) {
-                 var result = sync.await(stocklistlib.addFavoriteStock(stocklist[i]['isu_nm'], sync.defer()));
-                 if(result) {
-                     REDIS.sadd(exports.getAutoAddRedisKey(), isu_nm, function(err, result) {
-                     if(err) console.log(err);
-                        REDIS.smembers(exports.getAutoAddRedisKey(), function(err, result) {
-                            console.log(result);
-                        });
-                     });
-                 }
-             }
-             */
-            //TODO : 거래 대금 순매수가 정해진 값 이상일경우 grade를 올린다.
-            //TEST
         }
 
     }, function(err, res) {
@@ -253,15 +233,6 @@ exports.findTrading = function(param, callback) {
     });
 };
 
-exports.removeTrading = function(param, callback) {
-    sync.fiber(function() {
-        sync.await(tradinglib.removeTrading(param, sync.defer()));
-    }, function(err, res) {
-        if(err) console.log(err);
-        callback(err, res);
-    });
-};
-
 exports.editTrading = function(param, callback) {
     sync.fiber(function() {
         sync.await(tradinglib.editTrading(param, sync.defer()));
@@ -300,39 +271,6 @@ exports.filterRemove = function(tradinglist) {
         return true;
     });
     return result;
-};
-
-/**
- * 특정 grade의 stock만 얻어온다.
- * @param grade
- * @param stocklist
- * @param tradinglist
- * @returns {Array}
- */
-exports.filterGrade = function(grade, stocklist, tradinglist) {
-    var result = [];
-    stocklist.forEach(function(stock) {
-
-        //저장되어있는 stock의 grade를 얻어온다. 거래 리스트가 없을경우 무조건 검색
-        var _grade = exports.getGrade(tradinglist, stock.isu_nm);
-        if(_grade === -1 || _grade === grade) {
-            result.push(stock);
-        }
-    });
-
-    return result;
-};
-
-exports.getGrade = function(tradinglist, isu_nm) {
-    for(var i = 0; i<tradinglist.length; i++)
-    {
-        var trading = tradinglist[i];
-        if(trading.isu_nm === isu_nm) {
-            return trading.grade;
-        }
-    }
-
-    return -1;
 };
 
 exports.filterBestStock = function(date, type, tradingList, callback) {

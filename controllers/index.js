@@ -5,7 +5,7 @@ var logslib = require('../lib/logs');
 exports.delegate = function(app)
 {
     var controllers = [
-        'trading', 'stocklist', 'manager'
+        'trading', 'stocklist'
     ];
 
     controllers.forEach(function(c) {
@@ -21,8 +21,4 @@ function getIndex(req, res) {
     logslib.addConnection(function() {
         res.sendfile('public/main.html');
     });
-}
-
-function getManager(req, res) {
-    res.sendfile('public/manager.html');
 }

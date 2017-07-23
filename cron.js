@@ -10,7 +10,6 @@ var mongoose = require('mongoose');
 var config = require('./config');
 var tradingService = require('./service/trading');
 var stocklistlib = require('./lib/stocklist');
-var managerlib = require('./lib/manager');
 
 config.init();
 
@@ -26,11 +25,9 @@ function makeCron() {
         time = parseInt(time, 10);
         sync.fiber(function() {
 
-            var managerSetting = sync.await(managerlib.getManagerSetting(sync.defer()));
+            var managerSetting = DB.MANAGER_SETTING;
             var findTrading = [
-                { time: managerSetting.cron.grade[1], grade: 1, type: 'best' },
-                { time: managerSetting.cron.grade[2], grade: 2, type: 'best' },
-                { time: managerSetting.cron.grade[3], grade: 3, type: 'best' },
+                { time: managerSetting.cron.best,  type: 'best' },
                 { time: managerSetting.cron.favorite, type: 'favorite'}
             ];
 
@@ -42,7 +39,6 @@ function makeCron() {
 
                 var param = {
                     type: trading.type,
-                    grade: trading.grade || 0
                 };
                 sync.await(tradingService.findTradingList(param, sync.defer()));
             });
