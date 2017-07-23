@@ -13,7 +13,6 @@ exports.delegate = function(app)
     });
 
     app.get('/', getIndex);
-    app.get('/manager', getManager);
     console.info('index complete');
 };
 
