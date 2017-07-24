@@ -12,10 +12,6 @@ exports.FavoriteStockSchema = new mongoose.Schema( {
     isu_nm: {type:String, require:true}
 }, {versionKey: false});
 
-exports.ExceptionStockSchema = new mongoose.Schema( {
-    isu_nm: {type:String, require:true}
-}, {versionKey: false});
-
 exports.BestStockSchema = new mongoose.Schema({
     date: {type:String, require: true},
     type: {type: String, require: true},

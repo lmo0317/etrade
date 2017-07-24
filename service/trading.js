@@ -52,11 +52,8 @@ function getStockList(param, date)
         });
 
     } else if(param.type === 'best') {
-        //제외 종목
-        var exceptionStockList = sync.await(stocklistlib.getExceptionStockList(sync.defer()));
-
         //현재 시간 최대 매매 종목
-        stocklist = stocklist.concat(sync.await(stocklistlib.getAllBestStockList(date, exceptionStockList, sync.defer())));
+        stocklist = stocklist.concat(sync.await(stocklistlib.getAllBestStockList(date, sync.defer())));
 
         if(global.program.develop) {
             stocklist = debuglib.setFindTrading(stocklist);
@@ -102,7 +99,6 @@ function makeTradingData(stocklist, memberlist, callback)
              updn_rate = "01.13" //등락률
              updn_typ = "1"
              */
-
             var netaskvolSum = 0;
             var netaskvolSumHidden = 0;
             var netaskvalSum = 0;
@@ -133,7 +129,6 @@ function makeTradingData(stocklist, memberlist, callback)
                  bidval = "113,112,320" //거래대금 - 매수
                  netaskval = "-159,227,080" //거래대금 - 순매수
                  */
-
                 if(memberlist.isIn('mbr_nm', member.mbr_nm)) {
                     //거래량 - 순매수 합
                     var number = member.netaskvol.replace(/,/gi, '');
