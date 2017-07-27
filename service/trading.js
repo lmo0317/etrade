@@ -5,6 +5,7 @@ var debuglib = require('../lib/debug');
 var otplib = require('../lib/otp');
 var timelib = require('../lib/time');
 var request = require('../lib/request');
+var utilLib = require('../lib/util');
 
 function limitCount(list, count) {
 
@@ -151,11 +152,11 @@ function makeTradingData(stocklist, memberlist, callback)
             /**
              * SAVE FINDING LOG
              */
-            console.debug('종목 : ' + stock.isu_nm);
-            console.debug('거래량 순매수: ' + utilLib.numberWithCommas(netaskvolSum));
-            console.debug('거래대금 순매수 : ' + utilLib.numberWithCommas(netaskvalSum));
+            console.log('종목 : ' + stock.isu_nm);
+            console.log('거래량 순매수: ' + utilLib.numberWithCommas(netaskvolSum));
+            console.log('거래대금 순매수 : ' + utilLib.numberWithCommas(netaskvalSum));
             if (stockInfo) {
-                console.debug('등락률 : ' + stockInfo.updn_rate);
+                console.log('등락률 : ' + stockInfo.updn_rate);
             }
 
             var isu_nm = stock.isu_nm;
