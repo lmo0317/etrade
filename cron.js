@@ -23,6 +23,8 @@ function makeCron() {
 
         var time = timelib.getCurrentTime().format("mm");
         time = parseInt(time, 10);
+        console.log('CRON JOB', time);
+
         sync.fiber(function() {
 
             var managerSetting = DB.MANAGER_SETTING;
