@@ -38,7 +38,7 @@ function makeCron() {
                 }
 
                 var param = {
-                    type: trading.type,
+                    type: trading.type
                 };
                 sync.await(tradingService.findTradingList(param, sync.defer()));
             });
